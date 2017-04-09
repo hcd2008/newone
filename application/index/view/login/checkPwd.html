@@ -1,0 +1,98 @@
+ <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<HTML xmlns="http://www.w3.org/1999/xhtml">
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<TITLE>用户登陆</TITLE>
+<SCRIPT LANGUAGE='JavaScript'>function ResumeError() {return true;} window.onerror = ResumeError; </SCRIPT> 
+<SCRIPT type="text/javascript" src="__PUBLIC__/js/jquery.js"></SCRIPT>
+<SCRIPT type="text/javascript" src="__PUBLIC__/js/jquery.md5.js"></SCRIPT>
+<SCRIPT type="text/javascript" src="__PUBLIC__/js/md5.js"></SCRIPT>
+<LINK href="__PUBLIC__/css/v1/login.css" rel="stylesheet" type="text/css" />
+</HEAD>
+<BODY>
+<script type="text/javascript">
+if(top.location != self.location) {top.location=self.location;}
+$(document).ready(function(){
+	$("input.text").focus(
+		function(){
+			$("input.text").parent().parent().removeClass("inputGreen");
+			$(this).parent().parent().addClass("inputGreen");}
+	);
+	$("input.text").blur(
+		function(){ 
+			$(this).parent().parent().removeClass("inputGreen");}
+	);
+	$("#loginpass_source").focus();
+});
+function LoginNow() 
+{ 
+    var loginuser = $("#username").val();
+    var typepw = $("#loginpass_source").val();
+	var vc = '1def1713ebf17722cbe300cfc1c88558';
+	$("#loginpass_source")[0].value = '12345678901234567890';
+    if( typepw == '' ){
+        alert('请填写 通行证密码');
+        return false;
+    }
+    var submitpw = $.md5(typepw);
+   
+    $("#loginpass")[0].value = hex_md5(typepw);
+    
+    document.forms['login'].submit();     
+}
+</script>
+<div id="allbox">
+    <div id="header">
+       <div id="header_content">
+          <div id="header_logo"></div>
+          <div id="header_right">
+			 <div id="header_tips"><{$Think.config.tishi}> </div>
+			  <div id="header_menu" style='margin-left:400px;'></div>
+           </div>
+         </div>  	
+     </div>
+     <div id="top_line"></div>
+		<div id="reg_content">
+			<div id="content_reg_box_top"></div>
+			<div id="content_reg_box_center">
+				<div id="maintitle">通行证登录</div>	
+				<div id="maincontent">	
+        	<div style="width:684px; margin:auto;">
+					<form name='login' method="post" action="__URL__/doCheckPwd" onSubmit="javascript:LoginNow(); return false;">
+					<input type="hidden" name="loginpass" id="loginpass">
+					<input type="hidden" name="validcode" id="validcode">
+					<input type="hidden" name="flag" value="login2" />
+            		<div style="width:100%;text-align:center;">
+                    	<font color="#FF0000"></font>
+                    </div>
+                    <div class="content_reg_line">
+                    	<div class="form_title">通行证账号：</div>
+                        <div class="form_word" style='font-size:14px;'>{$username}</div>
+						<input type="hidden" name="username" id="username" value="{$username}"/>
+                    </div>
+					<div class="content_reg_line">
+                    	<div class="form_title">问候语：</div>
+                        <div class="form_word" style='font-size:14px;color:#f33;height:25px;line-height:25px;width:360px;padding-left:3px;'>
+						<font style="color:#333;"><{$logmsg}></font><br /> 
+                        <span style="font-size:12px;color:#999;">如果问候语与您预设不一致，则为仿冒！不要输入密码！</span>
+                        <br />&nbsp;
+                        </div>
+                    </div>
+                    <div class="content_reg_line">
+                    	<div class="form_title">登陆密码：</div>
+                        <div class="form_word"><span class="inputBox input180"><cite><input type="password" name="loginpass_source" id="loginpass_source" maxlength="20" value="" class="text"/></cite></span></div>
+                    </div>
+                    <div style="border-top:1px dotted #ccc; width:90%; margin:5px auto; height:1px; font-size:0; overflow:hidden;margin-bottom:20px;"></div>
+					<div style="height:30px; text-align:center;">
+                    <input name="Submit" type="image" id="Submit" src="/images/comm/t.gif" class='inputSubmit' title="点击开始游戏" width="104" height="30"/>
+                    &nbsp;&nbsp;<a href="__URL__/getpass">忘记密码？</a></div>
+					<div style="padding-top:32px; margin:2px 0px; text-align:center;">小提示: 使用 <font color=red>IE (Internet Explorer ) 8.0</font> 浏览器可达到最佳使用效果 </div>
+					</form>
+            </div>
+        </div>&nbsp;
+	</div>
+	<div id="content_reg_box_bottom"></div>
+</div>
+</div>
+</BODY>
+</HTML>

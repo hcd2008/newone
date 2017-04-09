@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<HTML xmlns="http://www.w3.org/1999/xhtml">
+<HEAD><TITLE></TITLE>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<META http-equiv="Pragma" content="no-cache" />
+<meta HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate"> 
+<meta HTTP-EQUIV="expires" CONTENT="0">
+<LINK href="__PUBLIC__/css/v1/v1.css" rel="stylesheet" type="text/css" />
+<script language="javascript" type="text/javascript" src="__PUBLIC__/js/jquery.js"></script>
+<script language="javascript" type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+<script language="javascript" type="text/javascript" src="__PUBLIC__/js/GZfRulurControl.js"></script>
+<script language="javascipt" type="text/javascript">
+$(function(){
+    if($(".needchangebg:even").eq(0).html() != null){
+        $(".needchangebg:even").find("td").css("background","#FAFCFE");
+        $(".needchangebg:odd").find("td").css("background","#F9F9F9");
+        $(".forzenuser").find("td").css("background","#FFE8E8");
+		$(".self_tr").find("td").css("background","#FFF4D2");
+        $(".needchangebg").hover(function(){
+            $(this).find("td").css("background","#E8F2FF");
+            $(".forzenuser").find("td").css("background","#FFE8E8");
+        },function(){
+            $(".needchangebg:even").find("td").css("background","#FAFCFE");
+            $(".needchangebg:odd").find("td").css("background","#F9F9F9");
+            $(".forzenuser").find("td").css("background","#FFE8E8");
+        }
+        );
+    }else{
+        $(".needchangebg:odd").find("td").css("background","#FAFCFE");
+        $(".needchangebg:even").find("td").css("background","#F9F9F9");
+		$(".forzenuser").find("td").css("background","#FFE8E8");
+		$(".self_tr").find("td").css("background","#FFF4D2");
+        $(".gametitle").css("background","#F9F9F9");
+        $(".needchangebg").hover(function(){
+            $(this).find("td").css("background","#E8F2FF");
+            $(".gametitle").css("background","#F9F9F9");
+        },function(){
+            $(".lt tr:odd").find("td").css("background","#FAFCFE");
+            $(".lt tr:even").find("td").css("background","#F9F9F9");
+            $(".gametitle").css("background","#F9F9F9");
+        }
+        );
+    }
+})
+</script>
+<SCRIPT LANGUAGE='JavaScript'>
+//function ResumeError() {return true;} 
+//window.onerror = ResumeError; 
+</SCRIPT>
+</HEAD>

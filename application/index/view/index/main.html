@@ -1,0 +1,78 @@
+﻿{layout name='layout'}
+
+
+<BODY STYLE="background:#FFF url('/images/v1/main_bg_0001.jpg') 0px -490px repeat-x; padding:10px;"><DIV ID='main_box'>
+<div class="box l"></div>
+<div class="box c"></div>
+<div class="box r"></div>
+<div class="box m">
+
+<H1>
+<SPAN class="action-span1"><DIV class='icons_mb1'></DIV>当前位置: 信息中心 </SPAN><DIV style="clear:both"></DIV></H1>
+<script>
+$(document).ready(function(){
+	$("a[rel='notice']").click(function(){
+		$("tr[id^='notice_content_']").hide();
+		$("#notice_content_"+$(this).attr("id")).show();
+	});
+	$("tr[id^='notice_content_']").hide();
+	$("a[rel='notice']:first").click();
+});
+</script>
+<div class=d450><table border=0 cellspacing=0 cellpadding=0>
+<tr class=t><td class=tl></td><td class=tm>&nbsp;</td><td class=tr></td></tr>
+<tr class=mm><td class=ml><img src='/images/comm/t.gif'></td><td>
+
+<table border=0 cellspacing=0 cellpadding=0>
+<tr>
+	<td width=170 align=center valign=middle><table border=0 cellspacing=0 cellpadding=0 class=tb1><tr><td><{$zf}></td></tr></table></td>
+	<td width=2><img src='/images/comm/t.gif' class='l1'></td>
+	<td valign=top><table border=0 cellspacing=0 cellpadding=0 class=tb2><tr><td STYLE='padding-top:10px;line-height:18px;'>
+您的账户安全评分为: <{$zf}> 分 ( 满分100 )<br/><br/>
+<{$msg}>
+</td></tr></table></td></tr>
+</table>
+
+</td><td class=mr><img src='/images/comm/t.gif'></td></tr>
+<tr class=b><td class=bl></td><td class=bm>&nbsp;</td><td class=br></td></tr></table>
+</div>
+
+<br/><br/>
+
+<div class=d450><table border=0 cellspacing=0 cellpadding=0>
+<tr class=t><td class=tl></td><td class=tm>&nbsp;</td><td class=tr></td></tr>
+<tr class=mm><td class=ml><img src='/images/comm/t.gif'></td><td>
+<table border=0 cellspacing=0 cellpadding=0><tr>
+	<td align=left valign=top width=290 align=center valign=middle>
+		<font color=red>&nbsp;系统公告</font><br/><br/>
+		<table border=0 cellspacing=0 cellpadding=2>
+				{volist name="list" id="vo" key="k" }
+						<?php
+							if( $vo['title']=='顶部公告'){
+								continue;
+							}
+						?>
+					{if $k==1}
+						<tr><td width=12>&nbsp;</td><td width=75><{$vo.addtime|strtotime|date="Y-m-d",###}></td><td><a href='javascript:' rel="notice" id="<{$vo.id}>"  style="color:#FF0000; font-weight:bold;"><{$vo.title}></a></td></tr>
+					{else}
+						<tr><td width=12>&nbsp;</td><td width=75><{$vo.addtime|strtotime|date="Y-m-d",###}></td><td><a href='javascript:' rel="notice" id="<{$vo.id}>"><{$vo.title}></a></td></tr>
+					{/if}
+				{/volist}
+					
+				</table>
+	</td>
+	<td valign=top width=2><img src='/images/comm/t.gif' class='l1'></td>
+    <td align=left valign=top>
+	<table border=0 cellspacing=0 cellpadding=0 class=tb2 style="table-layout:fixed;">
+	<volist name="list" id="vo">
+	
+        <tr id="notice_content_<{$vo.id}>" style="display:none;"><td><{$vo.content}></td></tr>
+   </volist>
+       
+        </table></td>
+</tr></table>
+
+</td><td class=mr><img src='/images/comm/t.gif'></td></tr>
+<tr class=b><td class=bl></td><td class=bm>&nbsp;</td><td class=br></td></tr></table>
+</div>
+

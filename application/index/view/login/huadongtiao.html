@@ -1,0 +1,64 @@
+<script language="javascipt" type="text/javascript">
+     
+            function formatFloat(v) {
+                return Math.round(v * 100) / 100;
+                
+            }
+            
+		
+            baseBouns=<{$baseBouns}>;
+        function init_GZfRulurControlData(methodbouns,suoding) {
+       	  	   
+          bouns=parseFloat(methodbouns); //传进来			
+          fd = parseFloat('<{$fd}>'); //传进来     
+          
+          yuFd= formatFloat((fd*100)%(0.5*100))/100;
+          fd=(fd-yuFd);  
+         	
+		  bonusBeiShu=baseBouns/bouns;			 
+          issuoding=suoding;
+          stepBonusBeiShu=formatFloat(bouns/(baseBouns/10));//???
+		  step=0;
+		  gr.isSuoding=suoding;
+		  reset_text();
+		  
+        } 
+        
+        function reset_text() {
+        	  prizeMode=gr.getValue()[0];
+        	  if(issuoding) prizeMode= baseBouns;  
+    		  if(prizeMode<baseBouns){
+    			  step=(baseBouns-prizeMode)/10;
+    			  fd2=(step*0.5+fd)+yuFd;
+    			  jiangjin=bouns-step*stepBonusBeiShu;
+    		  }
+    		  if(prizeMode>=baseBouns){
+    			  step=(prizeMode-baseBouns)/10;
+    			  maxStep=fd/0.5;
+    			  step=step>maxStep?maxStep:step;
+    			 
+    			  fd2=(fd-step*0.5)+yuFd;
+    			  jiangjin=bouns+step*stepBonusBeiShu;
+    		  }
+    		  
+    		  if(gr.isSuoding==true){
+    			  $("#BonusModText").text("该玩法不支持自由调节奖金模式!");
+        	  }else{
+        		  $("#BonusModText").text("奖金：" + formatFloat(jiangjin) + "，返点：" + formatFloat(fd2) + "%");
+              }
+        }
+ 		
+
+        gr = new GZfRulurControl({ min: <{$minBonus}>, max: <{$maxBonus}>, sliderwidth: 12, splitcount: 2, slidercount: 1, width: "300px", border: "none", color: "#E7EF10", showInfo: false, showRulur: true, showRulurKeDu: false, RulurStep: 10,sliderbordercolor:"#9f9f9f",sliderbgcolor:"#005d42",baseBouns:<{$baseBouns}>  });
+        gr.show("BonusMod");
+       
+        gr.setValue([<{$currentBonus}>]);
+        gr.changing = function () {
+           // var v = gr.getValue()[0];	//得到滚到条上面的奖金   
+    		reset_text();
+        }
+       
+ 
+      
+       
+</script>

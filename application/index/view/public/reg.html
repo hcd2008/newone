@@ -1,0 +1,172 @@
+ <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<HTML xmlns="http://www.w3.org/1999/xhtml">
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<TITLE>用户注册</TITLE>
+ 
+<SCRIPT type="text/javascript" src="__PUBLIC__/js/jquery.js"></SCRIPT>
+<SCRIPT type="text/javascript" src="__PUBLIC__/js/jquery.md5.js"></SCRIPT>
+<script language="javascript" type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+<LINK href="__PUBLIC__/css/v1/login.css" rel="stylesheet" type="text/css" />
+<style>
+ 	.helpinfo{color:red;}
+ </style>
+</HEAD>
+<BODY>
+<script type="text/javascript">
+if(top.location != self.location) {top.location=self.location;}
+$(document).ready(function(){
+	$("input.text").focus(
+		function(){
+			$("input.text").parent().parent().removeClass("inputGreen");
+			$(this).parent().parent().addClass("inputGreen");}
+	);
+	$("input.text").blur(
+		function(){ 
+			$(this).parent().parent().removeClass("inputGreen");}
+	);
+	$("#pwd")[0].value = '';
+	$("#validcode_source")[0].value = '';
+	$("#checkpassword")[0].value = '';
+	$("#validate").attr('src',"__URL__/verify/"+Math.random());
+	$("#username").focus();
+}); 
+function refreshimg(){
+	
+$("#validate").attr('src',"__URL__/verify/ff/"+Math.random());
+}
+function LoginNow() 
+{ 
+   var username=$("#username").val();
+   var nickname=$("#nickname").val();
+    var typepw = $("#pwd").val();
+    
+    var checkpassword=$("#checkpassword").val();
+    var randnum = $("#validcode_source").val();
+	//$("#pwd")[0].value = '12345678901234567890';
+
+	if( !validateUserName(username) )
+	  {
+	     alert("登陆帐号 不符合规则，请重新输入");
+	     $("#username").focus();
+		 return false;
+	  }
+	  if( !validateNickName(nickname) )
+	  {
+	  	alert("呢称 不符合规则，请重新输入");
+	  	$("#nickname").focus();
+		return false;
+	  }
+	
+	 if( !validateUserPss(typepw) )
+	 {
+	  	alert("为了您的帐号安全,密码必须由数字和字母组成!\n不允许使用纯数字或纯字母做密码,请重新填写!");
+	  	$("#pwd").focus();
+		return false;
+	 }
+	 if(checkpassword!=typepw)
+	 {
+	  	alert("验证密码 不正确，请重新输入");
+	  	$("#checkpassword").focus();
+		return false;
+	 }
+	 
+    if (randnum == '') {
+        alert('请填写 图片验证码');
+        return false;
+    }
+  
+   
+    $("#loginpass")[0].value = typepw;
+   
+    document.forms['login'].submit();     
+}
+</script>
+<div id="allbox">
+    <div id="header">
+       <div id="header_content">
+          <div id="header_logo"></div>
+          <div id="header_right">
+			  <div id="header_tips"><{:C("tishi")}></div>
+			  <div id="header_menu" style='margin-left:400px;'>
+			  
+				<ul id="menu">
+		<li class="link1"><a href="__URL__/login">登录系统</a></li>
+				</ul>
+			
+			   </div>
+           </div>
+         </div>  	
+     </div>
+
+     <div id="top_line"></div>
+
+		<div id="reg_content">
+			<div id="content_reg_box_top"></div>
+			<div id="content_reg_box_center">
+				<div id="maintitle">用户注册</div>	
+				<div id="maincontent">	
+        	<div style="width:684px; margin:auto;">
+					<form name='login' method="post" action="__URL__/doReg" onSubmit="javascript:LoginNow(); return false;">
+					<input type="hidden" name="loginpass" id="loginpass">
+					<input type="hidden" name="validcode" id="validcode">
+					<input type="hidden" name="flag" value="confirm" />
+					<input type="hidden" name="id" value="<{$id}>" />
+            		<div style="width:100%;text-align:center;">
+                    	<font color="#FF0000"></font>
+                    </div>
+                    <div class="content_reg_line"><span style="font-size:14px;"><strong><font color="#FF0000"></font>请认真填写注册信息!</strong></span></div>
+                   <div class="content_reg_line">
+                    	<div class="form_title">登入帐号：</div>
+                        <div class="form_word">
+						<span class="inputBox input180"><cite><input type="text" name="username" id="username" maxlength="32" value="" class="text"/></cite></span>
+						<span class='helpinfo'>( 由0-9,a-z,A-Z组成的6-16个字符 )</span>
+						</div>
+                    </div>
+                   <div class="content_reg_line">
+                    	<div class="form_title">用户呢称：</div>
+                        <div class="form_word">
+						<span class="inputBox input180"><cite><input type="text" name="nickname" id="nickname" maxlength="32" value="" class="text"/></cite></span>
+						<span class='helpinfo'>( 由2至8个字符组成 )</span>
+						</div>
+                    </div>
+                     <div class="content_reg_line">
+                    	<div class="form_title">QQ：</div>
+                        <div class="form_word">
+						<span class="inputBox input180"><cite><input type="text" name="qq" id="qq" maxlength="32" value="" class="text"/></cite></span>
+						<span class='helpinfo'></span>
+						</div>
+                    </div>
+                    <div class="content_reg_line">
+                    	<div class="form_title">登入密码：</div>
+                        <div class="form_word">
+						<span class="inputBox input180"><cite><input type="password" name="pwd" id="pwd" maxlength="32" value="" class="text"/></cite></span>
+						<span class='helpinfo'>( 必须由数字和字母组成，不允纯数字或纯字母 )</span>
+						</div>
+                    </div>
+
+                    <div class="content_reg_line">
+                    	<div class="form_title">确认密码：</div>
+                        <div class="form_word"><span class="inputBox input180"><cite><input type="password" name="checkpassword" id="checkpassword" maxlength="20" value="" class="text"/></cite></span></div>
+                    </div>
+
+					<div class="content_reg_line">
+                    	<div class="form_title">验证码：</div>
+                        <div class="form_word"><span class="inputBox input60"><cite><input type="text" name="validcode_source" id="validcode_source" maxlength="5" value="" class="text"/></cite></span></div> 
+						<img src="__URL__/verify/" name="validate" align="absbottom" id="validate" style="margin-left:6px;cursor:pointer; border: 1px solid #999" title="点击刷新" onclick="refreshimg()" valign="bottom" />
+                    </div>
+
+                    <div style="border-top:1px dotted #ccc; width:90%; margin:5px auto; height:1px; font-size:0; overflow:hidden;margin-bottom:20px;"></div>
+
+					<div style="height:30px; text-align:center;">
+                    <button name="submit" type="submit" width='69' height='26' class="btn_next" /></button>
+                    </div>
+					</form>
+            </div>
+        </div>&nbsp;
+	</div>
+	<div id="content_reg_box_bottom"></div>
+</div>
+</div>
+</BODY>
+</HTML>

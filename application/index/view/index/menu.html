@@ -1,0 +1,232 @@
+﻿ <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><title>左侧菜单</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<script language="javascript" type="text/javascript" src="__PUBLIC__/js/jquery.js"></script>
+<script language="javascript" type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+<link href="__PUBLIC__/css/v1/main.css" rel="stylesheet" type="text/css" />
+</HEAD>
+<BODY>
+<div class="mem_header">
+<dl><dt><div class='t_header currsorauto'>会员中心</div></dt>
+	<dd>
+		<ul class='t_infobox'>
+			<li id='userswitch' TITLE='隐藏/显示'><img class='l_link1' src='/images/comm/t.gif'><{$nickname}><span class='r1'></span>
+			   
+			</li>
+			<li id='refreshimg' style="" TITLE='点击刷新余额'>余额: <span id="leftusermoney"><{$money}></span><span class='r2'></span></li>
+					</ul>
+        <ul class='t_infobox'>
+            <li style="text-align:center; font-size:12px; cursor:default;">
+            <a href="__APP__/User/showChonZhi" style="border:0; margin:0; padding:0;" target="mainframe"><img id="czimg" TITLE='充值' class='c0' src='/images/comm/t.gif' border="0"></a>
+			<a href="__APP__/User/showZhiJinPwd/flag/tx" style="border:0; margin:0; padding:0;" target="mainframe"><img id="tximg" TITLE='提款' class='t0' src='/images/comm/t.gif' border="0"></a>
+			 
+	    </li>
+		</ul>
+	</dd>
+</dl></div>
+
+
+<div class="mem_header">
+<dl><dt><div class='t_header' id='menu-tab'>功能菜单</div></dt> 
+    <ul>
+	<dt class="explode" name='dtmenu'><div title="menu" class='item_title'>开始游戏<span class='actived'></span></div></dt>
+	<dd class="item_main">
+        	<ul>
+					<li TITLE='重庆时时彩 (CQSSC)' ALT='重庆时时彩 (CQSSC)'><a target="mainframe" href="__APP__/Ssc/">重庆时时彩</a></li>
+					<!--
+					<li TITLE='六合彩 (LHC)' ALT='六合彩 (LHC)'><a target="mainframe" href="__APP__/Lhc/">香港六合彩</a></li>
+					<li TITLE='重庆十一选五(CQ11-5)' ALT='重庆十一选五(CQ11-5)'><a target="mainframe" href="__APP__/Cq115/">重庆十一选五</a></li>
+					-->
+					<li TITLE='新疆时时彩 (XJSSC)' ALT='新疆时时彩 (XJSSC)'><a target="mainframe" href="__APP__/Xjc/">新疆时时彩</a></li>
+					<li TITLE='江西时时彩 (JXSSC)' ALT='江西时时彩 (JXSSC)'><a target="mainframe" href="__APP__/Xsc/">江西时时彩</a></li>
+					<li TITLE='上海时时乐 (SHSSL)' ALT='上海时时乐 (SHSSL)'><a target="mainframe" href="__APP__/Ssl/">上海时时乐</a></li>
+					<li TITLE='十一运夺金 (山东11选5,SD11-5)' ALT='十一运夺金 (山东11选5,SD11-5)'><a target="mainframe" href="__APP__/Sd115/">十一运夺金</a></li>
+					<li TITLE='多乐彩 (江西11选5,JX11-5)' ALT='多乐彩 (江西11选5,JX11-5)'><a target="mainframe" href="__APP__/Dl115/">多乐彩</a></li>
+					<li TITLE='广东11选5 (GD11-5)' ALT='广东11选5 (GD11-5)'><a target="mainframe" href="__APP__/Gd115/">广东十一选五</a></li>
+					
+					<li TITLE='福彩3D (3D)' ALT='福彩3D (3D)'><a target="mainframe" href="__APP__/Fucai/">福彩3D</a></li>
+					<li TITLE='排列三、五 (P3P5)' ALT='排列三、五 (P3P5)'><a target="mainframe" href="__APP__/Pls/">排列三、五</a></li>
+					
+		    	</ul>
+    	</dd>
+	</ul>
+	<ul>
+	<dt class="explode" name='dtmenu'><div title="menu" class='item_title'>活动中心<span class='actived'></span></div></dt>
+	<dd class="item_main">
+        	<ul>
+					<li TITLE='客户端下载' ALT='客户端下载'><a target="mainframe" href="/汇华国际.zip">客户端下载</a></li>
+					
+					
+					<li TITLE='夺宝奇兵' ALT='夺宝奇兵'><a target="mainframe" href="__APP__/User/dbqb">夺宝奇兵</a></li>
+					<!--
+					<li TITLE='代理返佣' ALT='代理返佣'><a target="mainframe" href="__APP__/User/dailify">代理返佣<img border="0" src='/images/v1/5-120601152056.gif'></a></li>
+					<li TITLE='代理分红' ALT='代理分红'><a target="mainframe" href="__APP__/User/dailifh">代理分红<img border="0" src='/images/v1/5-120601152056.gif'></a></li>
+					<li TITLE='电子银行' ALT='电子银行'><a target="mainframe" href="__APP__/User/dzyh">电子银行</a></li>
+					<li TITLE='开户有礼' ALT='开户有礼'><a target="mainframe" href="__APP__/User/showSongQian">开户有礼<img border="0" src='/images/v1/5-120601152056.gif'></a></li>
+					-->
+					
+		    		
+		    		<li TITLE='欢乐送' ALT='欢乐送'><a target="mainframe" href="__APP__/User/hlSong">欢乐送</a></li>
+		    	</ul>
+    	</dd>
+	</ul>
+     <ul>
+     <ul>
+	<dt class="explode" name='dtmenu'><div title="menu" class='item_title'>游戏记录<span class='actived'></span></div></dt>
+	<dd class="item_main">
+        	<ul>
+					<li TITLE='投注记录查看' ALT='投注记录查看'><a target="mainframe" href="__APP__/Order/">投注记录</a></li>
+					<li TITLE='追号记录查看' ALT='追号记录查看'><a target="mainframe" href="__APP__/Trace/">追号记录</a></li>
+		    	</ul>
+    	</dd>
+	</ul>
+     <ul>
+	<dt class="explode" name='dtmenu'><div title="menu" class='item_title'>用户管理<span class='actived'></span></div></dt>
+	<dd class="item_main">
+        	<ul>
+					<li TITLE='所有用户信息' ALT='所有用户信息'><a target="mainframe" href="__APP__/Users/userlistFrame">用户列表</a></li>
+					<li TITLE='增加下级用户' ALT='增加下级用户'><a target="mainframe" href="__APP__/Users/">增加用户</a></li>
+					<li TITLE='修改自己的昵称' ALT='修改自己的昵称'><a target="mainframe" href="__APP__/User/editNickName/">修改昵称</a></li>
+					<!-- <li TITLE='查看平台消息' ALT='查看平台消息'><a target="mainframe" href="/users_message.shtml">我的消息</a></li> -->
+					<li TITLE='查看各彩种奖金' ALT='查看各彩种奖金'><a target="mainframe" href="__APP__/User/mySet">奖金详情</a></li>
+					<li TITLE='查看今日新开户' ALT='查看今日新开户'><a target="mainframe" href="__APP__/Users/jrxkhy">今日新开会员</a></li>
+		    	</ul>
+    	</dd>
+	</ul>
+     <ul>
+	<dt class="explode" name='dtmenu'><div title="menu" class='item_title'>报表管理<span class='actived'></span></div></dt>
+	<dd class="item_main">
+        	<ul>
+					<li TITLE='查看所有账变信息' ALT='查看所有账变信息'><a target="mainframe" href="__APP__/Account/">账变列表</a></li>
+					<li TITLE='查询游戏统计信息' ALT='查询游戏统计信息'><a target="mainframe" href="__APP__/Report/reportList">报表查询</a></li>
+					<li TITLE='统计返点情况' ALT='统计返点情况'><a target="mainframe" href="__APP__/Report/countFd">返点统计</a></li>
+					<li TITLE='今日游戏统计' ALT='今日游戏统计'><a target="mainframe" href="__APP__/Report/todayReport">今日报表</a></li>
+		    	</ul>
+    	</dd>
+	</ul>
+     <ul>
+	<dt class="explode" name='dtmenu'><div title="menu" class='item_title'>账户管理<span class='actived'></span></div></dt>
+	<dd class="item_main">
+        	<ul>
+					<li TITLE='修改登陆密码和资金密码' ALT='修改登陆密码和资金密码'><a target="mainframe" href="__APP__/User/editPwd">修改密码</a></li>
+					<li TITLE='填写充值申请' ALT='填写充值申请'><a target="mainframe" href="__APP__/User/showChonZhi">充值申请</a></li>
+					<li TITLE='填写提现申请' ALT='填写提现申请'><a target="mainframe" href="__APP__/User/showZhiJinPwd/flag/tx">提现申请</a></li>
+					<li TITLE='管理我的银行卡' ALT='管理我的银行卡'><a target="mainframe" href="__APP__/User/showZhiJinPwd/flag/yhk">我的资料</a></li>
+		    	</ul>
+    	</dd>
+	</ul>
+     <ul>
+	<dt class="explode" name='dtmenu'><div title="menu" class='item_title'>帮助中心<span class='actived'></span></div></dt>
+	<dd class="item_main">
+        	<ul>
+					<li TITLE='信息中心' ALT='信息中心'><a target="mainframe" href="__APP__/index/main">信息中心</a></li>
+					<li TITLE='玩法介绍' ALT='玩法介绍'><a target="mainframe" href="__APP__/Help/game">玩法介绍</a></li>
+					<li TITLE='平台功能介绍' ALT='平台功能介绍'><a target="mainframe" href="__APP__/Help/fun">功能介绍</a></li>
+					<li TITLE='常见问题说明' ALT='常见问题说明'><a target="mainframe" href="__APP__/Help/general">常见问题</a></li>
+		    	</ul>
+    	</dd>
+	</ul>
+   </dl>
+</div><br/>
+
+<script language="JavaScript">
+<!--
+jQuery.noConflict();
+jQuery("#menu-tab").click(function(){
+	if( jQuery("dt[name='dtmenu']").attr("class") == "explode" ){
+		jQuery("dt[name='dtmenu']").attr("class","collapse").parent().children("dd").slideUp("fast");
+		jQuery(".actived").attr("class","unactived");
+		jQuery("#menu-tab").attr("title","展开所有菜单");
+	}else{
+		jQuery("dt[name='dtmenu']").attr("class","explode").parent().children("dd").slideDown("fast");
+		jQuery(".unactived").attr("class","actived");
+		jQuery("#menu-tab").attr("title","收缩所有菜单");
+	}
+});
+jQuery("div[title='menu']").click(function(){
+	if( jQuery(this).parent().attr("class") == "explode" ){
+		jQuery(this).parent().attr("class","collapse").parent().children("dd").slideUp("fast");
+		jQuery(this).children("span").attr("class","unactived");
+	}else{
+		jQuery(this).parent().attr("class","explode").parent().children("dd").slideDown("fast");
+		jQuery(this).children("span").attr("class","actived");
+	}
+});
+
+(function($){
+$(document).ready(function(){
+	var isopen = false;
+	$("#userswitch").click(function(){
+		if( isopen == true ){
+			isopen = false;
+			$(this).nextAll().fadeIn('fast');
+			//$(this).html("隐藏");
+		}else{
+			isopen = true;
+			$(this).nextAll().fadeOut('fast');
+			//$(this).html("展开");
+		}
+	});
+	$(".item_main").find("a").click(function(){
+		$(".item_main").find("a").attr("class","");
+		$(".item_main").find("a").blur();
+	    $(this).attr("class","active");
+	});
+	$("#czimg").mouseover(function(){
+		$(this).attr("class","c1");
+	}).mouseout(function(){
+		$(this).attr("class","c0");
+	});
+	$("#tximg").mouseover(function(){
+		$(this).attr("class","t1");
+	}).mouseout(function(){
+		$(this).attr("class","t0");
+	});
+	$("#hbimg").mouseover(function(){
+		$(this).attr("class","h1");
+	}).mouseout(function(){
+		$(this).attr("class","h0");
+	});
+
+	$("#refreshimg").click(function(){
+			$("#leftusermoney").html("<font color='#CCFF00'>载入中</font>");
+			$.ajax({
+				type : 'POST',
+				url  : '__APP__/User/getUserMoney',
+				data : 'flag=getmoney',
+				timeout : 8000,
+				success : function(data){
+					var partn = /logout/;
+					if( partn.exec(data) ){
+						
+						alert("此账号在别处登陆,您被迫下线!");					
+						window.top.location.href="__APP__/Public/login";
+						return false;
+					}
+					if( data == "error" ){//
+						$("#leftusermoney").html("<font color='#A20000'>获取失败</font>");
+						return false;
+					}else{
+						var partn = /<(.*)>.*<\/\1>/;
+						if( partn.exec(data) ){
+							window.top.location.href="/default_frame.shtml";
+							return false;
+						}
+						eval("data="+data+";");
+						var dd = moneyFormat(data.money);
+						//dd = dd.substring(0,(dd.length-2));
+						$("#leftusermoney").html(dd);
+						return true;
+					}
+				},
+				error: function(){
+					$("#leftusermoney").html("<font color='#A20000'>获取失败</font>");
+				}
+			});
+		});
+});
+})(jQuery);
+//-->
+</script>
+</BODY>
+</HTML>

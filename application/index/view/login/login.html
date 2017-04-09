@@ -1,0 +1,102 @@
+ <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<HTML xmlns="http://www.w3.org/1999/xhtml">
+<HEAD><META http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<TITLE>用户登陆</TITLE>
+<SCRIPT LANGUAGE='JavaScript'>function ResumeError() {return true;} window.onerror = ResumeError; </SCRIPT> 
+<SCRIPT type="text/javascript" src="__PUBLIC__js/jquery.js"></SCRIPT>
+<SCRIPT type="text/javascript" src="__PUBLIC__js/jquery.md5.js"></SCRIPT>
+<LINK href="__PUBLIC__css/v1/login.css" rel="stylesheet" type="text/css" />
+</HEAD><BODY>
+<script type="text/javascript">
+if(top.location != self.location) {top.location=self.location;}
+$(document).ready(function(){
+	$("input.text").focus(
+		function(){
+			$("input.text").parent().parent().removeClass("inputGreen");
+			$(this).parent().parent().addClass("inputGreen");}
+	);
+	$("input.text").blur(
+		function(){ 
+			$(this).parent().parent().removeClass("inputGreen");}
+	);
+	$("#username")[0].value = '';
+	$("#validcode_source")[0].value = '';
+	//$("#loginpass_source")[0].value = '';
+	$("#validate").attr('src',"__URL__/verify/"+Math.random());
+	$("#username").focus();
+}); 
+function refreshimg(){
+$("#validate").attr('src',"__URL__/verify/"+Math.random());
+}
+function LoginNow() 
+{ 
+    var loginuser = $("#username").val();
+    var randnum = $("#validcode_source").val();
+    if (loginuser == ''){
+        alert('请填写 登入账号');
+        return false;
+    }
+    if (randnum == '') {
+        alert('请填写 图片验证码');
+        return false;
+    }
+    var submitvc = $.md5(randnum);
+	$("#validcode")[0].value = submitvc;
+    document.forms['login'].submit();     
+}
+</script>
+<div id="allbox">
+    <div id="header">
+       <div id="header_content">
+          <div id="header_logo"></div>
+          <div id="header_right">
+			  <div id="header_tips"><{$Think.config.tishi}> &nbsp;<a href="/汇华国际.zip">客户端下载</a></div>
+			  <div id="header_menu" style='margin-left:400px;'>
+			  <!--
+				<ul id="menu">
+		<li class="link1"><a href="#1"><img src="/images/comm/t.gif" width="100" height="33" border="0" title="登录系统"/></a></li>
+		<li class="link2"><a href="#2"><img src="/images/comm/t.gif" width="110" height="33" border="0" title="帮助"/></a></li>
+				</ul>
+				//-->
+			   </div>
+           </div>
+         </div>  	
+     </div>
+     <div id="top_line"></div>
+		<div id="reg_content">
+			<div id="content_reg_box_top"></div>
+			<div id="content_reg_box_center">
+				<div id="maintitle">帐号登录</div>	
+				<div id="maincontent">	
+        	<div style="width:684px; margin:auto;">
+					<form name='login' method="post" action="__URL__/checkPwd" onSubmit="javascript:LoginNow(); return false;" >
+					<input type="hidden" name="validcode" id="validcode">
+					<input type="hidden" name="flag" value="login" />
+            		<div style="width:100%;text-align:center;">
+                    	<font color="#FF0000"></font>
+                    </div>
+                    <div class="content_reg_line">
+                    	<div class="form_title">登录账号：</div>
+                        <div class="form_word">
+						<span class="inputBox input180"><cite><input type="text" name="username" id="username" maxlength="32" value="" class="text"/></cite></span>
+						</div>
+                    </div>
+					<div class="content_reg_line">
+                    	<div class="form_title">图片验证码：</div>
+                        <div class="form_word"><span class="inputBox input60"><cite><input type="text" name="validcode_source" id="validcode_source" maxlength="4" value="" class="text"/></cite></span></div> 
+						<img width="160" height="40" border="0" align="absmiddle" src="{:captcha_src()}" title="看不清楚，换一张图片" id="vcode_img" onclick="this.src='{:captcha_src()}?'+(new Date()).getTime()"/>
+                    </div>
+                    <div style="border-top:1px dotted #ccc; width:90%; margin:5px auto; height:1px; font-size:0; overflow:hidden;margin-bottom:20px;"></div>
+					<div style="height:30px; text-align:center;">
+                    <input name="Submit" type="image" id="Submit" src="/images/comm/t.gif" class='inputNext' title="下一步" width="104" height="30"/>
+                    &nbsp;&nbsp;<a href="__URL__/getpass">忘记密码？</a></div>
+					<div style="padding-top:32px; margin:2px 0px; text-align:center;">小提示: 使用 <font color=red>IE (Internet Explorer ) 8.0</font> 浏览器可达到最佳使用效果 </div>
+					</form>
+            </div>
+        </div>&nbsp;
+	</div>
+	<div id="content_reg_box_bottom"></div>
+</div>
+</div>
+</BODY>
+</HTML>
