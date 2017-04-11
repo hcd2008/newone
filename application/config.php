@@ -255,4 +255,13 @@ return [
         // 验证成功后是否重置        
         'reset'    => true
     ],
+    //自定义配置
+    'tishi'=>'欢迎您',
+    
+    'baseBouns'=>1800,
+    
+    'fdCha'=>1.5,
+    
+    'dlfy'=>1,
+    'dlfh'=>4,
 ];

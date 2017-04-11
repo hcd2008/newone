@@ -2,6 +2,9 @@
 namespace app\index\controller;
 use app\common\controller\Base;
 use think\Db;
+use think\Session;
+use think\Config;
+use app\cp\controller\Buy;
 
 class Ssc extends Base
 {
@@ -38,7 +41,7 @@ class Ssc extends Base
 
 	public function ltSave()
 	{
-		import('@.Cp.Buy');
+		// import('@.Cp.Buy');
 		$buy = new Buy();
 		$_obfuscate_nT44rgz3TQ = $buy->buy();
 
@@ -60,7 +63,9 @@ class Ssc extends Base
 
 	public function ltGethistory()
 	{
-		$issue = formatstr($_POST['issue']);
+		$param=$this->request->param();
+		isset($param['issue']) or $param['issue']=0;
+		$issue = formatstr($param['issue']);
 		$_obfuscate_nT44rgz3TQ = array();
 		$_obfuscate_nT44rgz3TQ = $this->getHistoryCode($issue);
 
@@ -173,10 +178,9 @@ class Ssc extends Base
 		foreach ($_obfuscate_QK9pvIGeCDbMgA as $v ) {
 			$jiangprize['method' . $v['methodid']] = $v['prize'];
 		}
-
 		$_obfuscate_8Iu1 = $this->getCurIssue(true);
 		$_obfuscate_8Iu1['servertime'] = $servertime;
-		$_obfuscate_8Iu1['title'] = '王鹏开发';
+		$_obfuscate_8Iu1['title'] = 'hcd开发';
 		$_obfuscate_8Iu1['cur_issue'] = $cur_issue;
 		$_obfuscate_8Iu1['issues'] = $issues;
 		$_obfuscate_8Iu1['tomorrowissues'] = $tomorrowissues;
@@ -186,7 +190,7 @@ class Ssc extends Base
 		$_obfuscate_8Iu1['c2'] = 'n' . $histryCode['code'][2];
 		$_obfuscate_8Iu1['c3'] = 'n' . $histryCode['code'][3];
 		$_obfuscate_8Iu1['c4'] = 'n' . $histryCode['code'][4];
-		$_obfuscate_8Iu1 = array_merge($_obfuscate_8Iu1, $this->getSliderVal());
+		$_obfuscate_8Iu1 = array_merge($_obfuscate_8Iu1, $this->getSliderVal(0));
 		$_obfuscate_8Iu1['jiangprize'] = json_encode($jiangprize);
 		$currentmode = (int) Session::get('currentmode');
 		$_obfuscate_8Iu1['currentmode'] = $currentmode;
@@ -212,7 +216,6 @@ class Ssc extends Base
 			$_obfuscate_8Iu1['mode'] = 1700;
 			break;
 		}
-
 		$this->assign($_obfuscate_8Iu1);
 	}
 

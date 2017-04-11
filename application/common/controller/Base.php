@@ -3,6 +3,8 @@ namespace app\common\controller;
 use think\Controller;
 use think\Session;
 use think\Cookie;
+use think\Db;
+use think\Config;
 
 class Base extends Controller
 {
@@ -44,9 +46,9 @@ class Base extends Controller
 
 		$_obfuscate_Qi1hT2lPSlOT['maxBonus'] = $maxBonus;
 		$_obfuscate_Qi1hT2lPSlOT['minBonus'] = $data[0]['minbonus'];
-		$_obfuscate_Qi1hT2lPSlOT['baseBouns'] = c('baseBouns');
+		$_obfuscate_Qi1hT2lPSlOT['baseBouns'] = Config::get('baseBouns');
 
-		if (!Cookie::is_set('currentBonus')) {
+		if (!Cookie::has('currentBonus')) {
 			Cookie::set('currentBonus', 1800);
 			$_obfuscate_Qi1hT2lPSlOT['currentBonus'] = 1800;
 		}

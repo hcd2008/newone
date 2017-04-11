@@ -1,12 +1,13 @@
 <?php
-namespace app\index\cp;
-use app\index\cp\Encode;
-use app\index\cp\Lottery;
-use think\Session;
+namespace app\cp\controller;
+use app\cp\controller\Encode;
+use app\cp\controller\Lottery;
 use think\Db;
+use think\Controller;
+use think\Session;
 use think\Config;
 
-class Buy
+class Buy extends Controller
 {
 	private $lotteryid;
 	private $codeModel;
@@ -25,8 +26,9 @@ class Buy
 
 	public function __construct()
 	{
+		parent::__construct();
 		$param=$this->request->param();
-		// $lotteryid = formatstr($_REQUEST['lotteryid']);
+		isset($param['lotteryid']) or $param['lotteryid']=0;
 		$lotteryid = formatstr($param['lotteryid']);
 
 		if (!is_numeric($lotteryid)) {
@@ -37,63 +39,63 @@ class Buy
 
 		switch ($lotteryid) {
 		case 1:
-			$this->codeModel = 'SscCode';
-			$this->timeModel = 'SscTime';
+			$this->codeModel = 'Ssc_Code';
+			$this->timeModel = 'Ssc_Time';
 			break;
 
 		case 2:
-			$this->codeModel = 'HscCode';
-			$this->timeModel = 'HscTime';
+			$this->codeModel = 'Hsc_Code';
+			$this->timeModel = 'Hsc_Time';
 			break;
 
 		case 3:
-			$this->codeModel = 'XjcCode';
-			$this->timeModel = 'XjcTime';
+			$this->codeModel = 'Xjc_Code';
+			$this->timeModel = 'Xjc_Time';
 			break;
 
 		case 4:
-			$this->codeModel = 'XscCode';
-			$this->timeModel = 'XscTime';
+			$this->codeModel = 'Xsc_Code';
+			$this->timeModel = 'Xsc_Time';
 			break;
 
 		case 5:
-			$this->codeModel = 'SslCode';
-			$this->timeModel = 'SslTime';
+			$this->codeModel = 'Ssl_Code';
+			$this->timeModel = 'Ssl_Time';
 			break;
 
 		case 6:
-			$this->codeModel = 'Sd115Code';
-			$this->timeModel = 'Sd115Time';
+			$this->codeModel = 'Sd115_Code';
+			$this->timeModel = 'Sd115_Time';
 			break;
 
 		case 7:
-			$this->codeModel = 'Dl115Code';
-			$this->timeModel = 'Dl115Time';
+			$this->codeModel = 'Dl115_Code';
+			$this->timeModel = 'Dl115_Time';
 			break;
 
 		case 8:
-			$this->codeModel = 'Gd115Code';
-			$this->timeModel = 'Gd115Time';
+			$this->codeModel = 'Gd115_Code';
+			$this->timeModel = 'Gd115_Time';
 			break;
 
 		case 9:
-			$this->codeModel = 'FucaiCode';
-			$this->timeModel = 'FucaiTime';
+			$this->codeModel = 'Fucai_Code';
+			$this->timeModel = 'Fucai_Time';
 			break;
 
 		case 10:
-			$this->codeModel = 'PlsCode';
-			$this->timeModel = 'PlsTime';
+			$this->codeModel = 'Pls_Code';
+			$this->timeModel = 'Pls_Time';
 			break;
 
 		case 11:
-			$this->codeModel = 'Cq115Code';
-			$this->timeModel = 'Cq115Time';
+			$this->codeModel = 'Cq115_Code';
+			$this->timeModel = 'Cq115_Time';
 			break;
 
 		case 13:
-			$this->codeModel = 'LhcCode';
-			$this->timeModel = 'LhcTime';
+			$this->codeModel = 'Lhc_Code';
+			$this->timeModel = 'Lhc_Time';
 			break;
 		}
 
@@ -104,14 +106,16 @@ class Buy
 		}
 
 		$this->lt_project = $param['lt_project'];
+		isset($param['lt_trace_issues']) or $param['lt_trace_issues']=0;
 		$lt_trace_issues = formatstr($param['lt_trace_issues']);
 		$traceissues = array();
 		$ii = 0;
-
-		foreach ($lt_trace_issues as $value ) {
-			if (is_numeric($param['lt_trace_times_' . $value])) {
-				$traceissues[$ii] = array('issue' => $value, 'times' => $param['lt_trace_times_' . $value]);
-				$ii++;
+		if($lt_trace_issues){
+			foreach ($lt_trace_issues as $value ) {
+				if (is_numeric($param['lt_trace_times_' . $value])) {
+					$traceissues[$ii] = array('issue' => $value, 'times' => $param['lt_trace_times_' . $value]);
+					$ii++;
+				}
 			}
 		}
 
@@ -268,7 +272,7 @@ class Buy
 							exit();
 						}
 
-						$rsmsg = split(',', $rsmsg_str);
+						$rsmsg = explode(',', $rsmsg_str);
 
 						if (count($rsmsg) != count(array_unique($rsmsg))) {
 							$ajaxStr['stats'] = 'error';
@@ -338,6 +342,7 @@ class Buy
 							$accountData['accountnum'] = $accountnum . rand_string(5, 2);
 							$accountData['mode'] = $project['mode'];
 							$accountData['addtime'] = $nowtime;
+							// $DaoAccount->add($accountData);
 							Db::name('account')->insert($accountData);
 							$accountData = array();
 							$data = array();
@@ -391,7 +396,9 @@ class Buy
 						$sql_m = 'update jiang_user set money=money-' . $usemoney . ' where username=\'' . $username . '\'';
 
 						if (Db::query($sql_m)) {
+							// $DaoOrder->data($data)->add();
 							Db::name('order')->insert($data);
+							// $DaoAccount->data($accountData)->add();
 							Db::name('account')->insert($accountData);
 							$accountData = array();
 							$data = array();
@@ -423,7 +430,7 @@ class Buy
 	public function checkIssuesTimeOut($arr)
 	{
 		// $Dao = m($this->timeModel);
-		$timeData = Db:name($this->timeModel)->order('id')->select();
+		$timeData = Db::name($this->timeModel)->order('id')->select();
 		$time = date('H:i:s');
 		$qday = date('Y-m-d');
 
@@ -516,7 +523,7 @@ class Buy
 				$today = date('Ymd');
 
 				foreach ($arr as $iss ) {
-					$issarr = split('-', $iss['issue']);
+					$issarr = explode('-', $iss['issue']);
 
 					if ($today != $issarr[0]) {
 						return false;
@@ -638,7 +645,7 @@ class Buy
 
 				// $Daocode = m('XscCode');
 				$where['issue'] = $arr;
-				$dataCode = Db::name('xsc_code')->where($where)->find();
+				$dataCode = Db::name(xsc_code)->where($where)->find();
 
 				if (!empty($dataCode)) {
 					return $iss['issue'];
@@ -660,7 +667,7 @@ class Buy
 			case 8:
 			case 11:
 				$today = date('Ymd');
-				$issarr = split('-', $arr);
+				$issarr = explode('-', $arr);
 
 				if ($today != $issarr[0]) {
 					return false;
