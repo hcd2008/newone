@@ -17,7 +17,7 @@ class Base extends Controller
 		}
 	}
 
-	public function getSliderVal($rate)
+	public function getSliderVal($rate='')
 	{
 		// $Dao = m();
 		$_obfuscate_Qi1hT2lPSlOT = array();

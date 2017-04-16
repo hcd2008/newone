@@ -3,6 +3,8 @@ namespace app\cp\controller;
 use think\Db;
 use think\Session;
 use think\Config;
+use think\Cookie;
+use think\Cache;
 
 class Encode
 {
@@ -1321,16 +1323,16 @@ class Encode
 	public function getSliderPrizeMode($prize)
 	{
 		Cookie::set('currentBonus', $prize);
-		$minbonus = s('minbonus');
-		$maxbonus = s('maxbonus');
+		$minbonus = Cache::get('minbonus');
+		$maxbonus = Cache::get('maxbonus');
 
 		if (empty($minbonus)) {
 			// $Dao = m('Webconfig');
 			$Data = Db::name('Webconfig')->find();
 			$minbonus = (int) $Data['minbonus'];
 			$maxbonus = (int) $Data['maxbonus'];
-			s('maxbonus', $maxbonus, 3600 * 24);
-			s('minbonus', $minbonus, 3600 * 24);
+			Cache::set('maxbonus', $maxbonus, 3600 * 24);
+			Cache::set('minbonus', $minbonus, 3600 * 24);
 		}
 
 		if (($minbonus <= $prize) && ($prize <= $maxbonus) && (($prize % 10) == 0)) {

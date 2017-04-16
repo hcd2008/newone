@@ -5,8 +5,9 @@ use app\index\cp\Lottery;
 use think\Session;
 use think\Db;
 use think\Config;
+use think\Controller;
 
-class Buy
+class Buy extends Controller
 {
 	private $lotteryid;
 	private $codeModel;
@@ -128,6 +129,7 @@ class Buy
 
 	public function buy()
 	{
+		return 1111;
 		$ajaxStr = array();
 		$username = Session::get('un');
 		// $DaoUser = m('User');

@@ -6,7 +6,6 @@ use think\Db;
 use think\Controller;
 use think\Session;
 use think\Config;
-use think\Cookie;
 
 class Buy extends Controller
 {
@@ -98,7 +97,7 @@ class Buy extends Controller
 			$this->codeModel = 'LhcCode';
 			$this->timeModel = 'LhcTime';
 			break;
-		}
+
 		$this->lt_issue_start = $param['lt_issue_start'];
 
 		if (empty($this->lt_issue_start)) {
