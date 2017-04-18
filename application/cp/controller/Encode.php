@@ -762,7 +762,6 @@ class Encode
 
 			case 'ZX2':
 				$_obfuscate_rEkmiBpD = explode('\\|', $codes);
-
 				if (count($_obfuscate_rEkmiBpD) != 2) {
 					return false;
 				}
@@ -785,11 +784,10 @@ class Encode
 				}
 
 				$ptn = '/^' . $ptn . '$/';
-
+			
 				if (!preg_match($ptn, $codes)) {
 					return false;
 				}
-
 				$allnum = $tmp_nums;
 				break;
 

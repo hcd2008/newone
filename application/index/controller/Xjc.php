@@ -65,6 +65,7 @@ class Xjc extends Base
 	public function ltGethistory()
 	{
 		$param=$this->request->param();
+		isset($param['issue']) or $param['issue']=0;
 		$issue = formatstr($param['issue']);
 		$_obfuscate_nT44rgz3TQ = array();
 		$_obfuscate_nT44rgz3TQ = $this->getHistoryCode($issue);
