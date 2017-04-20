@@ -48,7 +48,6 @@ class Ssc extends Base
 		if (is_array($_obfuscate_nT44rgz3TQ)) {
 			$_obfuscate_nT44rgz3TQ = json_encode($_obfuscate_nT44rgz3TQ);
 		}
-
 		$buy = NULL;
 		echo $_obfuscate_nT44rgz3TQ;
 	}

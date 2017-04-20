@@ -158,7 +158,7 @@ div .a{color:#070;padding-left:18px;padding-top:3px;padding-bottom:12px;}
 <tr>
 	<td class="nl">充值银行: </td>
     <td style='height:60px;'>
-    <volist name="banklist" id="vo">
+    {volist name="banklist" id="vo"}
     <input type="radio" id='bank_1' name="bankinfo" value="<{$vo.id}>"  onclick="changbank(this)" />&nbsp;<label for='bank_1'><img STYLE='cursor:pointer;' src="/images/bank/<{$vo.id}>.jpg" /></label>&nbsp;&nbsp;&nbsp;
 
 	<?php
@@ -166,7 +166,7 @@ div .a{color:#070;padding-left:18px;padding-top:3px;padding-bottom:12px;}
 			echo "<br>";
 		}
 	?>
-    </volist>
+    {/volist}
 	
 	<!--
 	

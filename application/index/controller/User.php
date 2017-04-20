@@ -3,7 +3,8 @@ namespace app\index\controller;
 use app\common\controller\Base;
 use think\Db;
 use think\Session;
-use app\cp\controller\User;
+use app\cp\controller\User1;
+use think\Cache;
 class User extends Base
 {
 	public function getUserMoney()
@@ -105,7 +106,7 @@ class User extends Base
 	public function editNickName()
 	{
 		// import('@.Cp.User');
-		$User = new User(Session::get('un'));
+		$User = new User1(Session::get('un'));
 		$_obfuscate_8Iu1['nickname'] = $User->getNickname();
 		$this->assign($_obfuscate_8Iu1);
 		return  $this->fetch();
@@ -143,6 +144,7 @@ class User extends Base
 
 	public function updateLogMsg()
 	{
+		$param=$this->request->param();
 		// $DaoUser = Db::name('User');
 		$logme = $param['logmsg'];
 
@@ -1013,12 +1015,12 @@ class User extends Base
 			'or'
 			);
 		// $DaoOrder = Db::name('Order');
-		$dataOrder = Db::name('order')->where($condition)->suDb::name('money');
+		$dataOrder = Db::name('order')->where($condition)->sum('money');
 
 		if (empty($dataOrder)) {
 			$dataOrder = 0;
 		}
-
+		isset($param['ajax']) or $param['ajax']='';
 		$ajax = $param['ajax'];
 
 		if ($ajax == 'jiang') {
@@ -1064,9 +1066,8 @@ class User extends Base
 			$show = 2;
 			$cang = '下半场';
 		}
-
 		if (0 < $show) {
-			$dbarr = s('dbarr');
+			$dbarr = Cache::get('dbarr');
 
 			if (empty($dbarr)) {
 				// $DaoJiazj = Db::name('jiazj');
@@ -1117,8 +1118,11 @@ class User extends Base
 			}
 
 			$this->assign('dbarr', $dbarr);
+		}else{
+			$dbarr = Cache::get('dbarr');
+			$this->assign('dbarr', $dbarr);
 		}
-
+		// print_r($dbarr);exit;
 		$this->assign($Tpl);
 		return $this->fetch();
 	}
@@ -1135,7 +1139,7 @@ class User extends Base
 		$x_start_time_int = strtotime($x_start_time);
 		$x_end_time = date('Y-m-d 23:34:00');
 		$x_end_time_int = strtotime($x_end_time);
-		$jiangjing = Cache:get('dbjj');
+		$jiangjing = Cache::get('dbjj');
 
 		if (empty($jiangjing)) {
 			$jiangjing = array();
@@ -1159,7 +1163,7 @@ class User extends Base
 
 		shuffle($jiangjing);
 		$money = array_shift($jiangjing);
-		Cache:set('dbjj', $jiangjing, 15 * 60);
+		Cache::set('dbjj', $jiangjing, 15 * 60);
 
 		if ($nowTime_int < $x_start_time_int) {
 			if (($nowTime_int < $s_start_time_int) || ($s_end_time_int < $nowTime_int)) {
@@ -1287,7 +1291,7 @@ class User extends Base
 			'or'
 			);
 		$DaoOrder = Db::name('order');
-		$dataOrder = $DaoOrder->where($condition)->suDb::name('money');
+		$dataOrder = $DaoOrder->where($condition)->sum('money');
 
 		if (empty($dataOrder)) {
 			$dataOrder = 0;
@@ -1567,23 +1571,22 @@ class User extends Base
 		$_obfuscate_ndwqGjIXA['username'] = $username;
 		$_obfuscate_ahiXcXq_Pg = date('Y-m-d 00:00:01');
 		$_obfuscate_tYDlY3UVOg = date('Y-m-d 23:59:59');
-		$_obfuscate_ndwqGjIXA['addtime'] = array(
-			array('gt', $_obfuscate_ahiXcXq_Pg),
-			array('lt', $_obfuscate_tYDlY3UVOg),
-			'and'
-			);
-		$_obfuscate_ndwqGjIXA['beizhu'] = array(
-			array('eq', '欢乐送')
-			);
+		// $_obfuscate_ndwqGjIXA['addtime'] = array(
+		// 	array('gt', $_obfuscate_ahiXcXq_Pg),
+		// 	array('lt', $_obfuscate_tYDlY3UVOg),
+		// 	'and'
+		// 	);
+		// $_obfuscate_ndwqGjIXA['beizhu'] = array(
+		// 	array('eq', '欢乐送')
+		// 	);
 		$_obfuscate_2lyvQQ = 0;
 
-		if (0 < $DaoAccount->where($_obfuscate_ndwqGjIXA)->count()) {
+		if (0 < $DaoAccount->where('addtime','gt',$_obfuscate_ahiXcXq_Pg)->where('addtime','lt',$_obfuscate_tYDlY3UVOg)->where('beizhu','eq','欢乐送')->count()) {
 			$_obfuscate_2lyvQQ = 0;
 		}
 		else {
 			$_obfuscate_2lyvQQ = 1;
 		}
-
 		$_obfuscate_HFFFcUox7QrVZw = $this->getTodayXiaoFei();
 		$this->assign('hlmoney', 400);
 		$this->assign('xjjrxf', 1000);

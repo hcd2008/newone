@@ -69,9 +69,9 @@ div .a{color:#070;padding-left:18px;padding-top:3px;padding-bottom:12px;}
 	<td class='info' style="font-size:12px;line-height:25px;">
 	
 		<ul id="zjtgul">
-			<volist name="dbarr" id="vo">
+			{volist name="dbarr" id="vo"}
 			<li>恭喜 【<span class=c1><{$vo.nickname}></span>】 在今日<{$vo.cang}>, 喜夺 <span class=c3><{$vo.money}>元</span> 的宝箱!</li>
-			</volist>
+			{/volist}
 		</ul>
 		
 	</td>

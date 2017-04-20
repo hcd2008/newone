@@ -215,9 +215,7 @@ class Buy extends Controller
 				return $ajaxStr;
 				exit();
 			}
-			print_r($project);
 			$jg=$encode->checkCode($project['methodid'], $project['codes'], $project['nums'], $project['money'], $project['mode'], $project['times'], $project['type']);
-			echo $jg;exit;
 			if (!$encode->checkCode($project['methodid'], $project['codes'], $project['nums'], $project['money'], $project['mode'], $project['times'], $project['type'])) {
 				$failNum++;
 				$content[$key]['desc'] = $project['desc'];
