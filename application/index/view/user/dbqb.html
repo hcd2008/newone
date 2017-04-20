@@ -1,0 +1,87 @@
+{include file="Public:head" /}
+<BODY STYLE="background:#FFF url('/images/v1/main_bg_0001.jpg') 0px -490px repeat-x; padding:10px;"><DIV ID='main_box'>
+<div class="box l"></div>
+<div class="box c"></div>
+<div class="box r"></div>
+<div class="box m">
+
+<H1>
+<SPAN class="action-span1"><DIV class='icons_mb1'></DIV>当前位置: 夺宝奇兵
+</SPAN><DIV style="clear:both"></DIV></H1>
+<STYLE>
+.info{line-height:21px;padding:8px 0px;}
+.info div{line-height:18px;font-size:12px;padding:0px;margin:0px;}
+div .q{color:#222;padding-left:18px;padding-top:3px;}
+div .a{color:#070;padding-left:18px;padding-top:3px;padding-bottom:12px;}
+</STYLE>
+<div class="tab-div">
+
+<div class="ld" style='width:99%;margin:5px 0px 0px 0px;'>
+<table width="100%" class="ct" border="0" cellspacing="0" cellpadding="0">
+<form action="__URL__/doSongQian" method="post" name="drawform" id="drawform">
+<input type="hidden" name="flag" value="getgift" />
+<tr>
+	<td class="nl">活动主题：</td>
+	<td STYLE='line-height:20px;padding:5px 0px'><font style="font-size:16px;color:#F30;font-weight:bold;">
+	夺宝奇兵 </font>
+	</td>
+</tr>
+<tr>
+	<td class="nl">活动内容</td>
+    <td class='info' style="font-size:14px;">
+夺宝奇兵<font color='red'><{$qbNum}></font>个宝箱,其中一个宝箱为终级神秘大奖<font color='red'>1920元</font>。<br/>
+	</td>
+</tr>
+<tr>
+	<td class="nl">活动说明</td>
+    <td class='info' style="font-size:12px;line-height:25px;">
+1, 每天两次抢宝活动，每次开启<font color='red'><{$qbNum}></font>个宝箱,抢完为止。<br/>
+2, 上半场抢宝时间：<font color='red'><{$s_start_time}>-<{$s_end_time}></font>，下半场抢宝时间：<font color='red'><{$x_start_time}>-<{$x_end_time}></font>。<br/>
+3, 通过下方<font color='#0086A8'>【点我开抢】</font>，自助抢宝。<br/>
+4, 参与活动的账户， <font color='blue'>帐户余额</font> 达到<font color='red'>3000</font>元以上(包含3000元),或者今日消费量达到<font color='red'>2000</font>元以上，方可参加。<br/>
+5, 每个IP，只允许一个帐户参加每场活动。<br/>
+6, 平台将对本次活动全程监控，活动禁止违规操作，如有发现，一律严惩！<br/>
+
+	</td>
+</tr>
+<tr>
+	<td class="nl">今日您的消费量</td>
+    <td class='info' style="font-size:14px;color:green">
+					<font color="red"><{$jrxf}></>元</font>
+				    
+	</td>
+</tr>
+<tr>
+	<td class="nl">&nbsp;</td>
+	<td height="30">
+	<eq name="isdo" value="1">
+	<font color="red">你已经参加过了!</font>
+	<else/>
+	<a href="__URL__/dodbqb" title="快点我抢啊">
+						<img src="/images/v1/qiangbao.gif" style="border-width:0px;"/>
+	</a>
+	</eq>
+	
+	</td>
+</tr>
+<tr>
+	<td class="nl">最近夺宝排行</td>
+	<td class='info' style="font-size:12px;line-height:25px;">
+	
+		<ul id="zjtgul">
+			<volist name="dbarr" id="vo">
+			<li>恭喜 【<span class=c1><{$vo.nickname}></span>】 在今日<{$vo.cang}>, 喜夺 <span class=c3><{$vo.money}>元</span> 的宝箱!</li>
+			</volist>
+		</ul>
+		
+	</td>
+</tr>
+</form>
+</table>
+</div>
+<div id="footer"><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td align="center"><table align="center" width="450">
+<tr><td align="left"><font color='#000000'>浏览器建议：首选IE 8.0浏览器，其次为火狐浏览器。</font></td></tr>
+</table></td></tr><tr><td></td></tr></table></div>
+<br/><br/>
+</div></div>
+</BODY></HTML>

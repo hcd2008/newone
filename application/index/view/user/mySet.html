@@ -1,0 +1,758 @@
+<include file="Public:head" />
+
+
+<BODY STYLE='background-color:#838383;'>
+<DIV ID='main_box_s2'><DIV class='icons_mb2'></DIV>当前位置: 奖金详情 </DIV>
+<br/><STYLE>
+.tab-div-s2 .bd{width:806px;_width:804px;*+margin-top:0px;}
+#tabbar-div-s2 .tab-front .content{padding:0px 4px;}
+#tabbar-div-s2 .tab-back {*margin-top:7px;*height:32px;*overflow:hidden}
+#tabbar-div-s2 .tab-back .content{padding:0px 4px;}
+</STYLE>
+<script language="javascipt" type="text/javascript">
+;(function($){
+$(document).ready(function(){
+	$("span[id^='general_tab_']","#tabbar-div-s2").click(function(){
+		$k = $(this).attr("id").replace("general_tab_","");
+		$k = parseInt($k,10);
+		$("span[id^='general_tab_']","#tabbar-div-s2").attr("class","tab-back");
+		$("div[id^='general_txt_']").hide();
+		$(this).attr("class","tab-front");
+		$("#general_txt_"+$k).show();
+		$("span[id^='tabbar_tab_"+$k+"_']:first").click();
+		//$("table[id^='tabbar_txt_']:first").show();
+	});
+	$("span[id^='tabbar_tab_']").click(function(){
+		$z = $(this).attr("id").replace("tabbar_tab_","");
+		$("span[id^='tabbar_tab_']").attr("class","tab-back");
+		$("table[id^='tabbar_txt_']").hide();
+		$(this).attr("class","tab-front");
+		$("#tabbar_txt_"+$z).show();
+	});
+	$("span[id^='general_tab_']:first","#tabbar-div-s2").click();
+	//$("div[id^='general_txt_']:first").show();
+});
+})(jQuery);
+</script>
+
+<CENTER>
+<div class="div_s1" style='text-align:left;'>
+<div class='header'><DIV class='icons_mb3'></DIV> 账号: <{$username}> &nbsp;&nbsp;&nbsp;
+昵称:<{$nickname}> &nbsp;&nbsp;&nbsp; 
+
+</div>
+
+<div class="tab-div-s2">
+	<table width='100%' border="0" cellspacing="0" cellpadding="0"><tr><td id="tabbar-div-s2">
+    	    <span class="tab-back"  id="general_tab_1" TITLE='重庆时时彩 (CQSSC)' ALT='重庆时时彩 (CQSSC)'>
+		  <span class="tabbar-left"></span>
+		  <span class="content">重庆</span>
+		  <span class="tabbar-right"></span>
+		</span>
+    	    <span class="tab-back"  id="general_tab_2" TITLE='黑龙江时时彩 (HLJSSC)' ALT='黑龙江时时彩 (HLJSSC)'>
+		  <span class="tabbar-left"></span>
+		  <span class="content">黑龙江</span>
+		  <span class="tabbar-right"></span>
+		</span>
+    	    <span class="tab-back"  id="general_tab_3" TITLE='新疆时时彩 (XJSSC)' ALT='新疆时时彩 (XJSSC)'>
+		  <span class="tabbar-left"></span>
+		  <span class="content">新疆</span>
+		  <span class="tabbar-right"></span>
+		</span>
+    	    <span class="tab-back"  id="general_tab_4" TITLE='江西时时彩 (JXSSC)' ALT='江西时时彩 (JXSSC)'>
+		  <span class="tabbar-left"></span>
+		  <span class="content">江西</span>
+		  <span class="tabbar-right"></span>
+		</span>
+		 <span class="tab-back"  id="general_tab_6" TITLE='十一运夺金 (山东11选5,SD11-5)' ALT='十一运夺金 (山东11选5,SD11-5)'>
+		  <span class="tabbar-left"></span>
+		  <span class="content">十一运</span>
+		  <span class="tabbar-right"></span>
+		</span>
+		<!-- 
+    	    <span class="tab-back"  id="general_tab_5" TITLE='上海时时乐 (SHSSL)' ALT='上海时时乐 (SHSSL)'>
+		  <span class="tabbar-left"></span>
+		  <span class="content">时时乐</span>
+		  <span class="tabbar-right"></span>
+		</span>
+		
+    	   
+    	    <span class="tab-back"  id="general_tab_7" TITLE='多乐彩 (江西11选5,JX11-5)' ALT='多乐彩 (江西11选5,JX11-5)'>
+		  <span class="tabbar-left"></span>
+		  <span class="content">多乐彩</span>
+		  <span class="tabbar-right"></span>
+		</span>
+    	    <span class="tab-back"  id="general_tab_8" TITLE='广东11选5 (GD11-5)' ALT='广东11选5 (GD11-5)'>
+		  <span class="tabbar-left"></span>
+		  <span class="content">广东11选5</span>
+		  <span class="tabbar-right"></span>
+		</span>
+		 <span class="tab-back"  id="general_tab_11" TITLE='重庆十一选五' ALT='重庆十一选五'>
+		  <span class="tabbar-left"></span>
+		  <span class="content">重庆11选5</span>
+		  <span class="tabbar-right"></span>
+		</span>
+		 -->
+		<span class="tab-back"  id="general_tab_9" TITLE='福彩3D (3D)' ALT='福彩3D (3D)'>
+		  <span class="tabbar-left"></span>
+		  <span class="content">3D</span>
+		  <span class="tabbar-right"></span>
+		</span>
+
+    	<span class="tab-back"  id="general_tab_10" TITLE='排列三、五 (P3P5)' ALT='排列三、五 (P3P5)'>
+		  <span class="tabbar-left"></span>
+		  <span class="content">排列3-5</span>
+		  <span class="tabbar-right"></span>
+		</span>
+
+
+		<span class="tab-back"  id="general_tab_13" TITLE='香港六合彩' ALT='香港六合彩'>
+		  <span class="tabbar-left"></span>
+		  <span class="content">香港六合彩</span>
+		  <span class="tabbar-right"></span>
+		</span>
+    	   
+    	</td></tr>
+	</table>
+
+		<div class='bd'><div class='bd2' id="general_txt_1">
+	<table class="tabbar-div-s3" width='100%' style="display:none;">
+	  <tr>
+        <td>
+						 <span id="tabbar_tab_1_212" class="tab-back">
+				<span class="tabbar-left"></span>
+				<span class="content"> CQSSC[1800-6.622]</span>
+				<span class="tabbar-right"></span>
+			 </span>
+					</td>
+	  </tr>
+	</table>
+	<BR/>	<div class="ld" style='width:97%; margin:0px 10px 0px 10px;'>
+		<table class="lt" id="tabbar_txt_1_212" border="0" cellspacing="0" cellpadding="0">
+		<tr class='th'>
+			<td width="18%">玩法</td>
+			<eq name="jfauto_isopen" value="1">
+				<td colspan="2"><div class='line'></div>自由调节</td>
+			</eq>
+			<eq name="jf1700_isopen" value="1">
+				<td colspan="2"><div class='line'></div>1700模式</td>
+			</eq>
+			<eq name="jf1800_isopen" value="1">
+				<td colspan="2"><div class='line'></div>1800模式</td>
+			</eq>
+			<eq name="jf1900_isopen" value="1">
+				<td colspan="2"><div class='line'></div>1900模式</td>
+			</eq>	
+		</tr>
+		<volist name="vo1" id="vo">
+			<tr>
+				<td align="center"><{$vo.methodname}></td>
+				<eq name="jfauto_isopen" value="1">
+					<td align="center"><{$vo.prize2}><br></td>
+					<td align="center"><{$vo.fd2}>%</td>
+				</eq>
+				<eq name="jf1700_isopen" value="1">
+					<td align="center"><{$vo.prize1}><br></td>
+					<td align="center"><{$vo.fd1}>%</td>
+				</eq>	
+				<eq name="jf1800_isopen" value="1">
+					<td align="center"><{$vo.prize2}><br></td>
+					<td align="center"><{$vo.fd2}>%</td>
+				</eq>	
+				<eq name="jf1900_isopen" value="1">
+					<td align="center"><{$vo.prize3}><br></td>
+					<td align="center"><{$vo.fd3}>%</td>
+				</eq>				
+			</tr>
+		</volist>
+				
+			</table>
+		</div><BR/></div></div>
+		
+		
+		
+		<div class='bd'><div class='bd2' id="general_txt_2">
+	<table class="tabbar-div-s3" width='100%' style="display:none;">
+	  <tr>
+        <td>
+						 <span id="tabbar_tab_2_214" class="tab-back">
+				<span class="tabbar-left"></span>
+				<span class="content">HLJSSC[1800-6.6]</span>
+				<span class="tabbar-right"></span>
+			 </span>
+					</td>
+	  </tr>
+	</table>
+	<BR/>	<div class="ld" style='width:97%; margin:0px 10px 0px 10px;'>
+		<table class="lt" id="tabbar_txt_2_214" border="0" cellspacing="0" cellpadding="0">
+		<tr class='th'>
+			<td width="18%">玩法</td>
+			<eq name="jfauto_isopen" value="1">
+				<td colspan="2"><div class='line'></div>自由调节</td>
+			</eq>
+			<eq name="jf1700_isopen" value="1">
+				<td colspan="2"><div class='line'></div>1700模式</td>
+			</eq>
+			<eq name="jf1800_isopen" value="1">
+				<td colspan="2"><div class='line'></div>1800模式</td>
+			</eq>
+			<eq name="jf1900_isopen" value="1">
+				<td colspan="2"><div class='line'></div>1900模式</td>
+			</eq>	
+		</tr>
+		<volist name="vo2" id="vo">
+			<tr>
+				<td align="center"><{$vo.methodname}></td>
+				<eq name="jfauto_isopen" value="1">
+					<td align="center"><{$vo.prize2}><br></td>
+					<td align="center"><{$vo.fd2}>%</td>
+				</eq>
+				<eq name="jf1700_isopen" value="1">
+					<td align="center"><{$vo.prize1}><br></td>
+					<td align="center"><{$vo.fd1}>%</td>
+				</eq>	
+				<eq name="jf1800_isopen" value="1">
+					<td align="center"><{$vo.prize2}><br></td>
+					<td align="center"><{$vo.fd2}>%</td>
+				</eq>	
+				<eq name="jf1900_isopen" value="1">
+					<td align="center"><{$vo.prize3}><br></td>
+					<td align="center"><{$vo.fd3}>%</td>
+				</eq>				
+			</tr>
+		</volist>
+			</table>
+		</div><BR/></div></div>
+		<div class='bd'><div class='bd2' id="general_txt_3">
+	<table class="tabbar-div-s3" width='100%' style="display:none;">
+	  <tr>
+        <td>
+						 <span id="tabbar_tab_3_242" class="tab-back">
+				<span class="tabbar-left"></span>
+				<span class="content">XJSSC[1800-6.6]</span>
+				<span class="tabbar-right"></span>
+			 </span>
+					</td>
+	  </tr>
+	</table>
+	<BR/>	<div class="ld" style='width:97%; margin:0px 10px 0px 10px;'>
+		<table class="lt" id="tabbar_txt_3_242" border="0" cellspacing="0" cellpadding="0">
+		<tr class='th'>
+			<td width="18%">玩法</td>
+			<eq name="jfauto_isopen" value="1">
+				<td colspan="2"><div class='line'></div>自由调节</td>
+			</eq>
+			<eq name="jf1700_isopen" value="1">
+				<td colspan="2"><div class='line'></div>1700模式</td>
+			</eq>
+			<eq name="jf1800_isopen" value="1">
+				<td colspan="2"><div class='line'></div>1800模式</td>
+			</eq>
+			<eq name="jf1900_isopen" value="1">
+				<td colspan="2"><div class='line'></div>1900模式</td>
+			</eq>	
+		</tr>
+		<volist name="vo3" id="vo">
+			<tr>
+				<td align="center"><{$vo.methodname}></td>
+				<eq name="jfauto_isopen" value="1">
+					<td align="center"><{$vo.prize2}><br></td>
+					<td align="center"><{$vo.fd2}>%</td>
+				</eq>
+				<eq name="jf1700_isopen" value="1">
+					<td align="center"><{$vo.prize1}><br></td>
+					<td align="center"><{$vo.fd1}>%</td>
+				</eq>	
+				<eq name="jf1800_isopen" value="1">
+					<td align="center"><{$vo.prize2}><br></td>
+					<td align="center"><{$vo.fd2}>%</td>
+				</eq>	
+				<eq name="jf1900_isopen" value="1">
+					<td align="center"><{$vo.prize3}><br></td>
+					<td align="center"><{$vo.fd3}>%</td>
+				</eq>				
+			</tr>
+		</volist>
+			</table>
+		</div><BR/></div></div>
+		<div class='bd'><div class='bd2' id="general_txt_4">
+	<table class="tabbar-div-s3" width='100%' style="display:none;">
+	  <tr>
+        <td>
+						 <span id="tabbar_tab_4_238" class="tab-back">
+				<span class="tabbar-left"></span>
+				<span class="content">JXSSC[1800-6.6]</span>
+				<span class="tabbar-right"></span>
+			 </span>
+					</td>
+	  </tr>
+	</table>
+	<BR/>	<div class="ld" style='width:97%; margin:0px 10px 0px 10px;'>
+		<table class="lt" id="tabbar_txt_4_238" border="0" cellspacing="0" cellpadding="0">
+		<tr class='th'>
+			<td width="18%">玩法</td>
+			<eq name="jfauto_isopen" value="1">
+				<td colspan="2"><div class='line'></div>自由调节</td>
+			</eq>
+			<eq name="jf1700_isopen" value="1">
+				<td colspan="2"><div class='line'></div>1700模式</td>
+			</eq>
+			<eq name="jf1800_isopen" value="1">
+				<td colspan="2"><div class='line'></div>1800模式</td>
+			</eq>
+			<eq name="jf1900_isopen" value="1">
+				<td colspan="2"><div class='line'></div>1900模式</td>
+			</eq>	
+		</tr>
+		<volist name="vo4" id="vo">
+			<tr>
+				<td align="center"><{$vo.methodname}></td>
+				<eq name="jfauto_isopen" value="1">
+					<td align="center"><{$vo.prize2}><br></td>
+					<td align="center"><{$vo.fd2}>%</td>
+				</eq>
+				<eq name="jf1700_isopen" value="1">
+					<td align="center"><{$vo.prize1}><br></td>
+					<td align="center"><{$vo.fd1}>%</td>
+				</eq>	
+				<eq name="jf1800_isopen" value="1">
+					<td align="center"><{$vo.prize2}><br></td>
+					<td align="center"><{$vo.fd2}>%</td>
+				</eq>	
+				<eq name="jf1900_isopen" value="1">
+					<td align="center"><{$vo.prize3}><br></td>
+					<td align="center"><{$vo.fd3}>%</td>
+				</eq>				
+			</tr>
+		</volist>
+			</table>
+		</div><BR/></div></div>
+		<div class='bd'><div class='bd2' id="general_txt_5">
+	<table class="tabbar-div-s3" width='100%' style="display:none;">
+	  <tr>
+        <td>
+						 <span id="tabbar_tab_5_234" class="tab-back">
+				<span class="tabbar-left"></span>
+				<span class="content">SHSSL[1800-6.6]</span>
+				<span class="tabbar-right"></span>
+			 </span>
+					</td>
+	  </tr>
+	</table>
+	<BR/>	<div class="ld" style='width:97%; margin:0px 10px 0px 10px;'>
+		<table class="lt" id="tabbar_txt_5_234" border="0" cellspacing="0" cellpadding="0">
+		<tr class='th'>
+			<td width="18%">玩法</td>
+			<eq name="jfauto_isopen" value="1">
+				<td colspan="2"><div class='line'></div>自由调节</td>
+			</eq>
+			<eq name="jf1700_isopen" value="1">
+				<td colspan="2"><div class='line'></div>1700模式</td>
+			</eq>
+			<eq name="jf1800_isopen" value="1">
+				<td colspan="2"><div class='line'></div>1800模式</td>
+			</eq>
+			<eq name="jf1900_isopen" value="1">
+				<td colspan="2"><div class='line'></div>1900模式</td>
+			</eq>	
+		</tr>
+		<volist name="vo5" id="vo">
+			<tr>
+				<td align="center"><{$vo.methodname}></td>
+				<eq name="jfauto_isopen" value="1">
+					<td align="center"><{$vo.prize2}><br></td>
+					<td align="center"><{$vo.fd2}>%</td>
+				</eq>
+				<eq name="jf1700_isopen" value="1">
+					<td align="center"><{$vo.prize1}><br></td>
+					<td align="center"><{$vo.fd1}>%</td>
+				</eq>	
+				<eq name="jf1800_isopen" value="1">
+					<td align="center"><{$vo.prize2}><br></td>
+					<td align="center"><{$vo.fd2}>%</td>
+				</eq>	
+				<eq name="jf1900_isopen" value="1">
+					<td align="center"><{$vo.prize3}><br></td>
+					<td align="center"><{$vo.fd3}>%</td>
+				</eq>				
+			</tr>
+		</volist>
+			</table>
+		</div><BR/></div></div>
+		<div class='bd'><div class='bd2' id="general_txt_6">
+	<table class="tabbar-div-s3" width='100%' style="display:none;">
+	  <tr>
+        <td>
+						 <span id="tabbar_tab_6_232" class="tab-back">
+				<span class="tabbar-left"></span>
+				<span class="content">SD11-5[1782-3.9]</span>
+				<span class="tabbar-right"></span>
+			 </span>
+					</td>
+	  </tr>
+	</table>
+	<BR/>	<div class="ld" style='width:97%; margin:0px 10px 0px 10px;'>
+		<table class="lt" id="tabbar_txt_6_232" border="0" cellspacing="0" cellpadding="0">
+		<tr class='th'>
+			<td width="18%">玩法</td>
+			<eq name="jfauto_isopen" value="1">
+				<td colspan="2"><div class='line'></div>自由调节</td>
+			</eq>
+			<eq name="jf1700_isopen" value="1">
+				<td colspan="2"><div class='line'></div>1700模式</td>
+			</eq>
+			<eq name="jf1800_isopen" value="1">
+				<td colspan="2"><div class='line'></div>1800模式</td>
+			</eq>
+			<eq name="jf1900_isopen" value="1">
+				<td colspan="2"><div class='line'></div>1900模式</td>
+			</eq>	
+		</tr>
+		<volist name="vo6" id="vo">
+			<tr>
+				<td align="center"><{$vo.methodname}></td>
+				<eq name="jfauto_isopen" value="1">
+					<td align="center"><{$vo.prize2}><br></td>
+					<td align="center"><{$vo.fd2}>%</td>
+				</eq>
+				<eq name="jf1700_isopen" value="1">
+					<td align="center"><{$vo.prize1}><br></td>
+					<td align="center"><{$vo.fd1}>%</td>
+				</eq>	
+				<eq name="jf1800_isopen" value="1">
+					<td align="center"><{$vo.prize2}><br></td>
+					<td align="center"><{$vo.fd2}>%</td>
+				</eq>	
+				<eq name="jf1900_isopen" value="1">
+					<td align="center"><{$vo.prize3}><br></td>
+					<td align="center"><{$vo.fd3}>%</td>
+				</eq>				
+			</tr>
+		</volist>
+			</table>
+		</div><BR/></div></div>
+		<div class='bd'><div class='bd2' id="general_txt_7">
+	<table class="tabbar-div-s3" width='100%' style="display:none;">
+	  <tr>
+        <td>
+						 <span id="tabbar_tab_7_230" class="tab-back">
+				<span class="tabbar-left"></span>
+				<span class="content">JX11-5[1782-3.9]</span>
+				<span class="tabbar-right"></span>
+			 </span>
+					</td>
+	  </tr>
+	</table>
+	<BR/>	<div class="ld" style='width:97%; margin:0px 10px 0px 10px;'>
+		<table class="lt" id="tabbar_txt_7_230" border="0" cellspacing="0" cellpadding="0">
+		<tr class='th'>
+			<td width="18%">玩法</td>
+			<eq name="jfauto_isopen" value="1">
+				<td colspan="2"><div class='line'></div>自由调节</td>
+			</eq>
+			<eq name="jf1700_isopen" value="1">
+				<td colspan="2"><div class='line'></div>1700模式</td>
+			</eq>
+			<eq name="jf1800_isopen" value="1">
+				<td colspan="2"><div class='line'></div>1800模式</td>
+			</eq>
+			<eq name="jf1900_isopen" value="1">
+				<td colspan="2"><div class='line'></div>1900模式</td>
+			</eq>	
+		</tr>
+		<volist name="vo7" id="vo">
+			<tr>
+				<td align="center"><{$vo.methodname}></td>
+				<eq name="jfauto_isopen" value="1">
+					<td align="center"><{$vo.prize2}><br></td>
+					<td align="center"><{$vo.fd2}>%</td>
+				</eq>
+				<eq name="jf1700_isopen" value="1">
+					<td align="center"><{$vo.prize1}><br></td>
+					<td align="center"><{$vo.fd1}>%</td>
+				</eq>	
+				<eq name="jf1800_isopen" value="1">
+					<td align="center"><{$vo.prize2}><br></td>
+					<td align="center"><{$vo.fd2}>%</td>
+				</eq>	
+				<eq name="jf1900_isopen" value="1">
+					<td align="center"><{$vo.prize3}><br></td>
+					<td align="center"><{$vo.fd3}>%</td>
+				</eq>				
+			</tr>
+		</volist>
+			</table>
+		</div><BR/></div></div>
+		<div class='bd'><div class='bd2' id="general_txt_8">
+	<table class="tabbar-div-s3" width='100%' style="display:none;">
+	  <tr>
+        <td>
+						 <span id="tabbar_tab_8_228" class="tab-back">
+				<span class="tabbar-left"></span>
+				<span class="content">GD11-5[1782-3.9]</span>
+				<span class="tabbar-right"></span>
+			 </span>
+					</td>
+	  </tr>
+	</table>
+	<BR/>	<div class="ld" style='width:97%; margin:0px 10px 0px 10px;'>
+		<table class="lt" id="tabbar_txt_8_228" border="0" cellspacing="0" cellpadding="0">
+		<tr class='th'>
+			<td width="18%">玩法</td>
+			<eq name="jfauto_isopen" value="1">
+				<td colspan="2"><div class='line'></div>自由调节</td>
+			</eq>
+			<eq name="jf1700_isopen" value="1">
+				<td colspan="2"><div class='line'></div>1700模式</td>
+			</eq>
+			<eq name="jf1800_isopen" value="1">
+				<td colspan="2"><div class='line'></div>1800模式</td>
+			</eq>
+			<eq name="jf1900_isopen" value="1">
+				<td colspan="2"><div class='line'></div>1900模式</td>
+			</eq>	
+		</tr>
+		<volist name="vo8" id="vo">
+			<tr>
+				<td align="center"><{$vo.methodname}></td>
+				<eq name="jfauto_isopen" value="1">
+					<td align="center"><{$vo.prize2}><br></td>
+					<td align="center"><{$vo.fd2}>%</td>
+				</eq>
+				<eq name="jf1700_isopen" value="1">
+					<td align="center"><{$vo.prize1}><br></td>
+					<td align="center"><{$vo.fd1}>%</td>
+				</eq>	
+				<eq name="jf1800_isopen" value="1">
+					<td align="center"><{$vo.prize2}><br></td>
+					<td align="center"><{$vo.fd2}>%</td>
+				</eq>	
+				<eq name="jf1900_isopen" value="1">
+					<td align="center"><{$vo.prize3}><br></td>
+					<td align="center"><{$vo.fd3}>%</td>
+				</eq>				
+			</tr>
+		</volist>
+			</table>
+		</div><BR/></div></div>
+		<div class='bd'><div class='bd2' id="general_txt_9">
+	<table class="tabbar-div-s3" width='100%' style="display:none;">
+	  <tr>
+        <td>
+						 <span id="tabbar_tab_9_222" class="tab-back">
+				<span class="tabbar-left"></span>
+				<span class="content">FC3D[1800-6.6]</span>
+				<span class="tabbar-right"></span>
+			 </span>
+					</td>
+	  </tr>
+	</table>
+	<BR/>	<div class="ld" style='width:97%; margin:0px 10px 0px 10px;'>
+		<table class="lt" id="tabbar_txt_9_222" border="0" cellspacing="0" cellpadding="0">
+	<tr class='th'>
+			<td width="18%">玩法</td>
+			<eq name="jfauto_isopen" value="1">
+				<td colspan="2"><div class='line'></div>自由调节</td>
+			</eq>
+			<eq name="jf1700_isopen" value="1">
+				<td colspan="2"><div class='line'></div>1700模式</td>
+			</eq>
+			<eq name="jf1800_isopen" value="1">
+				<td colspan="2"><div class='line'></div>1800模式</td>
+			</eq>
+			<eq name="jf1900_isopen" value="1">
+				<td colspan="2"><div class='line'></div>1900模式</td>
+			</eq>	
+		</tr>
+		<volist name="vo9" id="vo">
+			<tr>
+				<td align="center"><{$vo.methodname}></td>
+				<eq name="jfauto_isopen" value="1">
+					<td align="center"><{$vo.prize2}><br></td>
+					<td align="center"><{$vo.fd2}>%</td>
+				</eq>
+				<eq name="jf1700_isopen" value="1">
+					<td align="center"><{$vo.prize1}><br></td>
+					<td align="center"><{$vo.fd1}>%</td>
+				</eq>	
+				<eq name="jf1800_isopen" value="1">
+					<td align="center"><{$vo.prize2}><br></td>
+					<td align="center"><{$vo.fd2}>%</td>
+				</eq>	
+				<eq name="jf1900_isopen" value="1">
+					<td align="center"><{$vo.prize3}><br></td>
+					<td align="center"><{$vo.fd3}>%</td>
+				</eq>				
+			</tr>
+		</volist>
+			</table>
+		</div><BR/></div></div>
+		<div class='bd'><div class='bd2' id="general_txt_10">
+	<table class="tabbar-div-s3" width='100%' style="display:none;">
+	  <tr>
+        <td>
+						 <span id="tabbar_tab_10_218" class="tab-back">
+				<span class="tabbar-left"></span>
+				<span class="content">P3P5[1800-6.6]</span>
+				<span class="tabbar-right"></span>
+			 </span>
+					</td>
+	  </tr>
+	</table>
+	<BR/>	<div class="ld" style='width:97%; margin:0px 10px 0px 10px;'>
+		<table class="lt" id="tabbar_txt_10_218" border="0" cellspacing="0" cellpadding="0">
+		<tr class='th'>
+			<td width="18%">玩法</td>
+			<eq name="jfauto_isopen" value="1">
+				<td colspan="2"><div class='line'></div>自由调节</td>
+			</eq>
+			<eq name="jf1700_isopen" value="1">
+				<td colspan="2"><div class='line'></div>1700模式</td>
+			</eq>
+			<eq name="jf1800_isopen" value="1">
+				<td colspan="2"><div class='line'></div>1800模式</td>
+			</eq>
+			<eq name="jf1900_isopen" value="1">
+				<td colspan="2"><div class='line'></div>1900模式</td>
+			</eq>	
+		</tr>
+		<volist name="vo10" id="vo">
+			<tr>
+				<td align="center"><{$vo.methodname}></td>
+				<eq name="jfauto_isopen" value="1">
+					<td align="center"><{$vo.prize2}><br></td>
+					<td align="center"><{$vo.fd2}>%</td>
+				</eq>
+				<eq name="jf1700_isopen" value="1">
+					<td align="center"><{$vo.prize1}><br></td>
+					<td align="center"><{$vo.fd1}>%</td>
+				</eq>	
+				<eq name="jf1800_isopen" value="1">
+					<td align="center"><{$vo.prize2}><br></td>
+					<td align="center"><{$vo.fd2}>%</td>
+				</eq>	
+				<eq name="jf1900_isopen" value="1">
+					<td align="center"><{$vo.prize3}><br></td>
+					<td align="center"><{$vo.fd3}>%</td>
+				</eq>				
+			</tr>
+		</volist>
+			</table>
+		</div><BR/></div></div>
+
+
+		<div class='bd'><div class='bd2' id="general_txt_13">
+	<table class="tabbar-div-s3" width='100%' style="display:none;">
+	  <tr>
+        <td>
+						 <span id="tabbar_tab_13_318" class="tab-back">
+				<span class="tabbar-left"></span>
+				<span class="content">P3P5[1800-6.6]</span>
+				<span class="tabbar-right"></span>
+			 </span>
+					</td>
+	  </tr>
+	</table>
+	<BR/>	<div class="ld" style='width:97%; margin:0px 10px 0px 10px;'>
+		<table class="lt" id="tabbar_txt_13_318" border="0" cellspacing="0" cellpadding="0">
+		<tr class='th'>
+			<td width="18%">玩法</td>
+			<eq name="jfauto_isopen" value="1">
+				<td colspan="2"><div class='line'></div>自由调节</td>
+			</eq>
+			<eq name="jf1700_isopen" value="1">
+				<td colspan="2"><div class='line'></div>1700模式</td>
+			</eq>
+			<eq name="jf1800_isopen" value="1">
+				<td colspan="2"><div class='line'></div>1800模式</td>
+			</eq>
+			<eq name="jf1900_isopen" value="1">
+				<td colspan="2"><div class='line'></div>1900模式</td>
+			</eq>	
+		</tr>
+		<volist name="vo13" id="vo">
+			<tr>
+				<td align="center"><{$vo.methodname}></td>
+				<eq name="jfauto_isopen" value="1">
+					<td align="center"><{$vo.prize2}><br></td>
+					<td align="center"><{$vo.fd2}>%</td>
+				</eq>
+				<eq name="jf1700_isopen" value="1">
+					<td align="center"><{$vo.prize1}><br></td>
+					<td align="center"><{$vo.fd1}>%</td>
+				</eq>	
+				<eq name="jf1800_isopen" value="1">
+					<td align="center"><{$vo.prize2}><br></td>
+					<td align="center"><{$vo.fd2}>%</td>
+				</eq>	
+				<eq name="jf1900_isopen" value="1">
+					<td align="center"><{$vo.prize3}><br></td>
+					<td align="center"><{$vo.fd3}>%</td>
+				</eq>				
+			</tr>
+		</volist>
+			</table>
+		</div><BR/></div></div>
+
+
+		<div class='bd'><div class='bd2' id="general_txt_11">
+	<table class="tabbar-div-s3" width='100%' style="display:none;">
+	  <tr>
+        <td>
+						 <span id="tabbar_tab_11_226" class="tab-back">
+				<span class="tabbar-left"></span>
+				<span class="content">CQ11-5[1782-3.9]</span>
+				<span class="tabbar-right"></span>
+			 </span>
+					</td>
+	  </tr>
+	</table>
+	<BR/>	<div class="ld" style='width:97%; margin:0px 10px 0px 10px;'>
+		<table class="lt" id="tabbar_txt_11_226" border="0" cellspacing="0" cellpadding="0">
+		<tr class='th'>
+			<td width="18%">玩法</td>
+			<eq name="jfauto_isopen" value="1">
+				<td colspan="2"><div class='line'></div>自由调节</td>
+			</eq>
+			<eq name="jf1700_isopen" value="1">
+				<td colspan="2"><div class='line'></div>1700模式</td>
+			</eq>
+			<eq name="jf1800_isopen" value="1">
+				<td colspan="2"><div class='line'></div>1800模式</td>
+			</eq>
+			<eq name="jf1900_isopen" value="1">
+				<td colspan="2"><div class='line'></div>1900模式</td>
+			</eq>	
+		</tr>
+		<volist name="vo11" id="vo">
+			<tr>
+				<td align="center"><{$vo.methodname}></td>
+				<eq name="jfauto_isopen" value="1">
+					<td align="center"><{$vo.prize2}><br></td>
+					<td align="center"><{$vo.fd2}>%</td>
+				</eq>
+				<eq name="jf1700_isopen" value="1">
+					<td align="center"><{$vo.prize1}><br></td>
+					<td align="center"><{$vo.fd1}>%</td>
+				</eq>	
+				<eq name="jf1800_isopen" value="1">
+					<td align="center"><{$vo.prize2}><br></td>
+					<td align="center"><{$vo.fd2}>%</td>
+				</eq>	
+				<eq name="jf1900_isopen" value="1">
+					<td align="center"><{$vo.prize3}><br></td>
+					<td align="center"><{$vo.fd3}>%</td>
+				</eq>				
+			</tr>
+		</volist>
+			</table>
+		</div><BR/></div></div>
+	</div></div>
+
+<BR/>
+<div class="div_s1" style='line-height:22px;'>
+<table STYLE='background-color:#E3E3E3;' width="100%" align="center" border="0" cellspacing="0" cellpadding="0">
+<tr><td align="center"><font color='#333333'>浏览器建议：首选IE 8.0浏览器，其次为火狐浏览器。</font><br/>
+</td></tr></table>
+</div></CENTER><br/><br/></BODY></HTML>
+

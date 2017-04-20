@@ -1,0 +1,265 @@
+<include file="Public:head" />
+
+
+<BODY STYLE="background:#FFF url('/images/v1/main_bg_0001.jpg') 0px -490px repeat-x; padding:10px;"><DIV ID='main_box'>
+<div class="box l"></div>
+<div class="box c"></div>
+<div class="box r"></div>
+<div class="box m">
+
+<H1><!-- <SPAN class="action-span"><A href="/account_banks.shtml?check=734" target='_self'>我的银行卡</a></SPAN> -->
+<SPAN class="action-span1"><DIV class='icons_mb1'></DIV>当前位置: 绑定相关资料 </SPAN><DIV style="clear:both"></DIV></H1>
+<SCRIPT language="JavaScript" src="__PUBLIC__/js/log.js"></SCRIPT>
+<script type="text/javascript">
+jQuery("document").ready( function(){
+	
+	
+	$("#bank").change(function(){
+		id = parseInt($(this).val(),10);
+		
+		
+		if( id==2 ){
+			
+			$("tr[title='bankinfo']").hide();
+			$("span[id^='banknameinfo']").html("财付通号码");
+			$("#cardno_msg").html("( 财付通号码由5-14位数字组成 )");
+			$("#cardno_again_msg").html("( 财付通确认号码由只能手动输入, 不能粘贴 )");
+		}else if(id==3){
+			
+			
+			$("tr[title='bankinfo']").hide();
+			$("span[id^='banknameinfo']").html("支付宝号码");
+			$("#cardno_msg").html("( 支付宝号码为邮箱帐号,或为11位手机号码 )");
+			$("#cardno_again_msg").html("( 支付宝确认号码由只能手动输入, 不能粘贴 )");
+			
+		}else{
+			
+			$("tr[title='bankinfo']").show();
+			
+			$("span[id^='banknameinfo']").html("银行账号");
+			$("#cardno_msg").html("( 银行卡账号由16位或19位数字组成 )");
+			$("#cardno_again_msg").html("( 银行账号只能手动输入, 不能粘贴 )");
+		}
+		
+	});
+});
+
+
+
+
+function exceptSpecial(obj){
+	obj.value = obj.value.replace(/[\<\>\~\!\@\#\$\%\^\&\*\-\+\=\|\\\'\?\,\.\/\[\]\{}\(\)\"]{1,}/,'');
+}
+
+function checkform(obj){
+  var repSpecial = /[\<\>\~\!\@\#\$\%\^\&\*\-\+\=\|\\\'\"\?\,\.\/\[\]\{}\(\)]{1,}/;
+  /*if (obj.nickname.value != ""){
+  	var re = /^(.){1,15}$/;
+  	if( !re.test(obj.nickname.value) || repSpecial.test(obj.nickname.value)){
+		alert("别名不符合规则, 请重新输入");
+		obj.nickname.focus();
+		return false;
+	  }
+  }
+  var nickname = document.getElementById("nickname"); 
+  if (nickname.value == ""){
+	alert('请填写字段 "别名", 用于快速识别多个卡');
+  	nickname.focus();
+  	return false;
+  }
+  var nnchecked = document.getElementById("nnchecked");
+   if (nnchecked.value != 1){
+	alert('别名重复, 请更换');
+	nickname.focus();
+  	return false;
+  }*/
+  var bank = document.getElementById("bank");
+  if (bank.value == "0"){
+    alert('请选择 "开户银行"');
+  	bank.focus();
+  	return false;
+  }
+  
+  var bankid = parseInt(bank.value,10);
+  if( bankid != "2" && bankid != "3" ){
+	  var province = document.getElementById("province");
+	  if (province.value == "0"){
+		alert('请选择 "开户银行卡省份"');
+		province.focus();
+		return false;
+	  }
+	  var city = document.getElementById("city");
+	  if (city.value == "0"){
+		alert('请选择 "开户银行卡城市"');
+		city.focus();
+		return false;
+	  }
+	 
+	 
+  }
+  var re = /^(.){1,10}$/;
+  if( !re.test(obj.realname.value) || repSpecial.test(obj.realname.value) || obj.realname == ""){
+    alert('"开户人姓名" 不符合规则, 请重新输入');
+	obj.realname.focus();
+	return false;
+  }
+  if( bankid == 2 ){
+  	  var re = /^\d{5,14}$/;
+	  var cardno = document.getElementById("cardno");
+	  if (!re.test(cardno.value)){
+		alert('"财付通号码" 不符合规则, 请重新输入');
+		cardno.focus();
+		return false;
+	  }
+	  var cardno_again = document.getElementById("cardno_again");
+	  if (cardno.value != cardno_again.value){
+		alert('两次填写的 "财付通号码" 不相同, 请仔细核对后再次提交');
+		cardno_again.focus();
+		return false;
+	  }
+  }else if(bankid==3){
+	  var re=/^(.+)@(.+)$/;
+	  var re2 = /^\d{11}$/;
+	  var cardno = document.getElementById("cardno");
+	  if (!re.test(cardno.value) && !re2.test(cardno.value)){
+		alert('"支付宝号码" 不符合规则, 请重新输入');
+		cardno.focus();
+		return false;
+	  }
+	  var cardno_again = document.getElementById("cardno_again");
+	  if (cardno.value != cardno_again.value){
+		alert('两次填写的 "支付宝号码" 不相同, 请仔细核对后再次提交');
+		cardno_again.focus();
+		return false;
+	  }
+  }else{
+	  var re = /^\d{16}$|^\d{19}$/;
+	  var cardno = document.getElementById("cardno");
+	  if (!re.test(cardno.value)){
+		alert('"银行账号" 不符合规则, 请重新输入');
+		cardno.focus();
+		return false;
+	  }
+	  var cardno_again = document.getElementById("cardno_again");
+	  if (cardno.value != cardno_again.value){
+		alert('两次填写的 "银行账号" 不相同, 请仔细核对后再次提交');
+		cardno_again.focus();
+		return false;
+	  }
+   }
+}
+</script>
+
+
+<div class="ld"><table class='st' border="0" cellspacing="0" cellpadding="0"><tr><td width='100%'>
+<font color='#ff0000'>使用提示: </font><br/>
+&nbsp;&nbsp;1, 请正确填写相关银行信息,否则会造成无法成功提现。<br/>
+&nbsp;&nbsp;2, 请尽量选择锁定资料,可以防止被他人恶意提现。<br/>
+&nbsp;&nbsp;3, 资料锁定后, <font color=#ff0000>如需解除锁定</font> 请联系相关客服人员。<br/>
+</td></tr></table></div><div style="clear:both; height:10px;"></div>
+
+
+<div class="ld">
+<table class="ct" border="0" cellspacing="0" cellpadding="0">
+<form action="__URL__/doBangDingBank" method="post" name="addform" id='addform' onsubmit="return checkform(this)">
+<input type="hidden" name="flag" value="add" />
+<!--<input type='hidden' id='nnchecked' name='nnchecked' value=0 />-->
+  <!--<tr>
+  	<td class="nl"><font color="#FF0000">*</font>&nbsp;别名:</td>
+    <td>
+		<input style='width:166px;' type="text" name="nickname" id="nickname" maxlength="10" onblur="checkname();" onkeyup="exceptSpecial(this);" onchange="exceptSpecial(this);" />&nbsp;&nbsp;&nbsp;<span id="nick_msg"> ( 自定义银行卡名字, 由1至10个字符或汉字组成, 不能使用特殊字符 )</span>
+    </td>
+  </tr>-->
+  <tr>
+  	<td class="nl"><font color="#FF0000">*</font>&nbsp;开户银行:</td>
+    <td>
+    	<eq name="issubmit" value="1">
+    		<select name="bank" id="bank" style='width:170px;'>
+    		<option value="0">请选择 ...</option>
+    		<volist name="bankname" id="vo">
+    			<option value="<{$vo.id}>"><{$vo.bankname}></option>
+    		</volist>  
+       </select>
+    		<else/>
+    		<span id="bank_msg" style="color:#ff3300"><{$bankname2}></span>
+    	</eq>
+    	
+    </td>
+  </tr>
+  <eq name="issubmit" value="1">
+  		<tr title="bankinfo">
+		<td class="nl"><font color="#FF0000">*</font>&nbsp;开户银行省份:</td>
+		<td><select name="province" id="province" onChange="selectcityarea('province','city','addform');" style='width:170px;'>
+	        	<option value="0" selected>请选择 ...</option>
+	        	        	
+	        </select>
+	    </td>
+	   </tr>
+	   <tr title="bankinfo">
+		<td class="nl"><font color="#FF0000">*</font>&nbsp;开户银行城市:</td>
+		<td><select name="city" id="city" onChange="addform.city.value=this.value;"   style='width:170px;'>
+	        	<option value="0">请选择 ...</option>
+	            </select>
+	    </td>
+	   </tr>
+	     <SCRIPT language=JavaScript>
+					 first("province","city","addform",0,0);
+				  </SCRIPT>
+  </eq>
+  
+    <tr>
+  	<td class="nl"><font color="#FF0000">*</font>&nbsp;开户人姓名:</td>
+  	<td>
+  	 <eq name="issubmit" value="1">
+   		
+		<input type="text" name="realname" maxlength="10" id="realname" onkeyup="exceptSpecial(this);" onchange="exceptSpecial(this);" style='width:220px;' value="<{$realname}>"/>&nbsp;&nbsp;&nbsp;<span id="realname_msg">( 由1至10个字符或汉字组成, 不能使用特殊字符 )</span>
+    	
+   		<else/>
+   		<span id="bank_msg" style="color:#ff3300"><{$realname}></span>
+   </eq>
+    </td>
+  </tr>
+  <tr>
+  	<td class="nl"><font color="#FF0000">*</font>&nbsp;<span id="banknameinfo_1">银行账号</span>:</td>
+    <td>
+    	<eq name="issubmit" value="1">
+		<input maxlength="39" type="text" name="cardno" id="cardno"  style="width:220px;" value="<{$banknum}>"/>&nbsp;&nbsp;&nbsp;<span id="cardno_msg" >( 银行卡账号由16位或19位数字组成 )</span>
+   		<else/>
+   		<span id="bank_msg" style="color:#ff3300"><{$banknum}></span>
+  		 </eq>
+    </td>
+  </tr>
+  <eq name="issubmit" value="1">
+  <tr>
+  	<td class="nl"><font color="#FF0000">*</font>&nbsp;确认<span id="banknameinfo_2">银行账号</span>:</td>
+    <td>
+		<input maxlength="39" type="text" name="cardno_again" id="cardno_again"  onpaste="return false" style="width:220px;" value="<{$banknum}>"/>&nbsp;&nbsp;&nbsp;<span id="cardno_again_msg">( 银行账号只能手动输入, 不能粘贴 )</span>
+    </td>
+  </tr>
+  </eq>
+  <tr>
+  	<td class="nl">&nbsp;<span id="qq">QQ</span>:</td>
+    <td>
+    	<eq name="issubmit" value="1">
+		<input maxlength="39" type="text" name="qq" id="cardno_again"  onpaste="return false" style="width:220px;" value="<{$qq}>"/>&nbsp;&nbsp;&nbsp;<span id="cardno_again_msg"></span>
+    	<else/>
+   		<span id="bank_msg" style="color:#ff3300"><{$qq}></span>
+  		 </eq>
+    </td>    
+  </tr>
+  <tr>
+  	<td class="nl"><font color="#FF0000">*</font>&nbsp;确认<span id="">是否锁定资料</span>:</td>
+    <td>
+		<input name="islock" type="checkbox" id="islock" value="1" 	<{$islock}> /> &nbsp;&nbsp;&nbsp;<span id="cardno_again_msg">(不锁定资料将无法申请提款)</span>
+    </td>
+  </tr>
+  <tr><td>&nbsp;</td><td><br/>
+  <eq name="issubmit" value="1"><button name="submit" type="submit" width='69' height='26' class="btn_next" /></button></eq>
+
+  
+  
+  <br/><br/></td></tr>
+</form>
+</table>
+</div>
+<include file="Public:foot" />

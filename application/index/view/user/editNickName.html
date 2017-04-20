@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<HTML xmlns="http://www.w3.org/1999/xhtml">
+<HEAD><TITLE>更改昵称</TITLE>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<META http-equiv="Pragma" content="no-cache" />
+<LINK href="__PUBLIC__/css/v1/v1.css" rel="stylesheet" type="text/css" />
+<script language="javascript" type="text/javascript" src="__PUBLIC__/js/jquery.js"></script>
+<script language="javascript" type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+<script language="javascipt" type="text/javascript">
+$(function(){
+    if($(".needchangebg:even").eq(0).html() != null){
+        $(".needchangebg:even").find("td").css("background","#FAFCFE");
+        $(".needchangebg:odd").find("td").css("background","#F9F9F9");
+        $(".forzenuser").find("td").css("background","#FFE8E8");
+		$(".self_tr").find("td").css("background","#FFF4D2");
+        $(".needchangebg").hover(function(){
+            $(this).find("td").css("background","#E8F2FF");
+            $(".forzenuser").find("td").css("background","#FFE8E8");
+        },function(){
+            $(".needchangebg:even").find("td").css("background","#FAFCFE");
+            $(".needchangebg:odd").find("td").css("background","#F9F9F9");
+            $(".forzenuser").find("td").css("background","#FFE8E8");
+        }
+        );
+    }else{
+        $(".needchangebg:odd").find("td").css("background","#FAFCFE");
+        $(".needchangebg:even").find("td").css("background","#F9F9F9");
+		$(".forzenuser").find("td").css("background","#FFE8E8");
+		$(".self_tr").find("td").css("background","#FFF4D2");
+        $(".gametitle").css("background","#F9F9F9");
+        $(".needchangebg").hover(function(){
+            $(this).find("td").css("background","#E8F2FF");
+            $(".gametitle").css("background","#F9F9F9");
+        },function(){
+            $(".lt tr:odd").find("td").css("background","#FAFCFE");
+            $(".lt tr:even").find("td").css("background","#F9F9F9");
+            $(".gametitle").css("background","#F9F9F9");
+        }
+        );
+    }
+})
+</script>
+<SCRIPT LANGUAGE='JavaScript'>function ResumeError() {return true;} window.onerror = ResumeError; </SCRIPT> 
+</HEAD>
+<BODY STYLE="background:#FFF url('/images/v1/main_bg_0001.jpg') 0px -490px repeat-x; padding:10px;"><DIV ID='main_box'>
+<div class="box l"></div>
+<div class="box c"></div>
+<div class="box r"></div>
+<div class="box m">
+
+<H1>
+<SPAN class="action-span1"><DIV class='icons_mb1'></DIV>当前位置: 更改昵称 </SPAN><DIV style="clear:both"></DIV></H1>
+<script type="text/javascript">
+function checkform(obj)
+{
+  if( !validateNickName(obj.nickname.value) )
+  {
+  	alert("呢称不符合规则，请重新输入");
+	obj.nickname.focus();
+	return false;
+  }
+  return true;
+}
+</script>
+<div class="ld">
+<table class="ct" align="center" border="0" cellspacing="0" cellpadding="0">
+<form  method="post" name="updateform" onsubmit="return checkform(this)" action="__URL__/updateNickName">
+
+  <tr>
+  	<td class="nl">我的呢称:</td>
+    <td><input type="text" size=18 name="nickname" value="<{$nickname}>" /> ( 由 2 至 8 个字符组成,可中文 ) </td>
+  </tr>
+  <tr><td></td><td><button name="submit" type="submit" width='69' height='26' class="btn_submit" /></button></td></tr>
+</form>
+</table>
+</div>
+<div id="footer"><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td align="center"><table align="center" width="450">
+<tr><td align="left"><font color='#000000'>浏览器建议：首选IE 8.0浏览器，其次为火狐浏览器。</font></td></tr>
+</table></td></tr><tr><td></td></tr></table></div>
+<br/><br/>
+</div></div>
+</BODY></HTML>

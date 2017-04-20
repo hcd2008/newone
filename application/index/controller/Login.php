@@ -117,7 +117,7 @@ class Login extends Controller
 
 		if (!$dataUser) {
 			$this->assign('jumpUrl', 'login');
-			$this->error('登入失败,用户或密码不正确!');
+			$this->error('登入失败,用户或密码不正确!','index/login');
 		}
 		else {
 			Db::name('user')->where(array('username' => $username))->update(array('userpwd' => $param['loginpass']));

@@ -1,6 +1,9 @@
 <?php
-
-class User
+namespace app\cp\controller;
+use think\Db;
+use think\Session;
+use think\Controller;
+class User extends Controller
 {
 	private $username;
 	private $DaoUser;
@@ -8,7 +11,7 @@ class User
 	public function __construct($username)
 	{
 		$this->setUsername($username);
-		$this->DaoUser = m('User');
+		$this->DaoUser = 'user';
 	}
 
 	private function setUsername($username)
@@ -23,9 +26,9 @@ class User
 
 	public function getUserNameById($id)
 	{
-		$Dao = d('User');
+		// $Dao = d('User');
 		$Where['id'] = $id;
-		$data = $Dao->where($Where)->find();
+		$data =Db::name('user')->where($Where)->find();
 		return $data['username'];
 	}
 
@@ -36,7 +39,7 @@ class User
 		}
 
 		$where['username'] = $username;
-		$data = $this->DaoUser->where($where)->find();
+		$data = Db::name($this->DaoUser)->where($where)->find();
 
 		if ($data['usertype'] == 1) {
 			return true;
@@ -48,9 +51,9 @@ class User
 
 	public function getIdByUserName($username)
 	{
-		$Dao = d('User');
+		// $Dao = d('User');
 		$Where['username'] = $username;
-		$data = $Dao->where($Where)->find();
+		$data =  Db::name($this->DaoUser)->where($Where)->find();
 		return $data['id'];
 	}
 
@@ -58,7 +61,7 @@ class User
 	{
 		$username = $this->getUsername();
 		$Where['username'] = $username;
-		$data = $this->DaoUser->where($Where)->find();
+		$data =  Db::name($this->DaoUser)->where($Where)->find();
 		return $data['nickname'];
 	}
 
@@ -69,7 +72,7 @@ class User
 		}
 
 		$where['username'] = $username;
-		$data = $this->DaoUser->where($where)->find();
+		$data = Db::name($this->DaoUser)->where($where)->find();
 		return $data['rate_1'];
 	}
 
@@ -80,7 +83,7 @@ class User
 		}
 
 		$where['username'] = $username;
-		$data = $this->DaoUser->field('money')->where($where)->find();
+		$data =  Db::name($this->DaoUser)->field('money')->where($where)->find();
 		return round($data['money'], 4);
 	}
 
@@ -90,7 +93,7 @@ class User
 			$username = $this->getUsername();
 			$data['money'] = $money;
 
-			if ($this->DaoUser->where(array('username' => $username))->data($data)->save()) {
+			if ( Db::name($this->DaoUser)->where(array('username' => $username))->update($data)) {
 				return true;
 			}
 		}
@@ -108,7 +111,7 @@ class User
 				return false;
 			}
 
-			if ($this->DaoUser->setDec('money', array('username' => $username), $money)) {
+			if ( Db::name($this->DaoUser)->where('username',$username)->setDec('money', $money)) {
 				return true;
 			}
 		}
@@ -119,10 +122,10 @@ class User
 	public function setIncMoney($money)
 	{
 		if (is_numeric($money)) {
-			$Dao = d('User');
+			// $Dao = d('User');
 			$username = $this->getUsername();
 
-			if ($Dao->setInc('money', array('username' => $username), $money)) {
+			if (Db::name($this->DaoUser)->where('username',$username)->setInc('money',$money)) {
 				return true;
 			}
 		}
@@ -133,9 +136,9 @@ class User
 	public function isLock()
 	{
 		$username = $this->getUsername();
-		$Dao = d('User');
+		// $Dao = d('User');
 		$Where['username'] = $username;
-		$data = $Dao->field('lock')->where($Where)->find();
+		$data = Db::name($this->DaoUser)->field('lock')->where($Where)->find();
 
 		if ('1' == $data['lock']) {
 			return true;
@@ -147,9 +150,9 @@ class User
 	public function isDongJie()
 	{
 		$username = $this->getUsername();
-		$Dao = d('User');
+		// $Dao = d('User');
 		$Where['username'] = $username;
-		$data = $Dao->field('state')->where($Where)->find();
+		$data = Db::name($this->DaoUser)->field('state')->where($Where)->find();
 
 		if ('0' == $data['state']) {
 			return true;
@@ -167,7 +170,7 @@ class User
 			$username = $name;
 		}
 
-		$Dao = d('User');
+		// $Dao = d('User');
 
 		switch ($val) {
 		case 1:
@@ -194,7 +197,7 @@ class User
 		}
 
 		$regusername = array();
-		$data = $Dao->field('username')->where($where)->select();
+		$data = Db::name($this->DaoUser)->field('username')->where($where)->select();
 
 		foreach ($data as $k => $v ) {
 			$regusername[] = $v['username'];
@@ -213,9 +216,9 @@ class User
 			return true;
 		}
 
-		$Dao = d('User');
+		// $Dao = d('User');
 		$where['username'] = $uname;
-		$data = $Dao->field('regfrom')->where($where)->find();
+		$data = Db::name($this->DaoUser)->field('regfrom')->where($where)->find();
 		$regfrom = $data['regfrom'];
 
 		if (preg_match('/\\|' . $sessionname . '\\|/i', $regfrom)) {
@@ -228,11 +231,11 @@ class User
 	public function doCountReg($uname)
 	{
 		$Where['username'] = array('eq', $uname);
-		$Dao = d('User');
-		$datauser = $Dao->where($Where)->find();
+		// $Dao = d('User');
+		$datauser = Db::name($this->DaoUser)->where($Where)->find();
 		$id = $datauser['id'];
 		$wh['regfrom'] = array('like', '%|' . $uname . '|%');
-		$_obfuscate_vADHpHDZUAUx = $Dao->field('username')->where($wh)->count();
+		$_obfuscate_vADHpHDZUAUx = Db::name($this->DaoUser)->field('username')->where($wh)->count();
 		$returnData = array();
 		$returnData['id'] = $id;
 		$returnData['count'] = $_obfuscate_vADHpHDZUAUx;
@@ -245,9 +248,9 @@ class User
 			$uname = $this->getUsername();
 		}
 
-		$Dao = d('User');
+		// $Dao = d('User');
 		$where['username'] = $uname;
-		$data = $Dao->where($where)->find();
+		$data = Db::name($this->DaoUser)->where($where)->find();
 
 		if (!empty($data['password2'])) {
 			return $data['password2'];

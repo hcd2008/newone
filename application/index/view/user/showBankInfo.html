@@ -1,0 +1,139 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<HTML xmlns="http://www.w3.org/1999/xhtml">
+<HEAD><TITLE>充值</TITLE>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<META http-equiv="Pragma" content="no-cache" />
+<LINK href="__PUBLIC__/css/v1/v1.css" rel="stylesheet" type="text/css" />
+<script language="javascript" type="text/javascript" src="__PUBLIC__/js/jquery.js"></script>
+<script language="javascript" type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+<script language="javascipt" type="text/javascript">
+$(function(){
+    if($(".needchangebg:even").eq(0).html() != null){
+        $(".needchangebg:even").find("td").css("background","#FAFCFE");
+        $(".needchangebg:odd").find("td").css("background","#F9F9F9");
+        $(".forzenuser").find("td").css("background","#FFE8E8");
+		$(".self_tr").find("td").css("background","#FFF4D2");
+        $(".needchangebg").hover(function(){
+            $(this).find("td").css("background","#E8F2FF");
+            $(".forzenuser").find("td").css("background","#FFE8E8");
+        },function(){
+            $(".needchangebg:even").find("td").css("background","#FAFCFE");
+            $(".needchangebg:odd").find("td").css("background","#F9F9F9");
+            $(".forzenuser").find("td").css("background","#FFE8E8");
+        }
+        );
+    }else{
+        $(".needchangebg:odd").find("td").css("background","#FAFCFE");
+        $(".needchangebg:even").find("td").css("background","#F9F9F9");
+		$(".forzenuser").find("td").css("background","#FFE8E8");
+		$(".self_tr").find("td").css("background","#FFF4D2");
+        $(".gametitle").css("background","#F9F9F9");
+        $(".needchangebg").hover(function(){
+            $(this).find("td").css("background","#E8F2FF");
+            $(".gametitle").css("background","#F9F9F9");
+        },function(){
+            $(".lt tr:odd").find("td").css("background","#FAFCFE");
+            $(".lt tr:even").find("td").css("background","#F9F9F9");
+            $(".gametitle").css("background","#F9F9F9");
+        }
+        );
+    }
+})
+</script>
+<SCRIPT LANGUAGE='JavaScript'>function ResumeError() {return true;} window.onerror = ResumeError; </SCRIPT> 
+</HEAD>
+<BODY STYLE="background:#FFF url('/images/v1/main_bg_0001.jpg') 0px -490px repeat-x; padding:10px;"><DIV ID='main_box'>
+<div class="box l"></div>
+<div class="box c"></div>
+<div class="box r"></div>
+<div class="box m">
+
+<H1><!-- <SPAN class="action-span"><A href="/account_savelist.shtml?check=790" target='_self'>充值记录</a></SPAN>-->
+<SPAN class="action-span1"><DIV class='icons_mb1'></DIV>当前位置: 自动充值 </SPAN><DIV style="clear:both"></DIV></H1>
+<div class="ld">
+<div id="demobox" style="position:absolute; display:none; margin-top:-40px; z-index:100; float:right;"><img src="/images/help/<{$helpimgname}>" style="border:2px solid #333333;" /></div>
+<table class="ct" border="0" cellspacing="0" cellpadding="0">
+<tr>
+	<td class="nl">充值银行：</td>
+	<td><a href="<{$bankurl}>" target="_blank"><img src="/images/bank/<{$bankimgname}>" border="0" /></a>&nbsp;&nbsp;&nbsp;<a href="<{$bankurl}>" style="color:#009900; font-size:14px; font-weight:bold;" target="_blank">←点此进入网上银行</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;页面有效期倒计时：<span id="expire_time" style="color:#006699; font-size:14px; font-weight:bold;">00:00</span></td>
+</tr>
+<tr>
+	<td class="nl">收款账户名：</td>
+    <td style="color:#333333;"><span id="copy_name_txt" style="padding-right:10px;"><{$shoukuanname}></span> <a href='#' TITLE='复制' onClick="javascript:copyToClipboard( 'copy_name_txt','【收款账户名】' );return false;" ><img src="/images/comm/copy.gif" border="0" />复制</a></td>
+</tr>
+<tr>
+	<td class="nl">收款账号：</td>
+    <td style="color:#333333;"><span id="copy_account_txt" style="padding-right:10px;"><{$banknum}></span> <a href='#' TITLE='复制' onClick="javascript:copyToClipboard( 'copy_account_txt','【收款账号】' );return false;" ><img src="/images/comm/copy.gif" border="0" />复制</a></td>
+</tr>
+<tr>
+	<td class="nl">充值金额：</td>
+    <td style="color:#333333;"><span id="copy_monye_txt" style="padding-right:10px;"><{$real_money}></span> <a href='#' TITLE='复制' onClick="javascript:copyToClipboard( 'copy_monye_txt','【充值金额】' );return false;" ><img src="/images/comm/copy.gif" border="0" />复制</a></td>
+</tr>
+
+<neq name="bankid" value="5">
+<tr>
+	<td class="nl">附言(充值编号)：</td>
+    <td style="color:#FF0000;"><span id="copy_msg_txt" style="padding-right:10px; font-family:fixedsys;"><{$chongzhinum}></span> <a href='#' TITLE='复制' onClick="javascript:copyToClipboard( 'copy_msg_txt','【附言(充值编号)】' );return false;" ><img src="/images/comm/copy.gif" border="0" />复制</a>&nbsp;&nbsp;&nbsp;&nbsp;<font color="#FF0000">←务必将此充值编号正确填写到汇款附言里</font></td>
+</tr>
+</neq>
+<eq name="bankimgname" value="4.jpg">
+<tr>
+	<td class="nl" style="color:#FF0000;">特别说明：</td>
+    <td style="line-height:25px; padding:5px 0; color:#333333;">
+   <font color='red'> 1、由于农行更新不能自动到账，农行充值转账成功后  必须联系在线客服处理 保证在5秒到账。<br />
+    2、农行开户地为:河南省 周口 中国农业银行股份有限公司 </font>
+    </td>
+</tr>
+</eq>
+<eq name="bankid" value="5">
+	<eq name="ists" value="1">
+<tr>
+	<td class="nl" style="color:#FF0000;">特别说明：</td>
+    <td style="line-height:25px; padding:5px 0; color:#333333;">
+   <font color='red'> <{$ts}><br />
+    
+    </td>
+</tr>
+	</eq>
+</eq>
+
+
+<tr>
+	<td class="nl" style="color:#FF0000;">充值说明：</td>
+    <td style="line-height:25px; padding:5px 0; color:#333333;">
+    1、务必将“充值编号”正确填写到银行汇款页面的“附言”栏中(复制->粘帖[CTRL+V])，否则充值将无法到账。<br />
+2、充值金额低于<font style="font-size:12px;color:#F30;font-weight:bold;">100</font>&nbsp;不享受“充值即返手续费”的优惠政策<br />
+
+3、收款账户名和收款账号会不定期更换，请在获取最新信息后充值，否则充值将无法到账。<br />
+4、“充值金额”与网银转账金额不符，充值将无法到账。<br /></td>
+</tr>
+<tr>
+	<td class="nl">&nbsp;</td>
+    <td style="color:#333333;"><input type="button" name="showdemo" id="showdemo" value="充值演示" class="button" /></td>
+</tr>
+</table>
+</div>
+<script type="text/javascript">
+jQuery(document).ready(function(){
+TimeCountDown('expire_time',600,function(){window.location.href="__APP__/index/main";;});
+setTimeout(function(){alert('务必将“充值编号”正确填写到银行汇款页面的“附言”栏中(复制→ 粘帖[CTRL+V])，否则充值将无法到账。');},1000);
+var demoleft = $("#showdemo").offset();
+demoleft = demoleft.left +120;
+$("#demobox").css({"left":demoleft+"px"});
+$("#showdemo").click(function(){
+	if($(this).val()=='充值演示'){
+		$("#demobox").show();
+		$(this).val("关闭演示");
+	}else{
+		$("#demobox").hide();
+		$(this).val("充值演示");
+	}
+});
+});
+</script>
+<div id="footer"><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td align="center"><table align="center" width="450">
+<tr><td align="left"><font color='#000000'>浏览器建议：首选IE 8.0浏览器，其次为火狐浏览器。</font></td></tr>
+</table></td></tr><tr><td></td></tr></table></div>
+<br/><br/>
+</div></div>
+</BODY></HTML>

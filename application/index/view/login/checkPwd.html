@@ -67,8 +67,8 @@ function LoginNow()
                     </div>
                     <div class="content_reg_line">
                     	<div class="form_title">通行证账号：</div>
-                        <div class="form_word" style='font-size:14px;'>{$username}</div>
-						<input type="hidden" name="username" id="username" value="{$username}"/>
+                        <div class="form_word" style='font-size:14px;'><{$username}></div>
+						<input type="hidden" name="username" id="username" value="<{$username}>"/>
                     </div>
 					<div class="content_reg_line">
                     	<div class="form_title">问候语：</div>

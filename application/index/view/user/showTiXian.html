@@ -1,0 +1,220 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<HTML xmlns="http://www.w3.org/1999/xhtml">
+<HEAD><TITLE>提现申请</TITLE>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<META http-equiv="Pragma" content="no-cache" />
+<LINK href="__PUBLIC__/css/v1/v1.css" rel="stylesheet" type="text/css" />
+<script language="javascript" type="text/javascript" src="__PUBLIC__/js/jquery.js"></script>
+<script language="javascript" type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+<script language="javascipt" type="text/javascript">
+$(function(){
+    if($(".needchangebg:even").eq(0).html() != null){
+        $(".needchangebg:even").find("td").css("background","#FAFCFE");
+        $(".needchangebg:odd").find("td").css("background","#F9F9F9");
+        $(".forzenuser").find("td").css("background","#FFE8E8");
+		$(".self_tr").find("td").css("background","#FFF4D2");
+        $(".needchangebg").hover(function(){
+            $(this).find("td").css("background","#E8F2FF");
+            $(".forzenuser").find("td").css("background","#FFE8E8");
+        },function(){
+            $(".needchangebg:even").find("td").css("background","#FAFCFE");
+            $(".needchangebg:odd").find("td").css("background","#F9F9F9");
+            $(".forzenuser").find("td").css("background","#FFE8E8");
+        }
+        );
+    }else{
+        $(".needchangebg:odd").find("td").css("background","#FAFCFE");
+        $(".needchangebg:even").find("td").css("background","#F9F9F9");
+		$(".forzenuser").find("td").css("background","#FFE8E8");
+		$(".self_tr").find("td").css("background","#FFF4D2");
+        $(".gametitle").css("background","#F9F9F9");
+        $(".needchangebg").hover(function(){
+            $(this).find("td").css("background","#E8F2FF");
+            $(".gametitle").css("background","#F9F9F9");
+        },function(){
+            $(".lt tr:odd").find("td").css("background","#FAFCFE");
+            $(".lt tr:even").find("td").css("background","#F9F9F9");
+            $(".gametitle").css("background","#F9F9F9");
+        }
+        );
+    }
+})
+</script>
+<SCRIPT LANGUAGE='JavaScript'>function ResumeError() {return true;} window.onerror = ResumeError; </SCRIPT> 
+</HEAD>
+<BODY STYLE="background:#FFF url('/images/v1/main_bg_0001.jpg') 0px -490px repeat-x; padding:10px;"><DIV ID='main_box'>
+<div class="box l"></div>
+<div class="box c"></div>
+<div class="box r"></div>
+<div class="box m">
+
+ <H1><!-- <SPAN class="action-span"><A href="/account_drawlist.shtml?check=136" target='_self'>提现记录</a></SPAN><SPAN class="action-span"><A href="/account_draw.shtml?check=136" target='_self'>提现申请</a></SPAN>-->
+<SPAN class="action-span1"><DIV class='icons_mb1'></DIV>当前位置: 提现申请 </SPAN><DIV style="clear:both"></DIV></H1>
+<script type="text/javascript">
+function checkForm(obj)
+{
+		
+	
+		if (obj.real_money.value == ""){
+		alert("请填写 '提现金额'");
+		obj.real_money.focus();
+		return false;
+	}
+	if(obj.real_money.value < <{$tkminmoney}>)
+	{
+		alert("提现金额不能低于最低提现限额 ");
+		$("#real_money").val(<{$tkminmoney}>);
+		showPaymentFee("<{$tkminmoney}>");
+		return false;
+	}
+	if(obj.real_money.value > <{$tkmaxmoney}>)
+	{
+		alert("提现金额不能高于最大提现限额 ");
+		$("#real_money").val(<{$tkmaxmoney}>);
+		showPaymentFee("<{$tkmaxmoney}>");
+		return false;
+	}
+	if(obj.real_money.value > <{$usermoney}>)
+	{
+		alert("提现金额不能高于您的账户余额 ");
+		$("#real_money").val(<{$usermoney}>);
+		showPaymentFee("<{$usermoney}>");
+		return false;
+	}
+	/*
+	if( obj.bankinfo.value == "" )
+	{
+		alert("请选择收款银行卡");
+		return false;
+	}
+	*/
+}
+function showPaymentFee(i){//onKeyUp="value=this.value.replace(/\D+/g,'')"
+
+	
+	
+	//document.drawform.real_money.value = formatFloat(""+i);
+	document.drawform.real_money.value =i.replace(/\D+/g,'');
+	document.drawform.money.value = FormatNumber( i ,2);
+	jQuery("#chineseMoney").html( changeMoneyToChinese(document.drawform.money.value) );
+}
+
+
+/* format number 0.00 */
+function FormatNumber(srcStr, nAfterDot){
+	var srcStr,nAfterDot;
+	var resultStr,nTen;
+	srcStr = ""+srcStr+"";
+	strLen = srcStr.length;
+	dotPos = srcStr.indexOf(".",0);
+	if (dotPos == -1){
+	   resultStr = srcStr+".";
+	   for (i=0; i<nAfterDot; i++){
+	    resultStr = resultStr+"0";
+	   }
+	   
+	}
+	else{
+	   if ((strLen - dotPos - 1) >= nAfterDot){
+		   
+	    nAfter = dotPos + nAfterDot + 1;
+	    nTen =1;
+	    for(j=0;j<nAfterDot;j++){
+	     nTen = nTen*10;
+	    }
+	    resultStr = Math.round(parseFloat(srcStr)*nTen)/nTen;
+	   }
+	   else{
+	    resultStr = srcStr;
+	    
+	    for (i=0;i<(nAfterDot - strLen + dotPos + 1);i++){
+	     resultStr = resultStr+"0";
+	    }
+	    
+	   }
+	}
+	return resultStr;
+}
+</script>
+
+<div class="tab-div">
+	<div id="tabbar-div">
+		  <span class="tab-front"  id="general_tab_0">
+		  <span class="tabbar-left"></span>
+		  <span class="content">提现申请</span>
+		  <span class="tabbar-right"></span>
+		</span>
+		<!-- 
+	    <span class="tab-back"  id="general_tab_1">
+		    <span class="tabbar-left"></span>
+		    <span class="content" onclick="window.location.href=''">提现记录</span>
+		    <span class="tabbar-right"></span>
+		</span>
+		 -->
+	</div>
+
+<div class="ld" style='width:99%;margin:5px 0px 0px 0px;'>
+<table width="100%" class="ct" border="0" cellspacing="0" cellpadding="0">
+<form action="__URL__/doTiXian" method="post" name="drawform" id="drawform" onsubmit="return checkForm(this)">
+<input type="hidden" name="flag" value="confirm" />
+<input type="hidden" name="money" value="" />
+<input type="hidden" name='transferfee' id='transferfee' value=''/>
+<tr>
+	<td class="nl"><font color="#FF3300">提示信息：</font></td>
+	<td STYLE='line-height:20px;padding:5px 0px'>每天限提&nbsp;<font style="font-size:16px;color:#F30;font-weight:bold;"><{$tkcishu}></font>&nbsp;次，今天您已经成功发起了&nbsp;<font style="font-size:16px;color:#690;font-weight:bold;"><{$wanchengcishu}></font>&nbsp;次提现申请。<br/>
+	每天的提现处理时间为：<font style="font-size:16px;color:#F30;font-weight:bold;"><{$tkstarttime}>-<{$tkendtime}></font>
+	</td>
+</tr>
+<tr>
+	<td class="nl">可提现金额：</td>
+	<td><{$usermoney}></td>
+</tr>
+<tr>
+	<td class="nl">提现金额：</td>
+    <td><input type="text" name="real_money" id="real_money" onkeyup="showPaymentFee(this.value);" />&nbsp;&nbsp;<span style="color:red;"></span> ( 单笔提现限额：最低：&nbsp;<font style="color:#FF3300"><{$tkminmoney}></font>&nbsp;元，最高：&nbsp;<font style="color:#FF3300"><{$tkmaxmoney}></font>&nbsp;元 ) </td>
+</tr>
+<!--<tr>
+	<td class="nl">实扣金额：</td>
+    <td id="real_withdraw">&nbsp;</td>
+</tr>
+<tr>
+	<td class="nl">提现手续费：</td>
+    <td id="charge">&nbsp;</td>
+</tr>
+<tr>
+	<td class="nl">到账金额：</td>
+    <td id="money">&nbsp;</td>
+</tr>-->
+<tr>
+	<td class="nl">提现金额(大写)：</td>
+    <td>&nbsp;<span id="chineseMoney"></span><input type="hidden" id="hiddenchinese" /></td>
+</tr>
+<!-- 
+<tr>
+	<td class="nl">收款银行卡信息：</td>
+    <td>
+    	<select name="bankinfo" id="bankinfo">
+			<option value="">请选择银行卡...</option>
+    					
+				<option value="T8QUEH">中国工商银行 | 银行卡尾号: 0107 </option>
+    		    	</select>&nbsp;&nbsp;<span style="color:red;"></span>
+    </td>
+</tr>
+ -->
+<tr>
+	<td class="nl" style="color:#FF0000;">提款说明：</td>
+	<td height="30" style="line-height:25px;"><{$tkinfo}></td>
+</tr>
+<tr>
+	<td class="nl"></td>
+	<td height="30"><br/><button name="submit" type="submit" width='69' height='26' class="btn_next" /></button><br/><br/></td>
+</tr>
+</form>
+</table>
+</div>
+<div id="footer"><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td align="center"><table align="center" width="450">
+<tr><td align="left"><font color='#000000'>浏览器建议：首选IE 8.0浏览器，其次为火狐浏览器。</font></td></tr>
+</table></td></tr><tr><td></td></tr></table></div>
+<br/><br/>
+</div></div>
+</BODY></HTML>

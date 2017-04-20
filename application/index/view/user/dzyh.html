@@ -1,0 +1,86 @@
+<include file="Public:head" />
+<BODY STYLE="background:#FFF url('/images/v1/main_bg_0001.jpg') 0px -490px repeat-x; padding:10px;"><DIV ID='main_box'>
+<div class="box l"></div>
+<div class="box c"></div>
+<div class="box r"></div>
+<div class="box m">
+
+<H1>
+<SPAN class="action-span1"><DIV class='icons_mb1'></DIV>当前位置: 电子银行
+</SPAN><DIV style="clear:both"></DIV></H1>
+<STYLE>
+.info{line-height:21px;padding:8px 0px;}
+.info div{line-height:18px;font-size:12px;padding:0px;margin:0px;}
+div .q{color:#222;padding-left:18px;padding-top:3px;}
+div .a{color:#070;padding-left:18px;padding-top:3px;padding-bottom:12px;}
+.subbtn{ width:89px; height:26px; border:0; text-align:center; font-size:12px; color:#fff; cursor:pointer; background:url(/images/v1/subbtn.gif) no-repeat; font-weight:bold;}
+</STYLE>
+<div class="tab-div">
+
+<div class="ld" style='width:99%;margin:5px 0px 0px 0px;'>
+<table width="100%" class="ct" border="0" cellspacing="0" cellpadding="0">
+
+
+<tr>
+	<td class="nl">活动主题：</td>
+	<td STYLE='line-height:20px;padding:5px 0px'><font style="font-size:16px;color:#F30;font-weight:bold;">电子银行</font>
+	</td>
+</tr>
+<tr>
+	<td class="nl">活动内容</td>
+    <td class='info' style="font-size:14px;color:green">
+					1：存期按最少24小时计算，如果存款没有达到24小时就提款，那么只能取得本金，无利息。<br/>
+				  	2：存期1日（24小时）,日利息为为<{$lr1*100}>%，例如，存款10000元，那么24小时后提出，可得到利息<{$lr1*10000*1}>元。<br/>
+				    3：存款10日，日利息为<{$lr10*100}>%，例如，存款10000元，那么10天后提出，可得到利息<{$lr10*10000*1}>*10=<{$lr10*10000*10}>元。<br/>
+				    4：存款30日，日利息为<{$lr30*100}>%，例如，存款10000元，那么30天后提出，可得到利息<{$lr30*10000*1}>*30=<{$lr30*10000*30}>元。<br/>
+				    5：存款6个月（180天），日利息为<{$lr180*100}>%，例如，存款10000元，那么6个月天后提出，可得到利息<{$lr180*10000*1}>*180=<{$lr180*10000*180}>元。<br/>
+				    6：存款1年（360天），日利息为<{$lr360*100}>%，例如，存款10000元，那么360天后提出，可得到利息<{$lr360*10000*1}>*360=<{$lr360*10000*360}>元。<br/>
+					
+				    
+	</td>
+</tr>
+<tr>
+	<td class="nl"></td>
+    <td class='info' style="font-size:12px;line-height:25px;"> <img alt="" src="/images/v1/bank.jpg">
+
+	</td>
+</tr>
+<tr>
+	<td class="nl">您的当前可用余额为:</td>
+	<td height="30">
+	<font color="red"><{$yhYG}></>元</font>
+	</td>
+</tr>
+<tr>
+	<td class="nl"><strong>你的当前银行存款为:</strong></td>
+	<td height="30">
+	<font color="red"><{$yhck}></>元 &nbsp;&nbsp;&nbsp;&nbsp;共存了<{$dayyu}>天,所得利息<{$yhcklx}>元</font>
+	</td>
+</tr>
+
+ <tr>
+              <form action="__URL__/dzyhck" method="post" name="drawform" id="drawform">
+				  	<td class="nl"><strong>存入电子银行:</strong></td>
+				  	<td height="30">
+				  	<input type="text" name="c_money" id="real_money"  />&nbsp;&nbsp;元
+				     <input name="button" style="height:26px;" type="submit" class="subbtn" id="button" value="存款" />
+				    </td>
+			 </form>
+ 				 </tr>
+			 <tr>
+              <form action="__URL__/dzyhtk" method="post" name="drawform" id="drawform">
+				  	<td class="nl"><strong>提出所有存款与利息:</strong></td>
+				  <td height="30">
+				  
+				     <input name="button" style="height:26px;" type="submit" class="subbtn" id="button" value="提款" />
+				    </td>
+			 </form>
+ 				 </tr>
+</table>
+</div>
+<div id="footer"><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td align="center"><table align="center" width="450">
+<tr><td align="left"><font color='#000000'>浏览器建议：首选IE 8.0浏览器，其次为火狐浏览器。</font></td></tr>
+</table></td></tr><tr><td></td></tr></table></div>
+<br/><br/>
+</div></div>
+</BODY></HTML>

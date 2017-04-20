@@ -1,0 +1,159 @@
+<?php
+
+			$real_money=$_REQUEST['real_money'];
+			
+
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title>支付页面</title>
+  <!--<script type="text/javascript" src="//ajax.aspnetcdn.com/ajax/jQuery/jquery-1.9.1.min.js"></script>-->
+  <style type="text/css">
+    body {
+	background:#fff;
+      font-size: 12px;
+    }
+  </style>
+  <script type="text/javascript">
+   
+    function Submit() {
+      if (!chkBank())
+        return false;
+	/*
+	if (!chkUserName())
+        return false;
+
+      if (!chkMoney())
+        return false;
+	*/
+      
+
+      return confirm("是否确定为用户【" + document.getElementById("uid").value + "】充值人民币【" + document.getElementById("p3_Amt").value + "元】？");
+    }
+    function chkBank() {
+
+      var checklists = document.getElementsByName("pd_FrpId");
+      var i = 0;
+      var flag = true;
+      for (i = 0; i < checklists.length; i++) {
+        if (checklists[i].checked) {
+          flag = false;
+        }
+      }
+      if (flag) {
+        alert('请选择支付的银行！');
+        return false;
+      }
+      return true;
+    }
+
+  </script>
+</head>
+<body>
+<form id="form1" action="__APP__/Yeepay/yeepayreg" method="post">
+<input type="hidden" name="real_money" value="<?php echo $real_money?>">
+  <div style="width:100%">
+    <table width="90%" align="center">
+      <tr>
+        <td align="center" style="height: 40px"><span style="font-weight:bold;font-size:14px;color:red">网上银行支付</span></td>
+      </tr>
+      <tr>
+        <td style="height: 151px">
+          <table width="100%">
+            <tr>
+              <td><span style="font-weight:bold;color:red">选择银行：</span></td>
+              <td>
+                <table width="100%">
+                  <tr>
+                    <td><input id="rdoBank1" name="pd_FrpId" type="radio" value="CMBCHINA-NET-B2C"/><label
+                        for="rdoBank1"><img src="__PUBLIC__/images/banklogo/zhaohang.gif"
+                                            onclick="document.getElementById('rdoBank1').checked=true"/></label></td>
+                    <td><input id="rdoBank2" name="pd_FrpId" type="radio" value="BOCO-NET-B2C"/><img
+                        src="__PUBLIC__/images/banklogo/jiaotong.gif" onclick="document.getElementById('rdoBank2').checked=true"/></td>
+                    <td><input id="rdoBank3" name="pd_FrpId" type="radio" value="ABC-NET-B2C"/><img
+                        src="__PUBLIC__/images/banklogo/nongye.gif" onclick="document.getElementById('rdoBank3').checked=true"/></td>
+                    <td><input id="rdoBank4" name="pd_FrpId" type="radio" value="SDB-NET-B2C"/><img
+                        src="__PUBLIC__/images/banklogo/shenfa.gif" onclick="document.getElementById('rdoBank4').checked=true"/></td>
+                  </tr>
+                  <tr>
+                    <td><input id="rdoBank5" name="pd_FrpId" type="radio" value="SPDB-NET-B2C"/><img
+                        src="__PUBLIC__/images/banklogo/shangpufa.gif" onclick="document.getElementById('rdoBank5').checked=true"/></td>
+                    <td><input id="rdoBank6" name="pd_FrpId" type="radio" value="PINGANBANK-NET-B2C"/><img
+                        src="__PUBLIC__/images/banklogo/pingan.gif" onclick="document.getElementById('rdoBank6').checked=true"/></td>
+                    <td><input id="rdoBank7" name="pd_FrpId" type="radio" value="CMBC-NET-B2C"/><img
+                        src="__PUBLIC__/images/banklogo/minsheng.gif" onclick="document.getElementById('rdoBank7').checked=true"/></td>
+                    <td><input id="rdoBank8" name="pd_FrpId" type="radio" value="CEB-NET-B2C"/><img
+                        src="__PUBLIC__/images/banklogo/guangda.gif" onclick="document.getElementById('rdoBank8').checked=true"/></td>
+                  </tr>
+                  <tr>
+                    <td><input id="rdoBank9" name="pd_FrpId" type="radio" value="CCB-NET-B2C"/><img
+                        src="__PUBLIC__/images/banklogo/jianshe.gif" onclick="document.getElementById('rdoBank9').checked=true"/></td>
+                    <td><input id="rdoBank10" name="pd_FrpId" type="radio" value="BOC-NET-B2C"/><img
+                        src="__PUBLIC__/images/banklogo/zhongguo.gif" onclick="document.getElementById('rdoBank10').checked=true"/></td>
+                    <td><input id="rdoBank11" name="pd_FrpId" type="radio" value="POST-NET-B2C"/><img
+                        src="__PUBLIC__/images/banklogo/youzheng.gif" onclick="document.getElementById('rdoBank11').checked=true"/></td>
+                    <td><input id="rdoBank12" name="pd_FrpId" type="radio" value="GDB-NET-B2C"/><img
+                        src="__PUBLIC__/images/banklogo/guangfa.gif" onclick="document.getElementById('rdoBank12').checked=true"/></td>
+                  </tr>
+                  <tr>
+                    <td><input id="rdoBank13" name="pd_FrpId" type="radio" value="CIB-NET-B2C"/><img
+                        src="__PUBLIC__/images/banklogo/xingye.gif" onclick="document.getElementById('rdoBank13').checked=true"/></td>
+                    <td><input id="rdoBank14" name="pd_FrpId" type="radio" value="HXB-NET-B2C"/><img
+                        src="__PUBLIC__/images/banklogo/huaxia.gif" onclick="document.getElementById('rdoBank14').checked=true"/></td>
+                    <td><input id="rdoBank15" name="pd_FrpId" type="radio" value="ECITIC-NET-B2C"/><img
+                        src="__PUBLIC__/images/banklogo/zhongxin.gif" onclick="document.getElementById('rdoBank15').checked=true"/></td>
+                    <td><input id="rdoBank16" name="pd_FrpId" type="radio" value="HKBEA-NET-B2C"/><img
+                        src="__PUBLIC__/images/banklogo/dongya.gif" onclick="document.getElementById('rdoBank16').checked=true"/></td>
+                  </tr>
+                  <tr>
+                    <td><input id="rdoBank17" name="pd_FrpId" type="radio" value="BCCB-NET-B2C"/><img
+                        src="__PUBLIC__/images/banklogo/beijing.gif" onclick="document.getElementById('rdoBank17').checked=true"/></td>
+                    <td><input id="rdoBank18" name="pd_FrpId" type="radio" value="CBHB-NET-B2C"/><img
+                        src="__PUBLIC__/images/banklogo/buohai.gif" onclick="document.getElementById('rdoBank18').checked=true"/></td>
+                    <td><input id="rdoBank19" name="pd_FrpId" type="radio" value="HZBANK-NET-B2C"/><img
+                        src="__PUBLIC__/images/banklogo/hangzhou.gif" onclick="document.getElementById('rdoBank19').checked=true"/></td>
+                    <td><input id="rdoBank20" name="pd_FrpId" type="radio" value="NBCB-NET-B2C"/><img
+                        src="__PUBLIC__/images/banklogo/ningbo.gif" onclick="document.getElementById('rdoBank20').checked=true"/></td>
+                  </tr>
+                  <tr>
+                    <td><input id="rdoBank21" name="pd_FrpId" type="radio" value="SCCB-NET-B2C"/><img
+                        src="__PUBLIC__/images/banklogo/hebei.gif" onclick="document.getElementById('rdoBank21').checked=true"/></td>
+                    <td><input id="rdoBank22" name="pd_FrpId" type="radio" value="NJCB-NET-B2C"/><img
+                        src="__PUBLIC__/images/banklogo/nanjing.gif" onclick="document.getElementById('rdoBank22').checked=true"/></td>
+                    <td><input id="rdoBank23" name="pd_FrpId" type="radio" value="CZ-NET-B2C"/><img
+                        src="__PUBLIC__/images/banklogo/zheshang.gif" onclick="document.getElementById('rdoBank23').checked=true"/></td>
+                    <td><input id="rdoBank24" name="pd_FrpId" type="radio" value="SHB-NET-B2C"/><img
+                        src="__PUBLIC__/images/banklogo/shanghaibank.gif" onclick="document.getElementById('rdoBank24').checked=true"/>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><input id="rdoBank25" name="pd_FrpId" type="radio" value="NCBBANK-NET-B2C"/><img
+                        src="__PUBLIC__/images/banklogo/nanyanbank.gif" onclick="document.getElementById('rdoBank25').checked=true"/></td>
+                    <td><input id="rdoBank26" name="pd_FrpId" type="radio" value="BJRCB-NET-B2C"/><img
+                        src="__PUBLIC__/images/banklogo/nongcunshangye.gif" onclick="document.getElementById('rdoBank26').checked=true"/>
+                    </td>
+                    <td><input id="rdoBank27" name="pd_FrpId" type="radio" value="ICBC-NET-B2C"/><img
+                        src="__PUBLIC__/images/banklogo/gongshang2.gif" onclick="document.getElementById('rdoBank27').checked=true"/></td>
+                    <td></td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    
+      <tr>
+        <td align="center"><input type="Submit" value="付款" onclick="return Submit()" style="width: 60px"/></td>
+      </tr>
+    </table>
+  </div>
+  <script type="text/javascript">
+    document.getElementById("uid").value = getQueryString("uid");
+    document.getElementById("uid2").value = getQueryString("uid");
+  </script>
+</form>
+</body>
+</html>

@@ -1,0 +1,221 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<HTML xmlns="http://www.w3.org/1999/xhtml">
+<HEAD><TITLE>自动充值</TITLE>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<META http-equiv="Pragma" content="no-cache" />
+<LINK href="__PUBLIC__/css/v1/v1.css" rel="stylesheet" type="text/css" />
+<script language="javascript" type="text/javascript" src="__PUBLIC__/js/jquery.js"></script>
+<script language="javascript" type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+<script language="javascipt" type="text/javascript">
+$(function(){
+    if($(".needchangebg:even").eq(0).html() != null){
+        $(".needchangebg:even").find("td").css("background","#FAFCFE");
+        $(".needchangebg:odd").find("td").css("background","#F9F9F9");
+        $(".forzenuser").find("td").css("background","#FFE8E8");
+		$(".self_tr").find("td").css("background","#FFF4D2");
+        $(".needchangebg").hover(function(){
+            $(this).find("td").css("background","#E8F2FF");
+            $(".forzenuser").find("td").css("background","#FFE8E8");
+        },function(){
+            $(".needchangebg:even").find("td").css("background","#FAFCFE");
+            $(".needchangebg:odd").find("td").css("background","#F9F9F9");
+            $(".forzenuser").find("td").css("background","#FFE8E8");
+        }
+        );
+    }else{
+        $(".needchangebg:odd").find("td").css("background","#FAFCFE");
+        $(".needchangebg:even").find("td").css("background","#F9F9F9");
+		$(".forzenuser").find("td").css("background","#FFE8E8");
+		$(".self_tr").find("td").css("background","#FFF4D2");
+        $(".gametitle").css("background","#F9F9F9");
+        $(".needchangebg").hover(function(){
+            $(this).find("td").css("background","#E8F2FF");
+            $(".gametitle").css("background","#F9F9F9");
+        },function(){
+            $(".lt tr:odd").find("td").css("background","#FAFCFE");
+            $(".lt tr:even").find("td").css("background","#F9F9F9");
+            $(".gametitle").css("background","#F9F9F9");
+        }
+        );
+    }
+
+
+		
+	$(":radio").click(function(){
+			if($(this).val()==5){
+					$(".jh").show();
+			}else{
+				$(".jh").hide();	
+			}
+	});
+    
+})
+</script>
+<SCRIPT LANGUAGE='JavaScript'>function ResumeError() {return true;} window.onerror = ResumeError; </SCRIPT> 
+</HEAD>
+<BODY STYLE="background:#FFF url('/images/v1/main_bg_0001.jpg') 0px -490px repeat-x; padding:10px;"><DIV ID='main_box'>
+<div class="box l"></div>
+<div class="box c"></div>
+<div class="box r"></div>
+<div class="box m">
+
+<H1> <!-- <SPAN class="action-span"><A href="/account_savelist.shtml?check=790" target='_self'>充值记录</a></SPAN>--><SPAN class="action-span"></SPAN>
+<SPAN class="action-span1"><DIV class='icons_mb1'></DIV>当前位置: 充值 </SPAN><DIV style="clear:both"></DIV></H1>
+<script type="text/javascript">
+function checkForm(obj)
+{
+	if(obj.real_money.value < <{$czminmoney}>)
+	{
+		alert("充值金额不能低于最低充值限额 ");
+		$("#real_money").val(<{$czminmoney}>);
+		showPaymentFee();
+		return false;
+	}
+	if(obj.real_money.value > <{$czmaxmoney}>)
+	{
+		alert("充值金额不能高于最高充值限额 ");
+		$("#real_money").val(<{$czmaxmoney}>);
+		showPaymentFee();
+		return false;
+	}
+	s = obj.bankinfo.length;
+	ischecked = false;
+	for( i=0; i<s; i++ ){
+		if( obj.bankinfo[i].checked == true ){
+			ischecked = true;
+		}
+	}
+	if( ischecked == false ){
+		alert("请选择充值银行");
+		return false;
+	}
+
+	
+	if($(":radio:checked").val()==888){
+		//易宝提交地址
+		var yeepayurl="__APP__/user/yeepaypage";
+		obj.action=yeepayurl;
+		
+	}
+	
+}
+function showPaymentFee(){
+	document.drawform.real_money.value = document.drawform.real_money.value.replace(/\D+/g,'');
+	jQuery("#chineseMoney").html( changeMoneyToChinese(document.drawform.real_money.value) );
+}
+function changbank(obj){
+	var id = $(obj).attr("id");
+	id = parseInt(id.replace("bank_",""),10);
+	if( id == 3 ){
+				alert("请先绑定您的建行银行卡");
+		self.location = "./account_banks.shtml";
+		return false;
+			}
+	$("tr[id^=msg_]").hide();
+	$("#msg_bank_"+id).show();
+}
+</script>
+<STYLE>
+.info{line-height:21px;padding:8px 0px;}
+.info div{line-height:18px;font-size:12px;padding:0px;margin:0px;}
+div .q{color:#222;padding-left:18px;padding-top:3px;}
+div .a{color:#070;padding-left:18px;padding-top:3px;padding-bottom:12px;}
+.jh{display:none;}
+</STYLE>
+<div class="tab-div">
+	<div id="tabbar-div">
+		<span class="tab-front" id="general_tab_0">
+		  <span class="tabbar-left"></span>
+		  <span class="content">自动充值</span>
+		  <span class="tabbar-right"></span>
+		</span>
+	    <!-- 
+		<span class="tab-back" id="general_tab_2">
+		    <span class="tabbar-left"></span>
+		    <span class="content" onclick="window.location.href='./account_savelist.shtml?check=790'">充值记录</span>
+		    <span class="tabbar-right"></span>
+		</span>
+		 -->
+	</div>
+
+<div class="ld" style='width:99%;margin:5px 0px 0px 0px;'>
+<table width="100%" class="ct" border="0" cellspacing="0" cellpadding="0">
+<form action="__URL__/showBankInfo" method="post" name="drawform" id="drawform" onsubmit="return checkForm(this)">
+<input type="hidden" name="flag" value="confirm" />
+<tr>
+	<td class="nl"><font color="#FF3300">充值使用需知:</font></td>
+	<td STYLE='line-height:23px;padding:5px 0px'>
+	<!--每天的充值处理时间为：<font style="font-size:16px;color:#F30;font-weight:bold;">9:00-2:00</font><br />//
+	充值金额低于<font style="font-size:16px;color:#F30;font-weight:bold;">100</font>&nbsp;不享受“充值即返手续费”的优惠<br/>
+	-->
+	每天的充值处理时间为：<font style="font-size:16px;color:#F30;font-weight:bold;">早上 <{$czstarttime}> 至 次日凌晨 <{$czendtime}></font><br/>
+    
+    充值金额不得低于<font style="font-size:16px;color:#F30;font-weight:bold;"><{$czminmoney}></font>&nbsp;<br/>
+	充值后, <font color='#ff0000'>请手动刷新您的余额</font>及查看相关帐变信息,若超过1分钟未上分,请与客服联系<br/>
+	选择充值银行, 填写充值金额, 点击 <font color=#0000FF>[下一步]</font> 后, 将有详细文字说明及<font color=red>充值演示</font>
+	</td>
+</tr>
+<tr>
+	<td class="nl">充值银行: </td>
+    <td style='height:60px;'>
+    <volist name="banklist" id="vo">
+    <input type="radio" id='bank_1' name="bankinfo" value="<{$vo.id}>"  onclick="changbank(this)" />&nbsp;<label for='bank_1'><img STYLE='cursor:pointer;' src="/images/bank/<{$vo.id}>.jpg" /></label>&nbsp;&nbsp;&nbsp;
+
+	<?php
+		if($i>3){
+			echo "<br>";
+		}
+	?>
+    </volist>
+	
+	<!--
+	
+    	
+	-->
+	 <input type="radio" id='bank_1' name="bankinfo" value="888"  onclick="changbank(this)" />&nbsp;<label for='bank_1'><img STYLE='cursor:pointer;' src="/images/bank/yeepay.png"  width="125" height="35"/></label>&nbsp;&nbsp;&nbsp;
+	
+    &nbsp;&nbsp;<span style="color:red; display:none"><input type="radio" name="bankinfo" value="" /></span>
+    </td>
+</tr>
+<tr id="msg_bank_3" style="display:none;">
+	<td class="nl">您要汇款的银行卡</td>
+    <td style="font-size:12px; font-weight:bold; color:#FF0000; line-height:20px;">
+    <select name="mybank" id="mybank">
+    		    </select>&nbsp;&nbsp;
+    使用建行充值时，必须使用您选择的建行卡进行汇款，否则不能到账！
+    </td>
+</tr>
+<tr>
+	<td class="nl">充值金额: </td>
+    <td style='height:66px;'><input type="text" name="real_money" id="real_money" maxlength="10" onkeyup="showPaymentFee();" />
+	&nbsp;&nbsp;<span style="color:red;"></span> ( 单笔充值限额：最低：&nbsp;<font style="color:#FF3300"><{$czminmoney}></font>&nbsp;元，最高：&nbsp;<font style="color:#FF3300"><{$czmaxmoney}></font>&nbsp;元 ) </td>
+</tr>
+<tr>
+	<td class="nl">充值金额(大写): </td>
+    <td style='height:60px;'>&nbsp;<span id="chineseMoney"></span><input type="hidden" id="hiddenchinese" /></td>
+</tr>
+
+<tr class="jh">
+	<td class="nl">打款卡号: </td>
+    <td style='height:66px;'><input type="text" name="dkkh" id="dkkh" maxlength="20"  />
+	&nbsp;&nbsp;<span style="color:red;">您使用打款的建行卡号,请正确输入否则无法到帐</span>  </td>
+</tr>
+<tr class="jh">
+	<td class="nl">打款人名: </td>
+    <td style='height:66px;'><input type="text" name="dkrm" id="dkrm" maxlength="20"  />
+	&nbsp;&nbsp;<span style="color:red;">您使用打款的建行卡的开户姓名,请正确输入否则无法到帐</span>  </td>
+</tr>
+<tr>
+	<td class="nl"></td>
+	<td height="30"><br/><button name="submit" type="submit" width='69' height='26' class="btn_next" /></button>
+	&nbsp;&nbsp;&nbsp;&nbsp;<br/><br/></td>
+</tr>
+</form>
+</table>
+</div>
+<div id="footer"><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td align="center"><table align="center" width="450">
+<tr><td align="left"><font color='#000000'>浏览器建议：首选IE 8.0浏览器，其次为火狐浏览器。</font></td></tr>
+</table></td></tr><tr><td></td></tr></table></div>
+<br/><br/>
+</div></div>
+</BODY></HTML>

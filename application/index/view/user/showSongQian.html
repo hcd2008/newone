@@ -1,0 +1,67 @@
+<include file="Public:head" />
+<BODY STYLE="background:#FFF url('/images/v1/main_bg_0001.jpg') 0px -490px repeat-x; padding:10px;"><DIV ID='main_box'>
+<div class="box l"></div>
+<div class="box c"></div>
+<div class="box r"></div>
+<div class="box m">
+
+<H1>
+<SPAN class="action-span1"><DIV class='icons_mb1'></DIV>当前位置: 开户有礼活动
+</SPAN><DIV style="clear:both"></DIV></H1>
+<STYLE>
+.info{line-height:21px;padding:8px 0px;}
+.info div{line-height:18px;font-size:12px;padding:0px;margin:0px;}
+div .q{color:#222;padding-left:18px;padding-top:3px;}
+div .a{color:#070;padding-left:18px;padding-top:3px;padding-bottom:12px;}
+</STYLE>
+<div class="tab-div">
+
+<div class="ld" style='width:99%;margin:5px 0px 0px 0px;'>
+<table width="100%" class="ct" border="0" cellspacing="0" cellpadding="0">
+<form action="__URL__/doSongQian" method="post" name="drawform" id="drawform">
+<input type="hidden" name="flag" value="getgift" />
+<tr>
+	<td class="nl">活动主题：</td>
+	<td STYLE='line-height:20px;padding:5px 0px'><font style="font-size:16px;color:#F30;font-weight:bold;">开户有礼活动</font>
+	</td>
+</tr>
+<tr>
+	<td class="nl">活动内容</td>
+    <td class='info' style="font-size:14px;">
+活动期间，注册并绑定银行卡后，即可领取<font color='red'><{$money}></font></>元的开户礼金。<br/>
+	</td>
+</tr>
+<tr>
+	<td class="nl">活动规则</td>
+    <td class='info' style="font-size:12px;line-height:25px;">
+1, 新会员登录“<{$webname}>”平台，绑定<font color="#0000FF">银行</font>卡（<font color="#FF0000">并且锁定</font>），即可领取彩金。</font><br/>
+2, 银行卡绑定成功后，活动期间内禁止修改，必须使用这张银行卡进行第一次提现，请仔细核对。<br/>
+3, 通过下方<font color='#0086A8'>【领取红包】</font>，自助式领取开户礼金。<br/>
+
+4, 同IP，同身份申请多个账户者,所领取的彩金视为无效彩金，平台有权清空此帐户的彩金。<br/>
+5, “<{$webname}>”将对本次活动全程监控，活动禁止违规操作，如有发现，一律严惩！<br/>
+<!--
+4, 参与活动的账户， <font color='blue'>投注总额</font> 达到<font color='red'>188</font>元，即可全额提现。<br/>
+-->
+	</td>
+</tr>
+<tr>
+	<td class="nl"></td>
+	<td height="30">
+	<eq name="isdo" value="1">
+	<font color="red">你已经领取过了!</font>
+	<else/>
+	<button name="submit" type="submit" width='69' height='26' class="btn_bonus" />
+	</eq>
+	
+	</td>
+</tr>
+</form>
+</table>
+</div>
+<div id="footer"><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td align="center"><table align="center" width="450">
+<tr><td align="left"><font color='#000000'>浏览器建议：首选IE 8.0浏览器，其次为火狐浏览器。</font></td></tr>
+</table></td></tr><tr><td></td></tr></table></div>
+<br/><br/>
+</div></div>
+</BODY></HTML>

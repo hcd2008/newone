@@ -1,0 +1,73 @@
+<include file="Public:head" />
+<BODY STYLE="background:#FFF url('/images/v1/main_bg_0001.jpg') 0px -490px repeat-x; padding:10px;"><DIV ID='main_box'>
+<div class="box l"></div>
+<div class="box c"></div>
+<div class="box r"></div>
+<div class="box m">
+
+<H1>
+<SPAN class="action-span1"><DIV class='icons_mb1'></DIV>当前位置: 领奖活动
+</SPAN><DIV style="clear:both"></DIV></H1>
+<STYLE>
+.info{line-height:21px;padding:8px 0px;}
+.info div{line-height:18px;font-size:12px;padding:0px;margin:0px;}
+div .q{color:#222;padding-left:18px;padding-top:3px;}
+div .a{color:#070;padding-left:18px;padding-top:3px;padding-bottom:12px;}
+</STYLE>
+<div class="tab-div">
+
+<div class="ld" style='width:99%;margin:5px 0px 0px 0px;'>
+<table width="100%" class="ct" border="0" cellspacing="0" cellpadding="0">
+<form action="__URL__/doLinJiang" method="post" name="drawform" id="drawform">
+<input type="hidden" name="flag" value="getgift" />
+<tr>
+	<td class="nl">活动主题：</td>
+	<td STYLE='line-height:20px;padding:5px 0px'><font style="font-size:16px;color:#F30;font-weight:bold;">
+	领奖活动 </font>
+	</td>
+</tr>
+<tr>
+	<td class="nl">活动内容</td>
+    <td class='info' style="font-size:14px;">
+根据用户的账户余额与当天最少消费额，领取相应的奖励。<br/>
+	</td>
+</tr>
+<tr>
+	<td class="nl">活动说明</td>
+    <td class='info' style="font-size:12px;line-height:25px;">
+1, 初级领奖:说明:<{$startTime}>-<{$endTime}>,初级领奖，最少消费额<{$ljxiaofei1}>，和账户余额<{$liYG1}>，可领取初级领奖活动。奖金<font color="red"><{$ljMoney1}></font>RMB。<br/>
+2, 中级领奖:说明:<{$startTime}>-<{$endTime}>,中级领奖，最少消费额<{$ljxiaofei2}>，和账户余额<{$liYG2}>，可领取中级领奖活动。奖金<font color="red"><{$ljMoney2}></font>RMB。<br/>
+3, 高级领奖:说明:<{$startTime}>-<{$endTime}>,高级领奖，最少消费额<{$ljxiaofei3}>，和账户余额<{$liYG3}>，可领取高级领奖活动。奖金<font color="red"><{$ljMoney3}></font>RMB 。<br/>
+4, 注：客户最少消费额为已开奖订单非撤单订单的总消费额。<br/>
+5, 平台将对本次活动全程监控，活动禁止违规操作，如有发现，一律严惩。<br/>
+
+
+	</td>
+</tr>
+<tr>
+	<td class="nl">您今天的消费额</td>
+	<td class='info' style="font-size:12px;line-height:25px;">
+	
+		<font color="red"><{$yhXF}></>元</font>
+		
+	</td>
+</tr>
+<tr>
+	<td class="nl">&nbsp;</td>
+	<td height="30">
+	
+	
+
+	<button name="submit" type="submit" width='69' height='26' class="btn_bonus" value="111" />
+	</td>
+</tr>
+
+</form>
+</table>
+</div>
+<div id="footer"><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td align="center"><table align="center" width="450">
+<tr><td align="left"><font color='#000000'>浏览器建议：首选IE 8.0浏览器，其次为火狐浏览器。</font></td></tr>
+</table></td></tr><tr><td></td></tr></table></div>
+<br/><br/>
+</div></div>
+</BODY></HTML>

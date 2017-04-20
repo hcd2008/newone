@@ -1,0 +1,72 @@
+<include file="Public:head" />
+<BODY STYLE="background:#FFF url('/images/v1/main_bg_0001.jpg') 0px -490px repeat-x; padding:10px;"><DIV ID='main_box'>
+<div class="box l"></div>
+<div class="box c"></div>
+<div class="box r"></div>
+<div class="box m">
+
+<H1>
+<SPAN class="action-span1"><DIV class='icons_mb1'></DIV>当前位置: 欢乐送
+</SPAN><DIV style="clear:both"></DIV></H1>
+<STYLE>
+.info{line-height:21px;padding:8px 0px;}
+.info div{line-height:18px;font-size:12px;padding:0px;margin:0px;}
+div .q{color:#222;padding-left:18px;padding-top:3px;}
+div .a{color:#070;padding-left:18px;padding-top:3px;padding-bottom:12px;}
+.subbtn{ width:89px; height:26px; border:0; text-align:center; font-size:12px; color:#fff; cursor:pointer; background:url(/images/v1/subbtn.gif) no-repeat; font-weight:bold;}
+</STYLE>
+<div class="tab-div">
+
+<div class="ld" style='width:99%;margin:5px 0px 0px 0px;'>
+<form action="__URL__/doHlSong" method="post" name="drawform" id="drawform">
+<table width="100%" class="ct" border="0" cellspacing="0" cellpadding="0">
+
+
+<tr>
+	<td class="nl">活动主题：</td>
+	<td STYLE='line-height:20px;padding:5px 0px'><font style="font-size:16px;color:#F30;font-weight:bold;">欢乐送</font>
+	</td>
+</tr>
+<tr>
+	<td class="nl">活动内容</td>
+    <td class='info' style="font-size:14px;color:green">
+					1:每天每个账号可以领取<{$songMoney}>元。只能领取一次。<br/>
+				  	2:今日消费总和满<{$xjjrxf}></>元方可参加。
+				    
+	</td>
+</tr>
+<tr>
+	<td class="nl">今日您的消费量</td>
+    <td class='info' style="font-size:14px;color:green">
+					<font color="red"><{$jrxf}></>元</font>
+				    
+	</td>
+</tr>
+<tr>
+	
+    <td colspan=2 class='info' style="font-size:12px;line-height:25px;" align="center"> 
+	 <img alt="" src="/images/v1/hls.jpg" width="780" height="168">
+
+	</td>
+</tr>
+ <tr>
+				  
+				  	<td style="padding-left:10px;" colspan="2" align="center">
+				    <eq name="isCJ" value="0">
+                <font color="red">你已经参加过了!</font>
+				<else/>
+                  
+				  <input name="button" style="height:26px;" type="submit" class="subbtn" id="button" value="点我领取" />
+                   </eq>  
+				    </td>
+ 				 </tr>
+
+</table>
+</form>
+</div>
+<div id="footer"><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td align="center"><table align="center" width="450">
+<tr><td align="left"><font color='#000000'>浏览器建议：首选IE 8.0浏览器，其次为火狐浏览器。</font></td></tr>
+</table></td></tr><tr><td></td></tr></table></div>
+<br/><br/>
+</div></div>
+</BODY></HTML>

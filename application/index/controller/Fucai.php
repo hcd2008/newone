@@ -65,6 +65,7 @@ class Fucai extends Base
 
 	public function ltGethistory()
 	{
+		$param=$this->request->param();
 		isset($param['issue']) or $param['issue']='';
 		$issue = formatstr($param['issue']);
 		$ajaxStr = array();

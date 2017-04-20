@@ -1,0 +1,147 @@
+<include file="Public:head" /> 
+</HEAD>
+<BODY STYLE="background:#FFF url('/images/v1/main_bg_0001.jpg') 0px -490px repeat-x; padding:10px;"><DIV ID='main_box'>
+<div class="box l"></div>
+<div class="box c"></div>
+<div class="box r"></div>
+<div class="box m">
+
+<H1><SPAN class="action-span"><A href="__APP__/Users/" target='mainframe'>增加用户</a></SPAN>
+<SPAN class="action-span1"><DIV class='icons_mb1'></DIV>当前位置: 用户列表 </SPAN><DIV style="clear:both"></DIV></H1>
+<SCRIPT type="text/javascript" src="__PUBLIC__/js/calendar/jquery.dyndatetime.js"></SCRIPT>
+<script type="text/javascript" src="__PUBLIC__/js/calendar/lang/calendar-utf8.js"></SCRIPT>
+<LINK rel="stylesheet" type="text/css" media="all" href="__PUBLIC__/js/calendar/css/calendar-blue2.css"  />
+<script language="javascript">
+function getTeamBank(obj, uid) {
+    if (jQuery(obj).closest("tr").next(".showteam").html() != null) {
+        jQuery(obj).closest("tr").next(".showteam").show();
+    } else {
+        var html = '<tr class="showteam"><td height="20" colspan=5>&nbsp;</td><td align="center"><span>正在读取数据....</span></td></tr>';
+        jQuery(obj).closest("tr").after(html);
+        jQuery.ajax({
+            type: "GET",
+            url: "__URL__/getTuanDuiMoney?dq="+ new Date().getTime()+"&uid=" + uid,
+            dataType: "json",
+            cache: false,
+            success: function(data) {
+                jQuery(obj).closest("tr").next(".showteam").find("span").html(data.error);
+                if (data.error == "error") {
+                    jQuery(obj).closest("tr").next(".showteam").find("span").html('抱歉, 您没有权限&nbsp;&nbsp;<a href="javascript:" style="color:#CF0;" onclick="hideTeam(this)">[关闭]</a>');
+                } else {
+                    if (data.error == "0") {
+                        jQuery(obj).closest("tr").next(".showteam").find("span").html('团队余额: <font color="#FFCC33">' + moneyFormat(data.result) + '</font>&nbsp;游戏币&nbsp;&nbsp;<a href="javascript:" style="color:#CF0;" onclick="hideTeam(this)">[关闭]</a>');
+                    } else {
+                        return true;
+                    }
+                }
+            }
+        });
+    }
+}
+function hideTeam(obj) {
+    jQuery(obj).closest("tr").hide();
+}
+</script>
+<div class="ld">
+<table class='st' border="0" cellspacing="0" cellpadding="0">
+<form action="__URL__/userlistContent" method="get" name="search" onSubmit="return checkForm(this)">
+<input type="hidden" name="frame" value="show" />
+<input type="hidden" name="flag" value="search" />
+	<tr>
+    	<td width='200'>用户名: <input type="text" size="16" name="username" value="" /></td>
+        <td>账户余额: <input type="text" size="10" name="bank_min" value="" onKeyUp="checkMoney(this)" /> 至 <input type="text" size="10" name="bank_max" value="" onKeyUp="checkMoney(this)" />
+        &nbsp;&nbsp;&nbsp;&nbsp;排序：<select name="sortby">
+        			<option value="default" >默认排序</option>
+        			<option value="username" >用户名</option>
+                    <option value="bank" >账户余额</option>
+                    
+                </select>
+                <input type="checkbox" name="sortbymax" value="1"   />从大到小
+                
+                
+                <input type="checkbox" name="online" value="1"   />当前在线
+		
+		</td>
+    </tr>
+    <tr>
+	<td>用户级别: <select name="my_search[usertype]" style="width:100px; height:20px;">
+        			<option value="-10" selected="selected">请选择..</option>
+                    <option value="1" >代理用户</option>
+                    <option value="0" >会员用户</option>
+                   </select></td>
+        <td>
+		<button name="submit" type="submit" width='69' height='26' class="btn_search" /></button>
+        </td>
+    </tr>
+</form>
+</table>
+</div>
+
+<div style="clear:both; height:10px;"></div>
+
+<div class="ld" >
+<table class="lt" border="0" cellspacing="0" cellpadding="0">
+<form action="./" method="get">
+	<tr>
+    	<td class='t' colspan="7"><div>
+		&nbsp;&nbsp;<a href="__ACTION__" target="userlist_content">我的用户</a>			<{$usersDaoHang}>		</div></td>
+    </tr>
+    <tr class='th'>
+    	<td>用户名</td>
+        <td><div class='line'></div>用户级别</td>
+        <td><div class='line'></div>余额</td>
+        <td><div class='line'></div>在线状态</td>    
+        <td><div class='line'></div>注册时间</td>
+        <td><div class='line'></div>操作</td>
+    </tr>
+    <volist name="userContentList" id="vo">
+    <if condition="$vo.self eq 1">
+    	<tr  class="self_tr" >
+    	<td align="left" height="20">&nbsp;&nbsp;<{$vo.username}></td>
+        <td align="center"><{$vo.jibie}>级<{$vo.usertype}></td>
+        <td align="center"><{$vo.money}></td>
+        <td align="center"><{$vo.online}></td>     
+        <td align="center"><{$vo.addtime}></td>
+        <td align="center">
+        			<eq name="vo.jibie" value="1">
+			            <a href="__URL__/editUser?username=<{$vo.username}>">编辑</a>
+			        </eq>    
+			            <if condition="$vo.jibie eq 1">
+							 <a href="__APP__/Account?username=<{$vo.username}>&range=2">帐变</a>
+			             </if>
+                          <a href="__APP__/User/mySet/username/<{$vo.username}>">用户详情</a>
+            <a href="javascript:" onclick="getTeamBank(this,<{$vo.id}>)">团队余额</a>
+                                </td>
+    </tr>
+    <else/>
+    <tr  class="needchangebg" >
+    	<td align="left" height="20">&nbsp;&nbsp;<a href="__ACTION__?uid=<{$vo.id}>" target="userlist_content" style="color:#003399; text-decoration:none;"><{$vo.username}></td>
+        <td align="center"><{$vo.jibie}>级<{$vo.usertype}></td>
+        <td align="center"><{$vo.money}></td>
+         <td align="center"><{$vo.online}></td>           
+        <td align="center"><{$vo.addtime}></td>
+        <td align="center">
+        			<eq name="vo.jibie" value="1">
+			             <a href="__URL__/editUser?username=<{$vo.username}>">编辑</a>
+			         </eq>    
+			            <if condition="$vo.jibie eq 1">
+							  <a href="__APP__/Account?username=<{$vo.username}>&range=2">帐变</a>
+			             </if>
+                        <a href="__APP__/User/mySet/username/<{$vo.username}>">用户详情</a>
+            <a href="javascript:" onclick="getTeamBank(this,<{$vo.id}>)">团队余额</a>
+                                </td>
+    </tr>
+    </if>
+        
+    </volist>
+      <tr><td class='b' colspan="7"><div style='text-align:right;'><{$page}></div></td></tr>
+</form>
+</table>
+</div>
+
+<div id="footer"><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td align="center"><table align="center" width="450">
+<tr><td align="left"><font color='#000000'>浏览器建议：首选IE 8.0浏览器，其次为火狐浏览器。</font></td></tr>
+</table></td></tr><tr><td></td></tr></table></div>
+<br/><br/>
+</div></div>
+</BODY></HTML>

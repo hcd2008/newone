@@ -1,0 +1,284 @@
+<include file="Public:head" />
+<script language="javascript" src="__PUBLIC__/js/dialog/jquery.dialogUI.js"></script>
+<BODY STYLE='background-color:#838383;'>
+<DIV ID='main_box_s2'><DIV class='icons_mb2'></DIV>当前位置: 增加用户 </DIV>
+<br/><STYLE>
+.ct2 .nl{width:14%;}
+.tab-div-s2 .bd{width:806px;_width:804px;*+margin-top:0px;}
+#tabbar-div-s2 .tab-back {*margin-top:7px;*height:32px;*overflow:hidden}
+.tabbar-div-s3{margin-left:12px;}
+.tabbar-div-s3 .tab-front {margin:0px 3px 0px 3px;}
+.tabbar-div-s3 .tab-front .content{padding:0px 5px 0px 4px;}
+.tabbar-div-s3 .tab-back {margin:0px 3px 0px 3px;}
+.tabbar-div-s3 .tab-back .content{padding:0px 5px 0px 4px;}
+</STYLE>
+<script type="text/javascript">
+;(function($){
+$(document).ready(function(){
+	$("span[id^='general_tab_']","#tabbar-div-s2").click(function(){
+		$k = $(this).attr("id").replace("general_tab_","");
+		$k = parseInt($k,10);
+		$("span[id^='general_tab_']","#tabbar-div-s2").attr("class","tab-back");
+		$("div[id^='general_txt_']").hide();
+		$(this).attr("class","tab-front");
+		$("#general_txt_"+$k).show();
+		$k==1 ? $("span[id^='tabbar_tab_']:first").click() : "";
+		$k==1 ? $("#addtype").val("xx") : $("#addtype").val("ks");
+	});
+	$("span[id^='tabbar_tab_']").click(function(){
+		$z = $(this).attr("id").replace("tabbar_tab_","");
+		$("span[id^='tabbar_tab_']").attr("class","tab-back");
+		$("table[id^='tabbar_txt_']").hide();
+		$(this).attr("class","tab-front");
+		$("#tabbar_txt_"+$z).show();
+	});
+	$("span[id^='general_tab_']:first","#tabbar-div-s2").click();
+		$(":checkbox[id^='selall_']").click(function(){
+		var lotid = $(this).attr("id").replace("selall_","");
+		$("#tabbar_txt_"+lotid).find("input[type='checkbox']").attr("checked",$(this).attr("checked"));
+	});
+	$("input[type='text'][name^='point_']").keyup(function(){
+		$(this).val( filterPercent($(this).val()) );
+		$(this).closest("tr").find("input[type='checkbox']").attr("checked",true);
+	});
+	$("input[type='button'][name^='tpbutton_']").click(function(){
+		var lotid = $(this).attr("id").replace("tpbutton_","");
+		var p = filterPercent($("#tpoint_"+lotid).val());
+		$("input[type='text'][name^='point_'][title!='spec']","#tabbar_txt_"+lotid).val(p);
+		$("input[type='checkbox'][id^='method_'][title!='spec']","#tabbar_txt_"+lotid).attr("checked",true);
+	});
+	$("input[type='text'][name^='tpoint_']").keyup(function(){
+		$(this).val( filterPercent($(this).val()) );
+	});
+	$("#dinwei").keyup(function(){
+		$(this).val( filterPercent($(this).val()) );
+	});
+	$("#budinwei").keyup(function(){
+		$(this).val( filterPercent($(this).val()) );
+	});
+});
+})(jQuery);
+//dinwei=parseFloat(8.21);
+
+
+//alert(Math.round(dinwei*100)%10);
+function checkform(obj)
+{
+  if( !validateUserName(obj.username.value) )
+  {
+	 $.alert("<IMG src='/images/comm/t.gif' class=icons_mb5_e style='margin:5px 15px 0 0;'>登陆帐号 不符合规则");
+	 obj.username.focus();
+	 return false;
+  }
+  if( !validateUserPss(obj.password.value) )
+  {
+	  $.alert("<IMG src='/images/comm/t.gif' class=icons_mb5_e style='margin:5px 15px 0 0;'>登陆密码 不符合规则");
+	obj.password.focus();
+	return false;
+  }
+  if( !validateNickName(obj.nickname.value) )
+  {
+	  $.alert("<IMG src='/images/comm/t.gif' class=icons_mb5_e style='margin:5px 15px 0 0;'>呢称 不符合规则");
+	obj.nickname.focus();
+	return false;
+  }
+  	var	jffixed = document.getElementById("jffixed") ;
+	var jfauto = document.getElementById("jfauto") ;
+	var	jf1900 = document.getElementById("jf1900") ;
+	var	jf1800 = document.getElementById("jf1800") ;
+	var	jf1700 = document.getElementById("jf1700") ;
+	if( (jf1900 != null && jf1900.checked == true) || (jf1800 != null && jf1800.checked == true) || (jf1700 != null && jf1700.checked == true)  )
+	{
+		jffixed.checked = true;
+	}
+	if( (jffixed == null || jffixed.checked == false) && (jfauto == null || jfauto.checked == false))
+	{
+		$.alert("至少选择一种奖金模式");
+		return false;
+	}
+	if( (jffixed != null && jffixed.checked == true) && (jf1900 == null || jf1900.checked == false) && (jf1800 == null || jf1800.checked == false) && (jf1700 == null || jf1700.checked == false)  )
+	{
+		$.alert("开通固定奖金模式至少选择一种奖金模式");
+		return false;
+	}
+
+	
+
+  
+  if( $("#addtype").val() == 'xx' ){
+  	isverfer = true;
+	$("input[type='checkbox'][id^='method_']").each(function(){
+		if( $(this).attr("checked") ==  true ){
+			id   = $(this).attr("id").replace("method_","");
+			maxp = Number($("input[name='maxpoint_"+id+"']").val());
+			point= Number($("input[name='point_"+id+"']").val());
+			if( point > maxp || point < 0 ){
+				$("input[name='point_"+id+"']").nextAll("span").html('&nbsp;&nbsp;<font color="red">返点错误</font>').show();
+				isverfer = false;
+			}else{
+				$("input[name='point_"+id+"']").nextAll("span").html('');
+			}
+		}
+	});
+	if( isverfer == false ){
+		$.alert("<IMG src='/images/comm/t.gif' class=icons_mb5_e style='margin:5px 15px 0 0;'>返点设置错误，请检查");
+		return false;
+	}
+  }else{
+	  keepdinwei = Number($("#keepdinwei").val());
+	 
+
+		if($("#dinwei").val()==""){
+			$.alert("<IMG src='/images/comm/t.gif' class=icons_mb5_e style='margin:5px 15px 0 0;'>返点不能为空，请检查");
+			return false;
+		}	
+	  
+	  dinwei= Number($("#dinwei").val());
+	 
+
+		
+	if( dinwei > keepdinwei || dinwei < 0 ){
+		$.alert("<IMG src='/images/comm/t.gif' class=icons_mb5_e style='margin:5px 15px 0 0;'>返点范围设置错误，请检查");
+		return false;
+	}
+	
+	if(Math.round(dinwei*100)%10!=0){
+		$.alert("<IMG src='/images/comm/t.gif' class=icons_mb5_e style='margin:5px 15px 0 0;'>返点只能为0.1的倍数");
+		return false;
+	}
+	if(jf1900 != null && jf1900.checked == true){
+
+		if(dinwei<5){
+			$.alert("<IMG src='/images/comm/t.gif' class=icons_mb5_e style='margin:5px 15px 0 0;'>开启固定1900模式,返点最少为5%");
+			return false;
+		}
+
+	}
+
+	
+  }
+  obj.submit.disabled=true;
+  return true;
+}
+//返点输入框输入过滤
+function filterPercent(num){
+	num = num.replace(/^[^\d]/g,'');
+	num = num.replace(/[^\d.]/g,'');
+	num = num.replace(/\.{2,}/g,'.');
+	num = num.replace(".","$#$").replace(/\./g,"").replace("$#$",".");
+	if( num.indexOf(".") != -1 ){
+		var data = num.split('.');
+		num = (data[0].substr(0,3))+'.'+(data[1].substr(0,1));
+	}else{
+		num = num.substr(0,3);
+	}
+	num = num > 100 ? 100 : num;
+	return num;
+}
+</script>
+
+<CENTER>
+<div class="div_s1" style='text-align:left'>
+<form method="post" name="updateform" action="__URL__/addUser" onsubmit="return checkform(this)">
+<input type="hidden" name="addtype" id="addtype" value="ks" />
+<input type="hidden" name="flag" value="insert" />
+<div class='header'><DIV class='icons_mb3'></DIV> 填写基本信息</div>
+<div class="tab-div-s2" STYLE='border-top: 1px solid #505050;'>
+    <div STYLE='background-color:#333;'><table class="ct2" border="0" cellspacing="0" cellpadding="0">
+	    <eq name='isreg' value='1'>
+	    <tr>
+		<td class="nl">推荐注册:</td>
+		<td>
+			
+			<label><span id="copy_name_txt" style="padding-right:10px;"><{$url}></span><a href='#' TITLE='复制' onClick="javascript:copyToClipboard( 'copy_name_txt','【推荐注册地址】' );return false;" ><img src="/images/comm/copy.gif" border="0" />复制</a></label>
+		</td>
+	  </tr>
+	  </eq>
+	  <tr>
+		<td class="nl">用户级别:</td>
+		<td>
+			<label><input type="radio" name="usertype" value="1" checked="checked" />代理用户</label>&nbsp;&nbsp;
+			<label><input type="radio" name="usertype" value="0" />会员用户</label>
+		</td>
+	  </tr>
+	  <tr>
+		<td class="nl">登陆帐号:</td>
+		<td><input type="text" name="username" class='w160'/> <span class='helpinfo'>( 由0-9,a-z,A-Z组成的6-16个字符 )</span></td>
+	  </tr>
+	  <tr>
+		<td class="nl">登陆密码:</td>
+		<td><input type="password" name="password" class='w160'/> <span class='helpinfo'>( 由字母和数字组成6-16个字符；且必须包含数字和字母，不允许连续三位相同 )</span></td>
+	  </tr>
+	  <tr>
+		<td class="nl">用户呢称:</td>
+		<td><input type="text" name="nickname" class='w160'/> <span class='helpinfo'>( 由2至8个字符组成 )</span></td>
+	  </tr>
+	 <tr>
+		<td class="nl">游戏模式:</td>
+		<td>
+		<eq name="jfauto_isopen" value="1">
+			自由调节游戏模式：<input type="checkbox" name="jfauto" id="jfauto" value="1"/><br/>
+		</eq>
+		<eq name="jffixed_isopen" value="1">
+			固定奖金游戏模式：<input type="checkbox" name="jffixed" id="jffixed" value="1"/> &nbsp;&nbsp;
+			(
+			<eq name="jf1900_isopen" value="1">
+			1900模式<input type="checkbox" name="jf1900" id="jf1900" value="1" />&nbsp; &nbsp; 
+			</eq>
+			<eq name="jf1800_isopen" value="1">
+                1800模式<input type="checkbox" name="jf1800" id="jf1800" value="1"  />&nbsp; &nbsp; 
+            </eq>
+            <eq name="jf1700_isopen" value="1">
+                1700模式<input type="checkbox" name="jf1700" id="jf1700" value="1" />
+            </eq>
+			)
+		</eq>	
+			
+		</td>
+	  </tr>
+      	</table>
+     </div>
+     
+	<table width='100%' border="0" cellspacing="0" cellpadding="0"><tr><td id="tabbar-div-s2">
+	    <span class="tab-front"  id="general_tab_0">
+		  <span class="tabbar-left"></span>
+		  <span class="content">返点设置</span>
+		  <span class="tabbar-right"></span>
+		</span>
+	
+	</td></tr>
+	</table>
+	<div class='bd'><div class='bd2' id="general_txt_0"><BR/>
+		
+	 <div STYLE='margin:0 0 18px 40px;font-size:14px;color:#FFF;'>
+	 <table>
+	 	<tr>
+	 		<td>时时彩返点: </td>
+	 		<td><input type="text" name="dinwei" id="dinwei" style='width:45px;'/> %</td>
+	 		<td> <span class='helpinfo'>(可填范围: 0～<{$keepdinwei}> ) 以1800模式为标准, 只能为0.1的倍数</span></td>
+	 	</tr>
+	 	<tr>
+	 		<td>福彩/排列/11选5返点: </td>
+	 		<td><input type="text" name="dinwei2" id="dinwei2" style='width:45px;'/> %</td>
+	 		<td> <span class='helpinfo'>(可填范围: 0～<{$keepdinwei2}> ) 以1800模式为标准, 只能为0.1的倍数</span></td>
+	 	</tr>
+	 	<tr>
+	 		<td colspan="3" align="center">
+			 	<input type="hidden" name="keepdinwei" id="keepdinwei" value="<{$keepdinwei}>" />
+				<input type="hidden" name="keepbudinwei" id="keepbudinwei" value="<{$keepbudinwei}>" />
+				<input name='submit1' type="submit" value="&nbsp;执行开户&nbsp;">
+	 		</td>
+	 		
+	 	</tr>
+	 </table>
+	
+	
+	</div>
+	</div></div>
+	
+</div></form></div>
+<BR/><div class="div_s1" style='line-height:22px;'>
+<table STYLE='background-color:#E3E3E3;' width="100%" align="center" border="0" cellspacing="0" cellpadding="0">
+<tr><td align="center"><font color='#333333'>浏览器建议：首选IE 8.0浏览器，其次为火狐浏览器。</font><br/>
+</td></tr></table>
+</div></CENTER><br/><br/></BODY></HTML>
