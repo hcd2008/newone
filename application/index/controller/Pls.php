@@ -91,7 +91,7 @@ class Pls extends Base
 			$today = date('Y-m-d', strtotime('+1 day'));
 		}
 
-		$curIssueData = DB::name($this->time_table)->where('begintime<=\'' . $servertime . '\' and endtime>\'' . $servertime . '\'')->find();
+		$curIssueData = DB::name($this->time_table)->where('begintime<=\'' . $servertime . '\' and endtime>\'' . $today . '\'')->find();
 		$date2 = strtotime($today);
 		$date1 = strtotime('01/01/2016');
 		$diff = (int) ($date2 - $date1) / (24 * 3600);
@@ -173,10 +173,18 @@ class Pls extends Base
 		$date1 = strtotime('01/01/2016');
 		$diff = (int) ($date2 - $date1) / (24 * 3600);
 		$qishu = sprintf('%03d', 1 + $diff);
-		$lottery_num = sprintf('%03d', $issueData[0]['lottery_num']);
+		if($arrsum){
+			$lottery_num = sprintf('%03d', $issueData[0]['lottery_num']);
+			$cur_issue['endtime'] = $taoday . $issueData[0]['endtime'];
+			$cur_issue['opentime'] = $taoday . $issueData[0]['opentime'];
+		}else{
+			$lottery_num = sprintf('%03d', '排列三、五');
+			$cur_issue['endtime'] = $taoday;
+			$cur_issue['opentime'] = $taoday;
+		}
+		
 		$cur_issue['issue'] = date('y') . $qishu;
-		$cur_issue['endtime'] = $taoday . $issueData[0]['endtime'];
-		$cur_issue['opentime'] = $taoday . $issueData[0]['opentime'];
+		
 		$cur_issue = json_encode($cur_issue);
 		$issues = array();
 		$tomorrowissues = array();

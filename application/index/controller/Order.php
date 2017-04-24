@@ -5,6 +5,7 @@ use think\Db;
 use think\Config;
 use think\Cache;
 use app\cp\controller\Lottery;
+use think\Session;
 
 
 class Order extends Base
@@ -20,9 +21,11 @@ class Order extends Base
 	}
 	public function index()
 	{
+		isset($this->param['isgetdata']) or $this->param['isgetdata']='';
+		isset($this->param['id']) or $this->param['id']='';
 		$isgetdata = $this->param['isgetdata'];
 		$oid = $this->param['id'];
-		$projectid = $this->param['projectid'];
+		$projectid = isset($this->param['projectid'])?$this->param['projectid']:'';
 
 		if ('1' == $isgetdata) {
 		}
@@ -265,15 +268,15 @@ class Order extends Base
 
 	public function search()
 	{
-		$my_search = $this->param['my_search'];
+		$my_search = isset($this->param['my_search'])?$this->param['my_search']:'';
 
 		if (empty($my_search)) {
 			$my_search = array();
 		}
 
 		$this->condition = array_filter($my_search, 'value_filter');
-		$starttime = $this->param['starttime'];
-		$endtime = $this->param['endtime'];
+		$starttime = isset($this->param['starttime'])?$this->param['starttime']:'';
+		$endtime = isset($this->param['endtime'])?$this->param['endtime']:'';
 		if (empty($starttime) && empty($endtime)) {
 			$starttime = date('Y-m-d 00:00:00');
 			$endtime = date('Y-m-d 03:00:00', strtotime('+1 days'));
@@ -294,14 +297,15 @@ class Order extends Base
 		if (2 < $diff) {
 			$this->error('最多只能查询相隔2天的数据');
 		}
-
-		if ('3' == $this->condition['state']) {
+		if ('3' == isset($this->condition['state'])?$this->condition['state']:'') {
 			$this->condition['state'] = array('gt', $this->condition['state']);
 		}
 
 		$username = Session::get('un');
+		isset($this->param['range']) or $this->param['range']='';
 		$range = (int) $this->param['range'];
 		$regname = array();
+		isset($this->param['username']) or $this->param['username']='';
 		$formusername = formatstr($this->param['username']);
 		$DaoUser = Db::name('User');
 
