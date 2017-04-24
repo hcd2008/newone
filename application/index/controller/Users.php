@@ -621,7 +621,6 @@ class Users extends Base
 		if ($_obfuscate_rgvoBz8 == '1') {
 			$condition['money'] = array('gt', 0);
 		}
-
 		$dataUser = $_obfuscate_6ogI80pkWQ->where($condition)->select();
 		$this->formatUserContentList($dataUser, $username);
 		$this->assign('userContentList', $this->userContentList);
