@@ -478,11 +478,13 @@ class Users extends Base
 		$bank_min = $this->param['bank_min'];
 		$bank_max = $this->param['bank_max'];
 		if (!empty($bank_min) && !empty($bank_max) && is_numeric($bank_min) && is_numeric($bank_max)) {
-			$this->condition['money'] = array(
-				array('gt', $bank_min),
-				array('lt', $bank_max),
-				'and'
-				);
+			// $this->condition['money'] = array(
+			// 	array('gt', $bank_min),
+			// 	array('lt', $bank_max),
+			// 	'and'
+			// 	);
+			$this->condition['money']=array('gt',$bank_min);
+			$this->condition['money']=array('lt',$bank_max);
 		}
 
 		$username = $this->param['username'];

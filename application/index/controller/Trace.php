@@ -6,6 +6,7 @@ use think\Session;
 use think\Cache;
 use app\cp\controller\lottery;
 use app\cp\controller\User1;
+use app\index\org\Zqpage;
 class Trace extends Base
 {
 	protected $traceCount = 0;
@@ -125,12 +126,11 @@ class Trace extends Base
 		if (!isset($this->condition['projectno'])) {
 			$this->condition['projectno'] = array('exp', 'is not NULL');
 		}
-		//hcd
 		// import('@.ORG.ZQPage');
 		$DaoOrder = Db::name('Order');
 		$listRows = 30;
 		$count = $DaoOrder->where($this->condition)->count();
-		// $p = new ZQPage($count, $listRows);
+		$p = new Zqpage($count, $listRows);
 		$ol = $DaoOrder->where($this->condition)->order('id desc')->limit($p->firstRow . ',' . $p->listRows)->select();
 		$this->orderList = $this->formatTraceNumList($ol);
 		$page = $p->show();
@@ -144,7 +144,7 @@ class Trace extends Base
 	public function formatTraceNumList($orderList)
 	{
 		$formatOrder = array();
-		$newLmData = s('newLmData');
+		$newLmData = Cache::get('newLmData');
 
 		if (empty($newLmData)) {
 			$newLmData = array();

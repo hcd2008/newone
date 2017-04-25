@@ -443,10 +443,11 @@ class User extends Base
 		// $DaoAccount = d('Account');
 		$Where['accounttype'] = 7;
 		$Where['username'] = $username;
-		$Where['addtime'] = array(
-			array('gt', date('Y-m-d 00:00:00')),
-			array('lt', date('Y-m-d 23:59:59'))
-			);
+		// $Where['addtime'] = array(
+		// 	array('gt', date('Y-m-d 00:00:00')),
+		// 	array('lt', date('Y-m-d 23:59:59'))
+		// 	);
+		$Where['addtime']=array('between time',[date('Y-m-d 00:00:00'),date('Y-m-d 23:59:59')]);
 		$_obfuscate_8Iu1['wanchengcishu'] = Db::name('account')>where($Where)->count();
 		// $_obfuscate_NWXTrwqh5P_IVE_K = Db::name('Webconfig');
 		$_obfuscate_iRSbjFQdYDgkX2BESQ = Db::name('webconfig')->find();
@@ -499,10 +500,11 @@ class User extends Base
 		// $DaoAccount = d('Account');
 		$Where['accounttype'] = 7;
 		$Where['username'] = $username;
-		$Where['addtime'] = array(
-			array('gt', date('Y-m-d 00:00:00')),
-			array('lt', date('Y-m-d 23:59:59'))
-			);
+		// $Where['addtime'] = array(
+		// 	array('gt', date('Y-m-d 00:00:00')),
+		// 	array('lt', date('Y-m-d 23:59:59'))
+		// 	);
+		$Where['addtime']=array('between time',[date('Y-m-d 00:00:00'),date('Y-m-d 23:59:59')]);
 		$_obfuscate_fyS5LuVReS3Mr6eAA = Db::name('account')->where($Where)->count();
 		// $_obfuscate_NWXTrwqh5P_IVE_K = Db::name('Webconfig');
 		$_obfuscate_iRSbjFQdYDgkX2BESQ = Db::name('webconfig')->find();
