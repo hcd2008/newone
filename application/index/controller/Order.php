@@ -6,6 +6,7 @@ use think\Config;
 use think\Cache;
 use app\cp\controller\Lottery;
 use think\Session;
+use app\index\org\Zqpage;
 
 
 class Order extends Base
@@ -15,7 +16,7 @@ class Order extends Base
 	protected $condpara = '';
 	protected $orderList = array();
 	protected $message = 0;
-	public $param='';
+	public $param=array();
 	public function _initialize(){
 		$this->param=$this->request->param();
 	}
@@ -39,8 +40,8 @@ class Order extends Base
 			$this->cheDan($projectid);
 			return NULL;
 		}
-
 		$this->show();
+		return $this->fetch();
 	}
 
 	public function cheDan($id)
@@ -384,10 +385,10 @@ class Order extends Base
 		$listRows = 30;
 		$count = $DaoOrder->where($this->condition)->count();
 		//hcd
-		// $p = new ZQPage($count, $listRows);
+		$p = new Zqpage($count, $listRows);
 		$this->orderList = $this->formatOrderList($DaoOrder->where($this->condition)->order('id desc')->limit($p->firstRow . ',' . $p->listRows)->paginate(10));
-		// $page = $p->show();
-		// $this->assign('page', $page);
+		$page = $p->show();
+		$this->assign('page', $page);
 
 		if (0 < $count) {
 			$this->message = 1;
@@ -415,7 +416,7 @@ class Order extends Base
 		$_obfuscate_8Iu1['orderList'] = $this->orderList;
 		$_obfuscate_8Iu1['message'] = $this->message;
 		$this->assign($_obfuscate_8Iu1);
-		return $this->fetch();
+		
 	}
 
 	public function formatOrderList($orderList)

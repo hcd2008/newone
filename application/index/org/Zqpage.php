@@ -1,5 +1,7 @@
 <?php
 namespace app\index\org;
+use think\Config;
+class Zqpage
 {
 	public $type;
 	public $firstRow;
@@ -22,11 +24,11 @@ namespace app\index\org;
 		$this->style = $style;
 		$this->totalRows = $totalRows;
 		$this->parameter = $parameter;
-		$this->rollPage = c('PAGE_ROLLPAGE');
-		$this->listRows = !empty($listRows) ? $listRows : c('PAGE_LISTROWS');
+		$this->rollPage = Config::get('PAGE_ROLLPAGE');
+		$this->listRows = !empty($listRows) ? $listRows : Config::get('PAGE_LISTROWS');
 		$this->totalPages = ceil($this->totalRows / $this->listRows);
 		$this->coolPages = ceil($this->totalPages / $this->rollPage);
-		$this->nowPage = !empty($_GET[c('VAR_PAGE')]) ? $_GET[c('VAR_PAGE')] : 1;
+		$this->nowPage = !empty($_GET[Config::get('VAR_PAGE')]) ? $_GET[Config::get('VAR_PAGE')] : 1;
 		if (!empty($this->totalPages) && ($this->totalPages < $this->nowPage)) {
 			$this->nowPage = $this->totalPages;
 		}

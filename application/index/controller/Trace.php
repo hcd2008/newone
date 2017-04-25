@@ -4,7 +4,7 @@ use app\common\controller\Base;
 use think\Db;
 use think\Session;
 use think\Cache;
-use app\cp\controller\lottery;
+use app\cp\controller\Lottery;
 use app\cp\controller\User1;
 use app\index\org\Zqpage;
 class Trace extends Base
@@ -58,15 +58,15 @@ class Trace extends Base
 
 	public function search()
 	{
-		$my_search = $this->param['my_search'];
+		$my_search = isset($this->param['my_search'])?$this->param['my_search']:'';
 
 		if (empty($my_search)) {
 			$my_search = array();
 		}
 
 		$this->condition = array_filter($my_search, 'value_filter');
-		$starttime = $this->param['starttime'];
-		$endtime = $this->param['endtime'];
+		$starttime = isset($this->param['starttime'])?$this->param['starttime']:'';
+		$endtime = isset($this->param['endtime'])?$this->param['endtime']:'';
 		if (empty($starttime) && empty($endtime)) {
 			$starttime = date('Y-m-d 00:00:00');
 			$endtime = date('Y-m-d 03:00:00', strtotime('+1 days'));
@@ -75,7 +75,7 @@ class Trace extends Base
 		$this->condition['addtime'] = array(
 			'between time',[$starttime,$endtime]
 			);
-
+		isset($this->condition['state']) or $this->condition['state']='';
 		if ('3' == $this->condition['state']) {
 			$this->condition['state'] = array('gt', $this->condition['state']);
 		}
@@ -83,8 +83,10 @@ class Trace extends Base
 		// import('@.Cp.User');
 		$username = Session::get('un');
 		$user = new User1($username);
+		isset($this->param['range']) or $this->param['range']='';
 		$range = (int) $this->param['range'];
 		$regname = array();
+		isset($this->param['username']) or $this->param['username']='';
 		$formusername = formatstr($this->param['username']);
 
 		switch ($range) {
