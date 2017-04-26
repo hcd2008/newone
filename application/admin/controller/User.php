@@ -1,40 +1,49 @@
 <?php
-
-class UserAction extends CommonAction
+namespace app\admin\controller;
+use app\admin\controller\Common;
+use think\Db;
+use app\cp\controller\User1;
+use app\index\org\Zqpage;
+class User extends Common
 {
 	protected $message = 0;
-
+	public $param=array();
+	public function _initialize(){
+		$this->param=$this->request->param();
+	}
 	public function index()
 	{
 		$this->search();
-		$this->display();
+		return $this->fetch();
 	}
 
 	public function search()
 	{
-		$my_search = $_GET['my_search'];
-		$range = (int) $_GET['range'];
+		$my_search = $this->param['my_search'];
+		$range = (int) $this->param['range'];
 
 		if (empty($my_search)) {
 			$my_search = array();
 		}
 
 		$condition = array_filter($my_search, 'value_filter');
-		$starttime = $_GET['starttime'];
-		$endtime = $_GET['endtime'];
+		$starttime = isset($this->param['starttime'])?$this->param['starttime']:'';
+		$endtime = isset($this->param['endtime'])?$this->param['endtime']:'';
 		if (!empty($starttime) && !empty($endtime)) {
-			$condition['addtime'] = array(
-				array('gt', $starttime),
-				array('lt', $endtime),
-				'and'
-				);
+			// $condition['addtime'] = array(
+			// 	array('gt', $starttime),
+			// 	array('lt', $endtime),
+			// 	'and'
+			// 	);
+			$condition['addtime'] = array('between time',$starttime,$endtime);
 		}
 
 		$regname = array();
-		$formusername = formatstr($_GET['username']);
+		isset($this->param['username']) or $this->param['username']='';
+		$formusername = formatstr($this->param['username']);
 		if (($range != 1) && !empty($condition['username'])) {
-			import('@.Cp.User');
-			$user = new User($condition['username']);
+			// import('@.Cp.User');
+			$user = new User1($condition['username']);
 
 			switch ($range) {
 			case 1:
@@ -57,18 +66,19 @@ class UserAction extends CommonAction
 			$condition['username'] = array('in', $regname);
 		}
 
-		$bank_min = $_GET['bank_min'];
-		$bank_max = $_GET['bank_max'];
+		$bank_min = $this->param['bank_min'];
+		$bank_max = $this->param['bank_max'];
 		if (!empty($bank_min) && !empty($bank_max) && is_numeric($bank_min) && is_numeric($bank_max)) {
-			$condition['money'] = array(
-				array('gt', $bank_min),
-				array('lt', $bank_max),
-				'and'
-				);
+			// $condition['money'] = array(
+			// 	array('gt', $bank_min),
+			// 	array('lt', $bank_max),
+			// 	'and'
+			// 	);
+			$condition['money'] = array('between',[$bank_min,$bank_max]);
 		}
 
-		$sortby = $_GET['sortby'];
-		$sortbymax = ($_GET['sortbymax'] == '1' ? 'desc' : 'asc');
+		$sortby = isset($this->param['sortby'])?$this->param['sortby']:'';
+		$sortbymax = ($this->param['sortbymax'] == '1' ? 'desc' : 'asc');
 		$orderStr = '';
 
 		switch ($sortby) {
@@ -101,11 +111,11 @@ class UserAction extends CommonAction
 			break;
 		}
 
-		$DaoUser = d('User');
-		import('@.ORG.ZQPage');
+		$DaoUser = Db::name('user');
+		// import('@.ORG.ZQPage');
 		$listRows = 30;
 		$count = $DaoUser->where($condition)->count();
-		$p = new ZQPage($count, $listRows);
+		$p = new Zqpage($count, $listRows);
 		$dataUser = $DaoUser->where($condition)->order($orderStr)->limit($p->firstRow . ',' . $p->listRows)->select();
 
 		if (!$dataUser) {
@@ -139,7 +149,7 @@ class UserAction extends CommonAction
 	public function deleteUser()
 	{
 		return NULL;
-		$safenum = $_POST['safenum'];
+		$safenum = $this->param['safenum'];
 		if (!is_numeric($safenum) || empty($safenum)) {
 			$this->error('安全认证码不正确,请联系技术获取!');
 			return NULL;
@@ -161,7 +171,7 @@ class UserAction extends CommonAction
 		}
 
 		$id = $_REQUEST['items'];
-		$Dao = m('User');
+		$Dao = Db::name('User');
 
 		if (0 < count($id)) {
 			$map['id'] = array('in', $id);
@@ -181,38 +191,38 @@ class UserAction extends CommonAction
 				$this->error('删除人员信息有错误!');
 			}
 
-			$DaoAccount = m('Account');
+			$DaoAccount = Db::name('Account');
 			$delwhere['username'] = array('in', $delUser);
 			$DaoAccount->where($delwhere)->delete();
-			$DaoOrder = m('Order');
+			$DaoOrder = Db::name('Order');
 			$DaoOrder->where($delwhere)->delete();
-			$DaoBaoBiao = m('Baobiao');
+			$DaoBaoBiao = Db::name('Baobiao');
 			$DaoBaoBiao->where($delwhere)->delete();
 
 			if ($Dao->where($map)->delete()) {
-				$this->assign('jumpUrl', u('User/index'));
+				$this->assign('jumpUrl', url('User/index'));
 				$this->success('删除数据成功');
 			}
 			else {
-				$this->assign('jumpUrl', u('User/index'));
+				$this->assign('jumpUrl', url('User/index'));
 				$this->error('删除数据失败');
 			}
 		}
 		else {
-			$this->assign('jumpUrl', u('User/index'));
+			$this->assign('jumpUrl', url('User/index'));
 			$this->error('非法操作');
 		}
 	}
 
 	public function editUser()
 	{
-		$id = $_GET['id'];
-		$username = $_GET['username'];
+		$id = $this->param['id'];
+		$username = $this->param['username'];
 		if (empty($id) && empty($username)) {
 			$this->error('参数不正确');
 		}
 
-		$DaoUser = m('User');
+		$DaoUser = Db::name('User');
 
 		if (empty($id)) {
 			$where['username'] = $username;
@@ -232,7 +242,7 @@ class UserAction extends CommonAction
 		$Tpl['username'] = $dataUser['username'];
 		$regfrom = $dataUser['regfrom'];
 		$str = ltrim(rtrim($regfrom, '|'), '|');
-		$regArr = split('\\|\\|', $str);
+		$regArr = explode('\\|\\|', $str);
 		$Tpl['regfrom'] = implode(' &nbsp;&nbsp;=> &nbsp;&nbsp;       ', $regArr);
 		$Tpl['usertype'] = $dataUser['usertype'];
 		$Tpl['lock'] = $dataUser['lock'];
@@ -269,13 +279,13 @@ class UserAction extends CommonAction
 		$Tpl['modeNum'] = 2;
 		$Tpl['sjnum'] = mt_rand(1000, 99999);
 		$this->assign($Tpl);
-		$this->display();
+		return $this->fetch();
 	}
 
 	public function updateUser()
 	{
-		$addMoney = $_POST['addMoney'];
-		$my_search = $_POST['my_search'];
+		$addMoney = $this->param['addMoney'];
+		$my_search = $this->param['my_search'];
 
 		if (empty($my_search)) {
 			$my_search = array();
@@ -283,7 +293,7 @@ class UserAction extends CommonAction
 
 		$condition = array_filter($my_search, 'value_filter');
 		if (empty($addMoney) || !is_numeric($addMoney)) {
-			$DaoUser = m('User');
+			$DaoUser = Db::name('User');
 
 			if (!empty($condition['password'])) {
 				$condition['password'] = md5($condition['password']);
@@ -294,12 +304,12 @@ class UserAction extends CommonAction
 			}
 
 			$uid = $condition['id'];
-			$DaoUser = d('User');
+			$DaoUser = Db::name('user');
 			$where['id'] = $uid;
 			$dataUser = $DaoUser->where($where)->find();
 			$regfrom = $dataUser['regfrom'];
 			$str = ltrim(rtrim($regfrom, '|'), '|');
-			$regArr = split('\\|\\|', $str);
+			$regArr = explode('\\|\\|', $str);
 			$count = count($regArr) - 1;
 			$sjname = $regArr[$count];
 			$dataUser_sj = $DaoUser->where(array('username' => $sjname))->find();
@@ -315,11 +325,11 @@ class UserAction extends CommonAction
 				$this->error('推荐注册返点必须小于自身返点 ');
 			}
 
-			$jffixed = (empty($_POST['jffixed']) ? 0 : 1);
-			$jfauto = (empty($_POST['jfauto']) ? 0 : 1);
-			$jf1900 = (empty($_POST['jf1900']) ? 0 : 1);
-			$jf1800 = (empty($_POST['jf1800']) ? 0 : 1);
-			$jf1700 = (empty($_POST['jf1700']) ? 0 : 1);
+			$jffixed = (empty($this->param['jffixed']) ? 0 : 1);
+			$jfauto = (empty($this->param['jfauto']) ? 0 : 1);
+			$jf1900 = (empty($this->param['jf1900']) ? 0 : 1);
+			$jf1800 = (empty($this->param['jf1800']) ? 0 : 1);
+			$jf1700 = (empty($this->param['jf1700']) ? 0 : 1);
 			if (empty($jffixed) && empty($jfauto)) {
 				$this->error('自由调节 或 固定奖金，至少选择一种奖金模式');
 			}
@@ -389,13 +399,13 @@ class UserAction extends CommonAction
 
 			$jiangmsg .= 'ip:' . get_client_ip();
 
-			if ($DaoUser->save($condition)) {
-				$Dao_jiangmsg = m('jiangmsg');
+			if ($DaoUser->update($condition)) {
+				$Dao_jiangmsg = Db::name('jiangmsg');
 				$data_jiangmsg['admin'] = Session::get('ht');
 				$data_jiangmsg['username'] = $dataUser['username'];
 				$data_jiangmsg['msg'] = $jiangmsg;
 				$data_jiangmsg['addtime'] = date('Y-m-d H:i:s');
-				$Dao_jiangmsg->add($data_jiangmsg);
+				$Dao_jiangmsg->insert($data_jiangmsg);
 				$this->success('会员信息更改成功');
 			}
 			else {
@@ -404,7 +414,7 @@ class UserAction extends CommonAction
 		}
 		else {
 			$uid = $condition['id'];
-			$DaoUser = d('User');
+			$DaoUser = Db::name('user');
 			$where['id'] = $uid;
 			$dataUser = $DaoUser->where($where)->find();
 			$username = $dataUser['username'];
@@ -419,7 +429,7 @@ class UserAction extends CommonAction
 
 			$du['id'] = $uid;
 			$du['money'] = $money_after;
-			$DaoAccount = m('Account');
+			$DaoAccount = Db::name('Account');
 			$da['username'] = $username;
 			$da['money'] = ($money < 0 ? -$money : $money);
 			$da['money_befor'] = $money_befor;
@@ -436,24 +446,24 @@ class UserAction extends CommonAction
 			}
 
 			$da['accountnum'] = date('ymdhis') . rand_string(5, 2);
-			$da['beizhu'] = $_POST['beizhu'];
+			$da['beizhu'] = $this->param['beizhu'];
 			$da['addtime'] = date('Y-m-d H:i:s');
 			$da['mode'] = 1;
-			$isfy = $_POST['isfy'];
+			$isfy = $this->param['isfy'];
 
 			if (0 < $money) {
-				$DaoMessage = m('message');
+				$DaoMessage = Db::name('message');
 				$ajaxStr['type'] = 2;
 				$ajaxStr['username'] = $username;
 				$ajaxStr['yinkui'] = $money;
-				$DaoMessage->add($ajaxStr);
+				$DaoMessage->insert($ajaxStr);
 
 				if (c('dlfy') == 1) {
 					$this->autoFanXian($username, $money, $da['addtime']);
 				}
 			}
 
-			if ($DaoUser->setInc('money', array('username' => $username), $money) && $DaoAccount->add($da)) {
+			if ($DaoUser->where('username',$username)->setInc('money', $money) && $DaoAccount->insert($da)) {
 				$this->success('金额操作成功');
 			}
 			else {
@@ -464,16 +474,17 @@ class UserAction extends CommonAction
 
 	public function xinkaihu()
 	{
-		$_obfuscate_6ogI80pkWQ = d('User');
+		$_obfuscate_6ogI80pkWQ = Db::name('user');
 		$TODAY = date('Y-m-d 00:00:00');
 		$_obfuscate_Xif3q_HAaupN = date('Y-m-d 00:00:00');
 		$endtime = date('Y-m-d 23:59:59');
-		$DaoAccount = m('Account');
-		$Where['addtime'] = array(
-			array('gt', $_obfuscate_Xif3q_HAaupN),
-			array('lt', $endtime),
-			'and'
-			);
+		$DaoAccount = Db::name('Account');
+		// $Where['addtime'] = array(
+		// 	array('gt', $_obfuscate_Xif3q_HAaupN),
+		// 	array('lt', $endtime),
+		// 	'and'
+		// 	);
+		$Where['addtime'] = array('between time',$_obfuscate_Xif3q_HAaupN,$endtime);
 		$Where['accounttype'] = 6;
 		$dataAcc = $DaoAccount->field('username')->where($Where)->group('username')->select();
 		$czHYarr = array();
@@ -494,10 +505,10 @@ class UserAction extends CommonAction
 		$Result = array_diff($czHYarr, $Dela);
 		$this->assign('countnum', sizeof($Result));
 		$condition['username'] = array('in', $Result);
-		import('@.ORG.ZQPage');
+		// import('@.ORG.ZQPage');
 		$listRows = 30;
 		$count = $_obfuscate_6ogI80pkWQ->where($condition)->count();
-		$banner_web_show_tt = new ZQPage($count, $listRows);
+		$banner_web_show_tt = new Zqpage($count, $listRows);
 		$dataUser = $_obfuscate_6ogI80pkWQ->where($condition)->order('id asc')->limit($banner_web_show_tt->firstRow . ',' . $banner_web_show_tt->listRows)->select();
 
 		if (!$dataUser) {
@@ -511,7 +522,7 @@ class UserAction extends CommonAction
 		$this->assign('page', $page);
 		$this->assign('message', $this->message);
 		$this->assign('list', $this->formatUserContentList($dataUser));
-		$this->display();
+		return $this->fetch();
 	}
 
 	public function autoFanXian($username, $addmoney, $addtime)
@@ -524,7 +535,7 @@ class UserAction extends CommonAction
 			return NULL;
 		}
 
-		$DaoAccount = m('account');
+		$DaoAccount = Db::name('account');
 		$cztime = date('Y-m-d H:i:s', strtotime($addtime));
 		$where_one['username'] = $username;
 		$where_one['addtime'] = array(
@@ -537,12 +548,12 @@ class UserAction extends CommonAction
 			return NULL;
 		}
 
-		$DaoUser = m('User');
+		$DaoUser = Db::name('User');
 		$where_u['username'] = $username;
 		$data_u = $DaoUser->where($where_u)->find();
 		$regfrom = $data_u['regfrom'];
 		$str = ltrim(rtrim($regfrom, '|'), '|');
-		$regArr = split('\\|\\|', $str);
+		$regArr = explode('\\|\\|', $str);
 		$countreg = count($regArr);
 
 		if ($countreg < 2) {
@@ -571,18 +582,19 @@ class UserAction extends CommonAction
 			$da['beizhu'] = '代理佣金:' . $username . '会员充值';
 			$da['addtime'] = date('Y-m-d H:i:s');
 			$da['mode'] = 1;
-			$DaoAccount->add($da);
-			$DaoUser->setInc('money', array('username' => $dainame), $oneSJ);
+			$DaoAccount->insert($da);
+			$DaoUser->where('username',$username)->setInc('money', $oneSJ);
 			return NULL;
 		}
 		else {
 			$dainame1 = $regArr[$countreg - 1];
 			$dainame2 = $regArr[$countreg - 2];
-			$map['username'] = array(
-				array('eq', $dainame1),
-				array('eq', $dainame2),
-				'or'
-				);
+			// $map['username'] = array(
+			// 	array('eq', $dainame1),
+			// 	array('eq', $dainame2),
+			// 	'or'
+			// 	);
+			$map['username']=array('in',[$dainame1,$dainame2]);
 			$data_umap = $DaoUser->where($map)->order('regfrom desc')->select();
 			$countMap = count($data_umap);
 
@@ -611,9 +623,9 @@ class UserAction extends CommonAction
 				$da[1]['beizhu'] = '代理佣金:' . $username . '会员充值';
 				$da[1]['addtime'] = date('Y-m-d H:i:s');
 				$da[1]['mode'] = 1;
-				$DaoAccount->addAll($da);
-				$DaoUser->setInc('money', array('username' => $data_umap[0]['username']), $oneSJ);
-				$DaoUser->setInc('money', array('username' => $data_umap[1]['username']), $twoSJ);
+				$DaoAccount->insertAll($da);
+				$DaoUser->where('username',$data_umap[0]['username'])->setInc('money', $oneSJ);
+				$DaoUser->where('username',$data_umap[0]['username'])->setInc('money', $twoSJ);
 				return NULL;
 			}
 
@@ -637,8 +649,8 @@ class UserAction extends CommonAction
 				$da['beizhu'] = '代理佣金:' . $username . '会员充值';
 				$da['addtime'] = date('Y-m-d H:i:s');
 				$da['mode'] = 1;
-				$DaoAccount->add($da);
-				$DaoUser->setInc('money', array('username' => $data_umap[0]['username']), $fymoey);
+				$DaoAccount->insert($da);
+				$DaoUser->where('username',$data_umap[0]['username'])->setInc('money', $fymoey);
 				return NULL;
 			}
 		}

@@ -1,6 +1,10 @@
 <?php
-
-class AccountAction extends CommonAction
+namespace app\admin\controller;
+use app\admin\controller\Common;
+use think\Db;
+use app\index\org\Zqpage;
+use app\cp\controller\User1;
+class Account extends Common
 {
 	protected $condition = array();
 	protected $search = array();
@@ -8,7 +12,7 @@ class AccountAction extends CommonAction
 	protected $accountList = array();
 	protected $message = 0;
 	protected $accountType = array();
-
+	public $param=array();
 	public function __construct()
 	{
 		parent::__construct();
@@ -18,28 +22,30 @@ class AccountAction extends CommonAction
 			$this->accountType[$v['accountnum']] = $v['accounttype'];
 		}
 	}
-
+	public function _initialize(){
+		$this->param=$this->request->param();
+	}
 	public function cfpaijiang()
 	{
 		$message = 0;
-		$cfissue = $_GET['cfissue'];
-		$cftype = $_GET['cftype'];
-		$lotteryid = $_GET['lotteryid'];
+		$cfissue = $this->param['cfissue'];
+		$cftype = $this->param['cftype'];
+		$lotteryid = $this->param['lotteryid'];
 
 		if (empty($cfissue)) {
 			$this->assign('message', $message);
-			$this->display();
+			return $this->fetch();
 			return NULL;
 		}
 
-		$DaoAccount = m('Account');
+		$DaoAccount = Db::name('Account');
 		$condition['lotteryid'] = $lotteryid;
 		$condition['issue'] = $cfissue;
 		$condition['beizhu'] = array('exp', ' is null ');
 		$condition['accounttype'] = $cftype;
 		$listRows = 30;
 		$dataAcc = $DaoAccount->where($condition)->group('ordernum')->having(' count(ordernum) > 1 ')->select();
-		$DaoUser = m('User');
+		$DaoUser = Db::name('User');
 
 		foreach ($dataAcc as $v ) {
 			$username = $v['username'];
@@ -65,14 +71,14 @@ class AccountAction extends CommonAction
 			$da['addtime'] = date('Y-m-d H:i:s');
 			$da['mode'] = 1;
 			$DaoUser->setDec('money', array('username' => $username), $money);
-			$DaoAccount->add($da);
+			$DaoAccount->insert($da);
 			$upAcc['beizhu'] = '已扣除';
 			$upAcc['id'] = $v['id'];
-			$DaoAccount->save($upAcc);
+			$DaoAccount->update($upAcc);
 		}
 
 		$condition['beizhu'] = '已扣除';
-		import('@.ORG.ZQPage');
+		// import('@.ORG.ZQPage');
 		$count = $DaoAccount->where($condition)->count();
 
 		if ($count <= 0) {
@@ -82,20 +88,20 @@ class AccountAction extends CommonAction
 			$message = 1;
 		}
 
-		$p = new ZQPage($count, $listRows);
+		$p = new Zqpage($count, $listRows);
 		$accountList = $this->formatAccountList($DaoAccount->where($condition)->order('id desc')->limit($p->firstRow . ',' . $p->listRows)->select());
 		$page = $p->show();
 		$Tpl['accountList'] = $accountList;
 		$this->assign('message', $message);
 		$this->assign('page', $page);
 		$this->assign($Tpl);
-		$this->display();
+		return $this->fetch();
 	}
 
 	public function deleteAccount()
 	{
-		$id = $_REQUEST['items'];
-		$Dao = m('Account');
+		$id = $this->param['items'];
+		$Dao = Db::name('Account');
 
 		if (0 < count($id)) {
 			$map['id'] = array('in', $id);
@@ -121,12 +127,13 @@ class AccountAction extends CommonAction
 	{
 		$starttime = date('Y-m-d 00:00:00');
 		$endtime = date('Y-m-d 03:00:00', strtotime('+1 days'));
-		$where['addtime'] = array(
-			array('gt', $starttime),
-			array('lt', $endtime),
-			'and'
-			);
-		$DaoAccount = m('Account');
+		// $where['addtime'] = array(
+		// 	array('gt', $starttime),
+		// 	array('lt', $endtime),
+		// 	'and'
+		// 	);
+		$where['addtime'] = array('between time',$starttime,$endtime);
+		$DaoAccount = Db::name('Account');
 		$where['accounttype'] = 7;
 		$where['state'] = 0;
 		$count = $DaoAccount->where($where)->count();
@@ -138,7 +145,7 @@ class AccountAction extends CommonAction
 		$czmoney = 200;
 		$oneSJ = 12;
 		$twoSJ = 5;
-		$DaoMy18 = m('my18');
+		$DaoMy18 = Db::name('my18');
 		$where['state'] = 0;
 		$data = $DaoMy18->where($where)->find();
 
@@ -148,7 +155,7 @@ class AccountAction extends CommonAction
 
 		if ($czmoney <= $data['money']) {
 			$cztime = date('Y-m-d H:i:s', strtotime($data['addtime']) - 600);
-			$DaoAccount = m('account');
+			$DaoAccount = Db::name('account');
 			$where_one['username'] = $data['username'];
 			$where_one['addtime'] = array(
 				array('lt', $cztime)
@@ -160,7 +167,7 @@ class AccountAction extends CommonAction
 				$id = $data['id'];
 				$data_u['id'] = $id;
 				$data_u['state'] = 1;
-				$DaoMy18->data($data_u)->save();
+				$DaoMy18->data($data_u)->update();
 				return NULL;
 			}
 		}
@@ -168,26 +175,26 @@ class AccountAction extends CommonAction
 		$id = $data['id'];
 		$data_u['id'] = $id;
 		$data_u['state'] = 1;
-		$DaoMy18->data($data_u)->save();
+		$DaoMy18->data($data_u)->update();
 
 		if ($data['money'] < $czmoney) {
 			return NULL;
 		}
 
 		$username = $data['username'];
-		$DaoUser = m('User');
+		$DaoUser = Db::name('User');
 		$where_u['username'] = $username;
 		$data_u = $DaoUser->where($where_u)->find();
 		$regfrom = $data_u['regfrom'];
 		$str = ltrim(rtrim($regfrom, '|'), '|');
-		$regArr = split('\\|\\|', $str);
+		$regArr = explode('\\|\\|', $str);
 		$countreg = count($regArr);
 
 		if ($countreg < 2) {
 			return NULL;
 		}
 
-		$DaoAccount = m('Account');
+		$DaoAccount = Db::name('Account');
 
 		if ($countreg == 2) {
 			$dainame = $regArr[1];
@@ -211,8 +218,8 @@ class AccountAction extends CommonAction
 			$da['beizhu'] = '代理佣金:' . $username . '会员充值';
 			$da['addtime'] = date('Y-m-d H:i:s');
 			$da['mode'] = 1;
-			$DaoAccount->add($da);
-			$DaoUser->setInc('money', array('username' => $dainame), $oneSJ);
+			$DaoAccount->insert($da);
+			$DaoUser->where('username',$dainame)->setInc('money', $oneSJ);
 			return NULL;
 		}
 		else {
@@ -251,9 +258,9 @@ class AccountAction extends CommonAction
 				$da[1]['beizhu'] = '代理佣金:' . $username . '会员充值';
 				$da[1]['addtime'] = date('Y-m-d H:i:s');
 				$da[1]['mode'] = 1;
-				$DaoAccount->addAll($da);
-				$DaoUser->setInc('money', array('username' => $data_umap[0]['username']), $oneSJ);
-				$DaoUser->setInc('money', array('username' => $data_umap[1]['username']), $twoSJ);
+				$DaoAccount->insertAll($da);
+				$DaoUser->where('username',$data_umap[0]['username'])->setInc('money', $oneSJ);
+				$DaoUser->where('username',$data_umap[0]['username'])->setInc('money', $twoSJ);
 				return NULL;
 			}
 
@@ -277,8 +284,8 @@ class AccountAction extends CommonAction
 				$da['beizhu'] = '代理佣金:' . $username . '会员充值';
 				$da['addtime'] = date('Y-m-d H:i:s');
 				$da['mode'] = 1;
-				$DaoAccount->add($da);
-				$DaoUser->setInc('money', array('username' => $data_umap[0]['username']), $fymoey);
+				$DaoAccount->insert($da);
+				$DaoUser->where(array('username' => $data_umap[0]['username']))->setInc('money', $fymoey);
 				return NULL;
 			}
 		}
@@ -286,13 +293,13 @@ class AccountAction extends CommonAction
 
 	public function qukuan()
 	{
-		if (empty($_GET['endtime'])) {
+		if (empty($this->param['endtime'])) {
 			$Tpl['starttime'] = date('Y-m-d 00:00:00');
 			$Tpl['endtime'] = date('Y-m-d 03:00:00', strtotime('+1 days'));
 		}
 		else {
-			$starttime = $_GET['starttime'];
-			$endtime = $_GET['endtime'];
+			$starttime = $this->param['starttime'];
+			$endtime = $this->param['endtime'];
 			$Tpl['starttime'] = $starttime;
 			$Tpl['endtime'] = $endtime;
 		}
@@ -302,35 +309,36 @@ class AccountAction extends CommonAction
 			$endtime = date('Y-m-d 03:00:00', strtotime('+1 days'));
 		}
 
-		$where['addtime'] = array(
-			array('gt', $starttime),
-			array('lt', $endtime),
-			'and'
-			);
-		$username = $_GET['username'];
-		$DaoAccount = m('Account');
+		// $where['addtime'] = array(
+		// 	array('gt', $starttime),
+		// 	array('lt', $endtime),
+		// 	'and'
+		// 	);
+		$where['addtime'] = array('between time',$starttime,$endtime);
+		$username = $this->param['username'];
+		$DaoAccount = Db::name('Account');
 		$where['accounttype'] = 7;
 
 		if (!empty($username)) {
 			$where['username'] = $username;
 		}
 
-		import('@.ORG.ZQPage');
+		// import('@.ORG.ZQPage');
 		$listRows = 30;
 		$count = $DaoAccount->where($where)->count();
-		$p = new ZQPage($count, $listRows);
+		$p = new Zqpage($count, $listRows);
 		$dataAccount = $DaoAccount->where($where)->order('addtime desc')->limit($p->firstRow . ',' . $p->listRows)->select();
 		$page = $p->show();
 		$this->assign('page', $page);
 		$Tpl['list'] = $dataAccount;
 		$this->assign($Tpl);
-		$this->display();
+		return $this->fetch();
 	}
 
 	public function doQukuan()
 	{
-		$id = $_REQUEST['id'];
-		$flag = $_REQUEST['flag'];
+		$id = $this->param['id'];
+		$flag = $this->param['flag'];
 		if (!is_numeric($id) && !is_numeric($flag)) {
 			$this->error('参数不正确');
 		}
@@ -339,7 +347,7 @@ class AccountAction extends CommonAction
 			$this->error('你的操作有误!');
 		}
 
-		$DaoAccount = d('Account');
+		$DaoAccount = Db::name('account');
 		$where['accounttype'] = 7;
 		$where['id'] = $id;
 		$dataAccount = $DaoAccount->where($where)->find();
@@ -356,7 +364,7 @@ class AccountAction extends CommonAction
 			$data['state'] = '1';
 			$data['beizhu'] = '已处理';
 
-			if ($DaoAccount->where($where)->data($data)->save()) {
+			if ($DaoAccount->where($where)->data($data)->update()) {
 				$this->success('处理成功!');
 				exit();
 			}
@@ -366,9 +374,9 @@ class AccountAction extends CommonAction
 			$data['state'] = 1;
 			$data['beizhu'] = '提现失败';
 
-			if ($DaoAccount->where($where)->data($data)->save()) {
-				import('@.Cp.User');
-				$user = new User($username);
+			if ($DaoAccount->where($where)->data($data)->update()) {
+				// import('@.Cp.User');
+				$user = new User1($username);
 				$usermoney = $user->getMoney();
 				$adddata['username'] = $username;
 				$adddata['money'] = $money;
@@ -379,8 +387,8 @@ class AccountAction extends CommonAction
 				$adddata['accountnum'] = date('ymdhis') . rand_string(5, 2);
 				$adddata['addtime'] = date('Y-m-d H:i:s');
 				$adddata['mode'] = 1;
-				$adddata['beizhu'] = $_POST['textfield'];
-				$DaoAccount->data($adddata)->add();
+				$adddata['beizhu'] = $this->param['textfield'];
+				$DaoAccount->data($adddata)->insert();
 
 				if ($user->setIncMoney($money)) {
 					$this->success('拒绝成功!');
@@ -394,37 +402,37 @@ class AccountAction extends CommonAction
 
 	public function editBeiZhu()
 	{
-		$ordernum = $_GET['ordernum'];
-		$DaoAccount = m('Account');
+		$ordernum = $this->param['ordernum'];
+		$DaoAccount = Db::name('Account');
 		$where['ordernum'] = $ordernum;
 		$where['state'] = 0;
 		$data = $DaoAccount->where($where)->find();
 		$this->assign('data', $data);
-		$this->display();
+		return $this->fetch();
 	}
 
 	public function updateBeiZhu()
 	{
-		$beizhu = $_POST['beizhu'];
-		$data['id'] = $_POST['id'];
+		$beizhu = $this->param['beizhu'];
+		$data['id'] = $this->param['id'];
 		$data['beizhu'] = $beizhu;
-		$DaoAccount = m('Account');
-		$DaoAccount->save($data);
+		$DaoAccount = Db::name('Account');
+		$DaoAccount->update($data);
 		$this->success('操作成功!');
 		exit();
 	}
 
 	public function cunkuan()
 	{
-		if (empty($_GET['endtime'])) {
+		if (empty($this->param['endtime'])) {
 			$Tpl['starttime'] = date('Y-m-d 00:00:00');
 			$Tpl['endtime'] = date('Y-m-d 03:00:00', strtotime('+1 days'));
 		}
 		else {
-			$starttime = $_GET['starttime'];
-			$endtime = $_GET['endtime'];
-			$Tpl['starttime'] = $_GET['starttime'];
-			$Tpl['endtime'] = $_GET['endtime'];
+			$starttime = $this->param['starttime'];
+			$endtime = $this->param['endtime'];
+			$Tpl['starttime'] = $this->param['starttime'];
+			$Tpl['endtime'] = $this->param['endtime'];
 		}
 
 		if (empty($starttime) && empty($endtime)) {
@@ -432,42 +440,43 @@ class AccountAction extends CommonAction
 			$endtime = date('Y-m-d 03:00:00', strtotime('+1 days'));
 		}
 
-		$where['addtime'] = array(
-			array('gt', $starttime),
-			array('lt', $endtime),
-			'and'
-			);
-		$username = $_GET['username'];
-		$DaoAccount = d('Account');
+		// $where['addtime'] = array(
+		// 	array('gt', $starttime),
+		// 	array('lt', $endtime),
+		// 	'and'
+		// 	);
+		$where['addtime'] = array('between time',$starttime,$endtime);
+		$username = $this->param['username'];
+		$DaoAccount = Db::name('account');
 		$where['accounttype'] = 6;
 
 		if (!empty($username)) {
 			$where['username'] = $username;
 		}
 
-		import('@.ORG.ZQPage');
+		// import('@.ORG.ZQPage');
 		$listRows = 30;
 		$count = $DaoAccount->where($where)->count();
-		$p = new ZQPage($count, $listRows);
+		$p = new Zqpage($count, $listRows);
 		$dataAccount = $DaoAccount->where($where)->order('addtime desc')->limit($p->firstRow . ',' . $p->listRows)->select();
 		$page = $p->show();
 		$this->assign('page', $page);
 		$Tpl['list'] = $dataAccount;
 		$this->assign($Tpl);
-		$this->display();
+		return $this->fetch();
 	}
 
 	public function hdcunkuan()
 	{
-		if (empty($_GET['endtime'])) {
+		if (empty($this->param['endtime'])) {
 			$Tpl['starttime'] = date('Y-m-d 00:00:00');
 			$Tpl['endtime'] = date('Y-m-d 03:00:00', strtotime('+1 days'));
 		}
 		else {
-			$starttime = $_GET['starttime'];
-			$endtime = $_GET['endtime'];
-			$Tpl['starttime'] = $_GET['starttime'];
-			$Tpl['endtime'] = $_GET['endtime'];
+			$starttime = $this->param['starttime'];
+			$endtime = $this->param['endtime'];
+			$Tpl['starttime'] = $this->param['starttime'];
+			$Tpl['endtime'] = $this->param['endtime'];
 		}
 
 		if (empty($starttime) && empty($endtime)) {
@@ -475,13 +484,14 @@ class AccountAction extends CommonAction
 			$endtime = date('Y-m-d 03:00:00', strtotime('+1 days'));
 		}
 
-		$where['addtime'] = array(
-			array('gt', $starttime),
-			array('lt', $endtime),
-			'and'
-			);
-		$username = $_GET['username'];
-		$DaoAccount = d('Account');
+		// $where['addtime'] = array(
+		// 	array('gt', $starttime),
+		// 	array('lt', $endtime),
+		// 	'and'
+		// 	);
+		$where['addtime'] = array('between time',$starttime,$endtime);
+		$username = $this->param['username'];
+		$DaoAccount = Db::name('account');
 		$where['accounttype'] = 11;
 
 		if (!empty($username)) {
@@ -497,12 +507,12 @@ class AccountAction extends CommonAction
 		$this->assign('page', $page);
 		$Tpl['list'] = $dataAccount;
 		$this->assign($Tpl);
-		$this->display();
+		return $this->fetch();
 	}
 
 	public function showBank()
 	{
-		$id = $_GET['id'];
+		$id = $this->param['id'];
 
 		if (!is_numeric($id)) {
 			$this->error('参数不正确');
@@ -512,13 +522,13 @@ class AccountAction extends CommonAction
 			$this->error('你的操作有误!');
 		}
 
-		$DaoAccount = d('Account');
+		$DaoAccount = Db::name('account');
 		$where['accounttype'] = 7;
 		$where['id'] = $id;
 		$dataAccount = $DaoAccount->where($where)->find();
 		$username = $dataAccount['username'];
 		$money = $dataAccount['money'];
-		$DaoUser = d('User');
+		$DaoUser = Db::name('user');
 		$dataUser = $DaoUser->where('username=\'' . $username . '\'')->find();
 		$realname = $dataUser['realname'];
 		$bankname = $dataUser['bankname'];
@@ -528,9 +538,9 @@ class AccountAction extends CommonAction
 		$regtime = $dataUser['addtime'];
 		$regfrom = $dataUser['regfrom'];
 		$str = ltrim(rtrim($regfrom, '|'), '|');
-		$regArr = split('\\|\\|', $str);
+		$regArr = explode('\\|\\|', $str);
 		$loginarr = array();
-		$DaoLogin = d('Login');
+		$DaoLogin = Db::name('login');
 		$dataLogin = $DaoLogin->where('username=\'' . $username . '\'')->order('id desc')->limit(10)->select();
 		import('@.ORG.Qqwry');
 		$QQWry = new QQWry();
@@ -555,7 +565,7 @@ class AccountAction extends CommonAction
 		$Tpl['regtime'] = $regtime;
 		$this->assign($Tpl);
 		$this->assign('logiplist', $loginarr);
-		$this->display();
+		return $this->fetch();
 	}
 
 	public function index()
@@ -565,29 +575,29 @@ class AccountAction extends CommonAction
 
 	public function search()
 	{
-		$my_search = $_GET['my_search'];
+		$my_search = $this->param['my_search'];
 
 		if (empty($my_search)) {
 			$my_search = array();
 		}
 
 		$this->condition = array_filter($my_search, 'value_filter');
-		$starttime = $_GET['starttime'];
-		$endtime = $_GET['endtime'];
+		$starttime = $this->param['starttime'];
+		$endtime = $this->param['endtime'];
 		if (empty($starttime) && empty($endtime)) {
 			$starttime = date('Y-m-d 00:00:00');
 			$endtime = date('Y-m-d 03:00:00', strtotime('+1 days'));
 		}
 
-		$this->condition['addtime'] = array(
-			array('gt', $starttime),
-			array('lt', $endtime),
-			'and'
-			);
-
+		// $this->condition['addtime'] = array(
+		// 	array('gt', $starttime),
+		// 	array('lt', $endtime),
+		// 	'and'
+		// 	);
+		$this->condition['addtime'] = array('between time',$starttime,$endtime);
 		if (isset($this->condition['ztype'])) {
 			$ztype = $this->condition['ztype'];
-			$ztypefield = formatstr($_GET['ztypefield']);
+			$ztypefield = formatstr($this->param['ztypefield']);
 
 			switch ($ztype) {
 			case '1':
@@ -609,13 +619,13 @@ class AccountAction extends CommonAction
 			unset($this->condition['ztype']);
 		}
 
-		$lntype = formatstr($_GET['lntype']);
+		$lntype = formatstr($this->param['lntype']);
 		if (!empty($lntype) && is_numeric($lntype)) {
 			$this->condition['accounttype'] = $lntype;
 		}
 
 		$regname = array();
-		$formusername = formatstr($_GET['username']);
+		$formusername = formatstr($this->param['username']);
 		if (empty($formusername) || is_null($formusername)) {
 		}
 		else {
@@ -623,7 +633,7 @@ class AccountAction extends CommonAction
 		}
 
 		import('@.ORG.ZQPage');
-		$DaoAccount = m('Account');
+		$DaoAccount = Db::name('Account');
 		$listRows = 30;
 		$count = $DaoAccount->where($this->condition)->count();
 		$p = new ZQPage($count, $listRows);
@@ -643,13 +653,13 @@ class AccountAction extends CommonAction
 	{
 		$this->search();
 
-		if (empty($_GET['endtime'])) {
+		if (empty($this->param['endtime'])) {
 			$Tpl['starttime'] = date('Y-m-d 00:00:00');
 			$Tpl['endtime'] = date('Y-m-d 03:00:00', strtotime('+1 days'));
 		}
 		else {
-			$Tpl['starttime'] = $_GET['starttime'];
-			$Tpl['endtime'] = $_GET['endtime'];
+			$Tpl['starttime'] = $this->param['starttime'];
+			$Tpl['endtime'] = $this->param['endtime'];
 		}
 
 		import('Home.Cp.Lottery');
@@ -661,12 +671,12 @@ class AccountAction extends CommonAction
 		$Tpl['accountList'] = $this->accountList;
 		$Tpl['message'] = $this->message;
 		$this->assign($Tpl);
-		$this->display();
+		return $this->fetch();
 	}
 
 	public function getAccountType()
 	{
-		$Dao = m('Accountzhidi');
+		$Dao = Db::name('Accountzhidi');
 		return $Dao->order('id asc')->select();
 	}
 
@@ -777,18 +787,18 @@ class AccountAction extends CommonAction
 
 	public function baobiao()
 	{
-		$DaoBaobiao = m('baobiao');
-		$username = $_GET['username'];
+		$DaoBaobiao = Db::name('baobiao');
+		$username = $this->param['username'];
 		$where['addtime'] = date('Y-m-d');
-		$starttime = $_GET['starttime'];
-		$endtime = $_GET['endtime'];
+		$starttime = $this->param['starttime'];
+		$endtime = $this->param['endtime'];
 		if (!empty($starttime) && !empty($endtime)) {
-			$where['addtime'] = array(
-				array('gt', $starttime),
-				array('lt', $endtime),
-				'and'
-				);
-
+			// $where['addtime'] = array(
+			// 	array('gt', $starttime),
+			// 	array('lt', $endtime),
+			// 	'and'
+			// 	);
+			$where['addtime'] = array('between time',$starttime,$endtime);
 			if ($starttime == $endtime) {
 				$where['addtime'] = $starttime;
 			}
@@ -798,10 +808,10 @@ class AccountAction extends CommonAction
 			$where['username'] = $username;
 		}
 
-		import('@.ORG.ZQPage');
+		// import('@.ORG.ZQPage');
 		$listRows = 900;
 		$count = $DaoBaobiao->where($where)->count();
-		$p = new ZQPage($count, $listRows);
+		$p = new Zqpage($count, $listRows);
 		$data = $DaoBaobiao->where($where)->order('yingkui desc')->limit($p->firstRow . ',' . $p->listRows)->select();
 		$page = $p->show();
 		$this->assign('page', $page);
@@ -815,12 +825,12 @@ class AccountAction extends CommonAction
 
 		$this->assign('message', $message);
 		$this->assign('baobiao', $data);
-		$this->display();
+		return $this->fetch();
 	}
 
 	public function meiTianbaobiao()
 	{
-		$starttime = $_GET['starttime'];
+		$starttime = $this->param['starttime'];
 
 		if (empty($starttime)) {
 			$starttime = date('Y-m-d 00:00:00');
@@ -829,12 +839,13 @@ class AccountAction extends CommonAction
 		$Tpl['starttime'] = $starttime;
 		$today = date('Y-m-d 00:00:00');
 		$endtime = date('Y-m-d 23:59:59', strtotime($starttime));
-		$DaoAccount = m('Account');
-		$where['addtime'] = array(
-			array('gt', $starttime),
-			array('lt', $endtime),
-			'and'
-			);
+		$DaoAccount = Db::name('Account');
+		// $where['addtime'] = array(
+		// 	array('gt', $starttime),
+		// 	array('lt', $endtime),
+		// 	'and'
+		// 	);
+		$where['addtime'] = array('between time',$starttime,$endtime);
 		$dataAcc = $DaoAccount->field('ordernum,username,money,accounttype,beizhu')->where($where)->select();
 		$sumCZ = 0;
 		$sumTX = 0;
@@ -902,7 +913,7 @@ class AccountAction extends CommonAction
 		$Tpl['sumCZNum'] = $sumCZNum;
 		$Tpl['sumYK'] = sprintf('%.02f', $sumYK);
 		$this->assign($Tpl);
-		$this->display();
+		return $this->fetch();
 	}
 }
 
