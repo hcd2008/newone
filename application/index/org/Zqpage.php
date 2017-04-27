@@ -25,11 +25,8 @@ class Zqpage
 		$this->totalRows = $totalRows;
 		$this->parameter = $parameter;
 		$this->rollPage = Config::get('PAGE_ROLLPAGE');
-<<<<<<< HEAD
-		$this->listRows = !empty($listRows) ? $listRows : c('PAGE_LISTROWS');
-=======
+
 		$this->listRows = !empty($listRows) ? $listRows : Config::get('PAGE_LISTROWS');
->>>>>>> 6068607b296ec7a6a74045e3ec671f689f60c6d0
 		$this->totalPages = ceil($this->totalRows / $this->listRows);
 		$this->coolPages = ceil($this->totalPages / $this->rollPage);
 		$this->nowPage = !empty($_GET[Config::get('VAR_PAGE')]) ? $_GET[Config::get('VAR_PAGE')] : 1;

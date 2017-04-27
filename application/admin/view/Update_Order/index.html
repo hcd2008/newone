@@ -42,8 +42,8 @@ jQuery(document).ready(function() {
 		}
 	});
 	jQuery("#lotteryid").change(function(){
-		var data_method = <{$data_method}>;
-		var data_issue =  <{$data_issue}>;
+		var data_method = <{@$data_method}>;
+		var data_issue =  <{@$data_issue}>;
 		var obj_method = $("#methodid")[0];
 		var obj_issue  = $("#issue")[0];
 		i =  $("#lotteryid").val();
@@ -150,7 +150,7 @@ function checkForm(obj)
 						          </tr>
 								  </thead>
 								  <!--主题-->
-								<volist name="orderList" id="vo">
+								{volist name="orderList" id="vo"}
 								  	<tr >
 								        <td height="37" ><a href="__URL__/orderinfo/id/<{$vo.id}>/ordernum/<{$vo.ordernum}>"  title="查看投注详情" class="blue" rel="projectinfo"><{$vo.ordernum}></a></td>
 								        <td ><{$vo.username}></td>
@@ -164,7 +164,7 @@ function checkForm(obj)
 								        <td ><{$vo.money}></td>
 								       
 								    </tr>
-							  </volist>
+							  {/volist}
 							       <switch name="message">
 									<case value="0">
 										 <tr>

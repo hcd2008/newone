@@ -98,7 +98,7 @@ function checkForm(obj)
 						            <tr>             
 						              <td >
   用户名:<input type="text" name="username"> 
-日期: <input style='width:124px;' type="text" size="19" name="starttime" id="ordertime_min" value="<{$starttime}>" /> <img class='icons_mb4' src="/images/comm/t.gif" id="time_min_button" /> 至 <input style='width:124px;' type="text" size="19" name="endtime" id="ordertime_max" value="<{$endtime}>" / > <img class='icons_mb4' src="/images/comm/t.gif"/> &nbsp;&nbsp;&nbsp;&nbsp;<button name="submit" type="submit" width='69' height='26' class="btn_search" /></button>
+日期: <input style='width:124px;' type="text" size="19" name="starttime" id="ordertime_min" value="<{$starttime}>" /> <img class='icons_mb4' src="/images/comm/t.gif" id="time_min_button" /> 至 <input style='width:124px;' type="text" size="19" name="endtime" id="ordertime_max" value="<{$endtime}>" / > <img class='icons_mb4' src="/images/comm/t.gif"/> &nbsp;&nbsp;&nbsp;&nbsp;<button name="submit" type="submit" width='69' height='26' class="btn_search" />搜索</button>
 
 <br><br>	              
 						              </td>
@@ -129,7 +129,7 @@ function checkForm(obj)
 						          </tr>
 								  </thead>
 								  <!--主题-->
-								  <volist name="baobiao" id="vo">
+								  {volist name="baobiao" id="vo"}
 							      <tr class="needchangebg">
 							    	
 							        <td><{$vo.username}> &nbsp;&nbsp;(
@@ -156,7 +156,7 @@ function checkForm(obj)
 							        </td>
 									 <td ><{$vo.addtime}></td>	
 							     </tr>
-							     </volist>
+							     {/volist}
 							       <switch name="message">
 									<case value="0">
 										 <tr>

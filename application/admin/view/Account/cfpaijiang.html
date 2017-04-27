@@ -1,4 +1,4 @@
-<include file="Public:head" />
+@<include file="Public:head" />
 <script type="text/javascript" src="__PUBLIC__/js/calendar/jquery.dyndatetime.js"></script>
 <script type="text/javascript" src="__PUBLIC__/js/calendar/lang/calendar-utf8.js"></script>
 <link rel="stylesheet" type="text/css" media="all" href="__PUBLIC__/js/calendar/css/calendar-blue2.css"  />
@@ -42,8 +42,8 @@ jQuery(document).ready(function() {
 		}
 	});
 	jQuery("#lotteryid").change(function(){
-		var data_method = <{$data_method}>;
-		var data_issue =  <{$data_issue}>;
+		var data_method = <{@$data_method}>;
+		var data_issue =  <{@$data_issue}>;
 		var obj_method = $("#methodid")[0];
 		var obj_issue  = $("#issue")[0];
 		i =  $("#lotteryid").val();
@@ -189,7 +189,7 @@ function checkForm(obj)
 						          </tr>
 								  </thead>
 								  <!--主题-->
-								  <volist name="accountList" id="vo">
+								  {volist name="accountList" id="vo"}
 							      <tr class="needchangebg">
 							    	<td ><a href="__APP__/Order/orderinfo/ordernum/<{$vo.ordernum}>"><{$vo.accountnum}></a></td>
 							        <td><{$vo.username}></td>
@@ -204,7 +204,7 @@ function checkForm(obj)
 							        <td ><{$vo.money_after}></td>
 							        <td title="<{$vo.beizhu}>"><{$vo.beizhu|msubstr=0,10}></td>
 							     </tr>
-							     </volist>
+							     {/volist}
 							       <switch name="message">
 									<case value="0">
 										 <tr>

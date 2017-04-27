@@ -2,6 +2,9 @@
 namespace app\admin\controller;
 use app\admin\controller\Common;
 use think\Db;
+use app\index\org\Zqpage;
+use think\Cache;
+use app\cp\controller\Lottery;
 class Order extends Common
 {
 	protected $traceCount = 0;
@@ -24,10 +27,9 @@ class Order extends Common
 	}
 	public function index()
 	{
-		$isgetdata = $this->param['isgetdata'];
-		$ordernum = $this->param['id'];
-		$projectid = $this->param['projectid'];
-
+		$isgetdata = isset($this->param['isgetdata'])?$this->param['isgetdata']:'';
+		$ordernum = isset($this->param['id'])?$this->param['id']:'';
+		$projectid = isset($this->param['projectid'])?$this->param['projectid']:'';
 		if (!empty($ordernum)) {
 			$this->getOrderNumInfo($ordernum);
 			return NULL;
@@ -39,6 +41,7 @@ class Order extends Common
 		}
 
 		$this->show();
+		return $this->fetch();
 	}
 
 	public function cheDan($id)
@@ -198,15 +201,15 @@ class Order extends Common
 
 	public function search()
 	{
-		$my_search = $this->param['my_search'];
+		$my_search = isset($this->param['my_search'])?$this->param['my_search']:'';
 
 		if (empty($my_search)) {
 			$my_search = array();
 		}
 
 		$this->condition = array_filter($my_search, 'value_filter');
-		$starttime = $this->param['starttime'];
-		$endtime = $this->param['endtime'];
+		$starttime = isset($this->param['starttime'])?$this->param['starttime']:'';
+		$endtime = isset($this->param['endtime'])?$this->param['endtime']:'';
 		if (empty($starttime) && empty($endtime)) {
 			$starttime = date('Y-m-d 00:00:00');
 			$endtime = date('Y-m-d 03:00:00', strtotime('+1 days'));
@@ -217,11 +220,12 @@ class Order extends Common
 		// 	array('lt', $endtime),
 		// 	'and'
 		// 	);
-		$this->condition['addtime'] = array('between time',$starttime,$endtime);
+		$this->condition['addtime'] = array('between time',[$starttime,$endtime]);
+		isset($this->condition['state']) or $this->condition['state']='';
 		if ('3' == $this->condition['state']) {
 			$this->condition['state'] = array('gt', $this->condition['state']);
 		}
-
+		isset($this->param['username']) or $this->param['username']='';
 		$formusername = formatstr($this->param['username']);
 		if (empty($formusername) || is_null($formusername)) {
 		}
@@ -268,10 +272,10 @@ class Order extends Common
 		$_obfuscate_8Iu1['orderList'] = $this->orderList;
 		$_obfuscate_8Iu1['message'] = $this->message;
 		$this->assign($_obfuscate_8Iu1);
-		return $this->fetch();
+		// return $this->fetch();
 	}
 
-	public function formatOrderList(&$orderList)
+	public function formatOrderList($orderList)
 	{
 		$formatOrder = array();
 		$newLmData = Cache::get('newLmData');

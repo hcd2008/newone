@@ -140,7 +140,7 @@ function checkForm(obj)
                     <option value="2" >未中奖</option>                    
                     <option value="3" >已撤单</option>
                     </select>      
-用户名: <input style='width:90px;' type="text" name="username" value="" size="19" />&nbsp;&nbsp;帐变时间: <input style='width:124px;' type="text" size="19" name="starttime" id="ordertime_min" value="<{$starttime}>" /> <img class='icons_mb4' src="/images/comm/t.gif" id="time_min_button" /> 至 <input style='width:124px;' type="text" size="19" name="endtime" id="ordertime_max" value="<{$endtime}>" / > <img class='icons_mb4' src="/images/comm/t.gif"/> &nbsp;&nbsp;&nbsp;&nbsp;<button name="submit" type="submit" width='69' height='26' class="btn_search" /></button>
+用户名: <input style='width:90px;' type="text" name="username" value="" size="19" />&nbsp;&nbsp;帐变时间: <input style='width:124px;' type="text" size="19" name="starttime" id="ordertime_min" value="<{$starttime}>" /> <img class='icons_mb4' src="/images/comm/t.gif" id="time_min_button" /> 至 <input style='width:124px;' type="text" size="19" name="endtime" id="ordertime_max" value="<{$endtime}>" / > <img class='icons_mb4' src="/images/comm/t.gif"/> &nbsp;&nbsp;&nbsp;&nbsp;<button name="submit" type="submit" width='69' height='26' class="btn_search" />搜索</button>
 
 <br><br>
 
@@ -151,9 +151,9 @@ function checkForm(obj)
 游戏名称: 
   <select name="my_search[lotteryid]" id="lotteryid" style="width:100px;">
   	<option value="-9">所有游戏</option>
-   <volist name="lotterylist" id="vo">
+   {volist name="lotterylist" id="vo"}
 							<option value="<{$vo.lotteryid}>"><{$vo.lotteryname}></option>
-	</volist>
+	{/volist}
   </select>
 <span id="game_info">
 &nbsp;玩法: <select name='my_search[methodid]' id='methodid' style='width:100px;'><option value='-10' selected="selected">所有玩法</option></select>
@@ -199,7 +199,7 @@ function checkForm(obj)
 						          </tr>
 								  </thead>
 								  <!--主题-->
-								<volist name="orderList" id="vo">
+								{volist name="orderList" id="vo"}
 								  	<tr >
 								        <td height="37" ><a href="__URL__/orderinfo/id/<{$vo.id}>"  title="查看投注详情" class="blue" rel="projectinfo"><{$vo.ordernum}></a></td>
 								        <td ><{$vo.username}></td>
@@ -216,7 +216,7 @@ function checkForm(obj)
 								        <td ><{$vo.traceif}></td>
 								        <td ><{$vo.status}></td> 
 								    </tr>
-							  </volist>
+							  {/volist}
 							       <switch name="message">
 									<case value="0">
 										 <tr>

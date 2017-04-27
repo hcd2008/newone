@@ -87,7 +87,6 @@ class UpdateOrder extends Common
 		if (0 < $count) {
 			$this->message = 1;
 		}
-
 		$this->assign('orderList', $formatOrder);
 		return $this->fetch();
 	}

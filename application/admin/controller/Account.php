@@ -30,9 +30,9 @@ class Account extends Common
 	public function cfpaijiang()
 	{
 		$message = 0;
-		$cfissue = $this->param['cfissue'];
-		$cftype = $this->param['cftype'];
-		$lotteryid = $this->param['lotteryid'];
+		$cfissue = isset($this->param['cfissue'])?$this->param['cfissue']:'';
+		$cftype = isset($this->param['cftype'])?$this->param['cftype']:'';
+		$lotteryid = isset($this->param['lotteryid'])?$this->param['lotteryid']:'';
 
 		if (empty($cfissue)) {
 			$this->assign('message', $message);
@@ -94,6 +94,7 @@ class Account extends Common
 		$accountList = $this->formatAccountList($DaoAccount->where($condition)->order('id desc')->limit($p->firstRow . ',' . $p->listRows)->select());
 		$page = $p->show();
 		$Tpl['accountList'] = $accountList;
+		print_r($Tpl);
 		$this->assign('message', $message);
 		$this->assign('page', $page);
 		$this->assign($Tpl);
@@ -573,6 +574,7 @@ class Account extends Common
 	public function index()
 	{
 		$this->show();
+		return $this->fetch();
 	}
 
 	public function search()
@@ -674,7 +676,7 @@ class Account extends Common
 		$Tpl['accountList'] = $this->accountList;
 		$Tpl['message'] = $this->message;
 		$this->assign($Tpl);
-		return $this->fetch();
+		// return $this->fetch();
 	}
 
 	public function getAccountType()
@@ -791,10 +793,10 @@ class Account extends Common
 	public function baobiao()
 	{
 		$DaoBaobiao = Db::name('baobiao');
-		$username = $this->param['username'];
+		$username = isset($this->param['username'])?$this->param['username']:'';
 		$where['addtime'] = date('Y-m-d');
-		$starttime = $this->param['starttime'];
-		$endtime = $this->param['endtime'];
+		$starttime = isset($this->param['starttime'])?$this->param['starttime']:'';
+		$endtime = isset($this->param['endtime'])?$this->param['endtime']:'';
 		if (!empty($starttime) && !empty($endtime)) {
 			// $where['addtime'] = array(
 			// 	array('gt', $starttime),
@@ -828,12 +830,14 @@ class Account extends Common
 
 		$this->assign('message', $message);
 		$this->assign('baobiao', $data);
+		$this->assign('starttime',$starttime);
+		$this->assign('endtime',$endtime);
 		return $this->fetch();
 	}
 
 	public function meiTianbaobiao()
 	{
-		$starttime = $this->param['starttime'];
+		$starttime = isset($this->param['starttime'])?$this->param['starttime']:'';
 
 		if (empty($starttime)) {
 			$starttime = date('Y-m-d 00:00:00');
