@@ -161,7 +161,7 @@ class User1 extends Controller
 		return false;
 	}
 
-	public function getRegFrom($val, $name)
+	public function getRegFrom($val, $name='')
 	{
 		if (empty($name)) {
 			$username = $this->getUsername();
