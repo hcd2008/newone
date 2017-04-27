@@ -265,4 +265,7 @@ return [
     
     'dlfy'=>1,
     'dlfh'=>4,
+    /* 分页设置 */
+    'PAGE_ROLLPAGE'         => 5,      // 分页显示页数
+    'PAGE_LISTROWS'         => 20,     // 分页每页显示记录数
 ];

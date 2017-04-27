@@ -1,0 +1,54 @@
+<html>
+<head>
+<title>后台管理系统</title>
+<meta http-equiv=Content-Type content=text/html;charset=utf-8>
+<SCRIPT type="text/javascript" src="__PUBLIC__/js/jquery.js"></SCRIPT>
+<script type="text/javascript">
+var is_ssc_paijiang=false;
+function paijiangSsc(lotteryid,issue){	
+	$.ajax({
+		type : 'POST',		
+		url  : '__APP__/Winauto/paijiang/lotteryid/'+lotteryid+'/issue/'+issue+'/auto/true/',
+		timeout :8000,
+		success : function(data){
+					//出口
+					var partn = /end/;
+                    if (partn.test(data)) {                    
+						is_ssc_paijiang=false;
+						paijiangEnd();
+						return;
+                    }else{
+						if(is_ssc_paijiang==false){
+							paijiangEnd();
+							return;
+						} 
+						
+						paijiangSsc(lotteryid,issue);
+					}				
+		},
+		error: function() {
+                    is_ssc_paijiang=false;
+                    paijiangEnd();
+					return;
+        }
+	});	
+}
+
+function paijiangEnd(){
+
+	window.frames["main"].sdpjEnd();
+}
+
+</script>
+</head>
+<frameset rows="64,*"  frameborder="NO" border="0" framespacing="0">
+	<frame src="<{:url('login/top')}>" noresize="noresize" frameborder="NO" name="topFrame" scrolling="no" marginwidth="0" marginheight="0" target="main" />
+  <frameset cols="185,7,*"  rows="560,*" id="frame" name="myFrame">
+	<frame src="<{:url('login/left')}>" name="leftFrame" noresize="noresize" marginwidth="0" marginheight="0" frameborder="0" scrolling="no" target="main" />
+	<frame src="<{:url('login/switchframe')}>" name="midFrame" frameborder="no" scrolling="No" noresize="noresize" id="midFrame" title="midFrame" />
+	<frame src="<{:url('login/right')}>" name="main" marginwidth="0" marginheight="0" frameborder="0" scrolling="auto" target="_self" />
+  </frameset>
+<noframes>
+  <body></body>
+    </noframes>
+</html>

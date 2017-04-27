@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<META HTTP-EQUIV="pragma" CONTENT="no-cache"> 
+<META HTTP-EQUIV="Cache-Control" CONTENT="no-store, must-revalidate"> 
+<META HTTP-EQUIV="expires" CONTENT="Wed, 26 Feb 1997 08:21:57 GMT"> 
+<META HTTP-EQUIV="expires" CONTENT="0">
+<title></title>
+<load href="__PUBLIC__/css/skin.css"/>
+<script language="javascript" type="text/javascript" src="__PUBLIC__/js/jquery.js"></script>
+<script language="javascript" type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+<load href="__PUBLIC__/css/zqpage.css"/>
+<script type="text/javascript">
+  $(function(){
+		$("#viewlist>tbody>tr:odd").addClass("odd");
+		$("#viewlist>tbody>tr:even").addClass("even");
+		$(".edittable>tbody>tr:odd").addClass("odd");
+		$(".edittable>tbody>tr:even").addClass("even");
+		// 如果复选框默认情况下是选择的，则高色.
+		$('#viewlist>tbody>tr:has(:checked)').addClass('selected');
+		//全选
+		 $("#CheckedAll").click(function(){
+				if(this.checked){				 //如果当前点击的多选框被选中						
+					 $("input[type=checkbox][name=items[]]").attr("checked", true);					 
+				}else{								
+					 $("input[type=checkbox][name=items[]]").attr("checked", false);
+				}
+		 });
+		 //鼠标滑运效果
+		$("#viewlist>tbody>tr").hover(
+			function () {
+				$(this).addClass("hover");
+		    },
+			 function () {
+				$(this).removeClass("hover");
+		    }
+		);
+  })
+  function isDeltet(){	  
+	  var arr = $('input[type=checkbox][name=items[]]:checked');	  
+	  if(arr.size()<=0){
+			alert("请先选 择要删除的项目！");
+			return false;
+		  }else{
+			if(confirm("确定要永久删除吗？")){
+					//提交表单
+					$("#formlist").submit();
+				}
+			  }
+	return false;
+	  }
+</script>
+</head>

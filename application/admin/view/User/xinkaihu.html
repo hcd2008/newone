@@ -1,0 +1,227 @@
+<include file="Public:head" />
+<script type="text/javascript" src="__PUBLIC__/js/calendar/jquery.dyndatetime.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/calendar/lang/calendar-utf8.js"></script>
+<link rel="stylesheet" type="text/css" media="all" href="__PUBLIC__/js/calendar/css/calendar-blue2.css"  />
+<script type="text/javascript">
+
+jQuery(document).ready(function() {		
+	jQuery("#ordertime_min").dynDateTime({
+		ifFormat: "%Y-%m-%d %H:%M:%S",
+		daFormat: "%l;%M %p, %e %m,  %Y",
+		align: "Br",
+		electric: true,
+		singleClick: false,
+		button: ".next()",
+		showOthers: true,
+		weekNumbers: true,
+		showsTime: true
+	});
+	jQuery("#ordertime_max").dynDateTime({
+		ifFormat: "%Y-%m-%d %H:%M:%S",
+		daFormat: "%l;%M %p, %e %m,  %Y",
+		align: "Br",
+		electric: true,
+		singleClick: false,
+		button: ".next()",
+		showOthers: true,
+		weekNumbers: true,
+		showsTime: true
+	});
+	jQuery("#endtime").change(function(){
+		if(! validateInputDate(jQuery("#endtime").val()) )
+		{
+			jQuery("#endtime").val('');
+			$.alert("时间格式不正确,正确的格式为:2011-01-01 08:00");
+		}
+		if($("#starttime").val()!="")
+		{
+			if($("#starttime").val()>$("#endtime").val())
+			{
+				$("#endtime").val("");
+				$.alert("输入的时间不符合逻辑, 起始时间大于结束时间");
+			}
+		}
+	});
+	
+});
+
+function checkForm(obj)
+{
+	if( jQuery.trim(obj.ordertime_min.value) != "" )
+	{
+		if( false == validateInputDate(obj.ordertime_min.value) )
+		{
+			alert("时间格式不正确");
+			obj.ordertime_min.focus();
+			return false;
+		}
+	}
+	if( jQuery.trim(obj.ordertime_max.value) != "" )
+	{
+		if( false == validateInputDate(obj.ordertime_max.value) )
+		{
+			alert("时间格式不正确");
+			obj.ordertime_max.focus();
+			return false;
+		}
+	}
+}
+
+function isDeltet(){	  
+	  var arr = $('input[type=checkbox][name=items[]]:checked');	  
+	  if(arr.size()<=0){
+			alert("请先选 择要删除的项目！");
+			return false;
+		  }else{
+			if(confirm("确定要永久删除吗？")){
+
+				
+				var   a   =   window.prompt( "为了系统的安全性请输入认证码： ","") ;
+				 if( a=="" || a==null ) return false; 
+						$("#safenum").val(a);
+				
+					//提交表单
+					$("#formlist").submit();
+				}
+			  }
+	return false;
+	  }
+</script>
+<body>
+	<SPAN id=ShowSound></SPAN>
+	<table width="100%" border="0" cellpadding="0" cellspacing="0">
+	<!--标签栏开始-->
+  <tr>
+    <td width="17" valign="top" background="__PUBLIC__/images/mail_leftbg.gif"><img src="__PUBLIC__/images/left-top-right.gif" width="17" height="29" /></td>
+    <td valign="top" background="__PUBLIC__/images/content-bg.gif"><table width="100%" height="31" border="0" cellpadding="0" cellspacing="0" class="left_topbg" id="table2">
+      <tr>
+        <td height="31"><div class="titlebt">新开并充值</div></td>
+      </tr>
+    </table></td>
+    <td width="16" valign="top" background="__PUBLIC__/images/mail_rightbg.gif"><img src="__PUBLIC__/images/nav-right-bg.gif" width="16" height="29" /></td>
+  </tr><!--标签栏结束-->
+  <tr><!--左侧一坚-->
+    <td valign="middle" background="__PUBLIC__/images/mail_leftbg.gif">&nbsp;</td>
+    <td valign="top" bgcolor="#F7F8F9">
+	<!--主体表格-->
+		<table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+		 
+	
+		   <tr>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+						  	<td>
+<font color="red" size="5">今日首次冲值用户：<{$countnum}> 个</font>
+						  	</td>
+						  </tr>
+		  <!--空行-->
+		    <tr>
+            <td>&nbsp;</td>
+          </tr>
+		  <!--功能列表开始-->
+		  <tr>
+            <td>
+            	<div class="viewlist">
+						<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+						 
+						  
+						   
+						   
+						 
+						  <!--第二行-->
+						   <!--列表开始-->
+						  <tr>
+						    <td>  <form action="__URL__/deleteUser" method="POST" id="formlist"> 
+						    <input type="hidden" name="safenum" id="safenum"> 
+						      <table width="100%" border="0" align="left" cellpadding="0" cellspacing="1" bgcolor="" id="viewlist" class="viewlist">
+						          <!--表头-->
+								  <thead>
+								  <tr>
+								  <th width="30px" ><input type="checkbox" name="CheckedAll" id="CheckedAll" /></th>	
+						          	<th>編号</th>
+						          	<th>用户</th>
+								   <th>代理</th>
+								    <th>冻结</th>
+								    <th>锁定</th>
+								    <th>QQ</th>
+								    <th>银行</th>
+								     <th>卡号</th>
+								      <th>姓名</th>
+								   <th>余额</th>
+								   <th>返点</th>
+								    <th>注册时间</th>								 
+						          </tr>
+								  </thead>
+								  <!--主题-->
+								<volist name="list" id="vo">
+								  	<tr >
+								       <td height="18">
+								       		<if condition="$vo.username neq 'admin' ">
+											<input name="items[]" type="checkbox" value="<{$vo.id}>"/>
+											</if>
+										</td>	
+										 <td ><{$vo.id}></td>			
+								        <td ><a href="__URL__/editUser/id/<{$vo.id}>"><{$vo.username}></a></td>
+								        <td ><{$vo.usertype}></td>
+								        <td ><{$vo.state}></td>
+								        <td ><{$vo.lock}></td>
+								        <td ><{$vo.qq}></td>
+								         <td ><{$vo.bankname}></td>
+								          <td ><{$vo.banknum}></td>
+								           <td ><{$vo.realname}></td>
+								        <td ><{$vo.money}></td>
+								        <td ><{$vo.rate_1}></td>
+								        <td ><{$vo.addtime}></td>
+								       
+								    </tr>
+							  </volist>
+							       <switch name="message">
+									<case value="0">
+										 <tr>
+							    	<td height="37" colspan="13" align="center" class=needq><span>请选择查询条件之后进行查询<span></td>
+							            </tr>
+									</case>
+									<case value="2">
+										<tr>
+							    	<td height="37" colspan="13" align="center" class="no-records"><span>没有找到指定条件的投注记录</span></td>
+							             </tr>
+									</case>		
+									<case value="1">
+									 <tr align="right">
+							    	<td height="37" colspan="25">
+							    		 <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#E9EBEF" class="pagelist">						          
+								
+									  <tr>
+							            <th align="center">
+										<{$page}>
+										</th>   
+							          </tr>
+								 
+						</table> <!--分页列表结束-->
+							    	</td>
+							         </tr>
+									</case>		
+							  </switch>		  	 
+						    </table></form></td>
+						  </tr>
+						  <!--列表结束-->
+						  
+						  </table>
+						
+						
+						
+                </div>	
+                  <!--分页列表-->
+						 
+						
+            </td>
+          </tr>
+          <!--功能列表开始-->
+		</table>
+	<!--主体结束-->
+	
+   
+	<include file="Public:foot" />
+
+	

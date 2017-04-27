@@ -7,7 +7,7 @@ class Common extends Controller
 	public function _initialize()
 	{
 		$ht = Session::get('ht');
-		if (empty($ht) || !Session::is_set('ht')) {
+		if (empty($ht) || !Session::has('ht')) {
 			$this->redirect('login/login');
 			exit();
 		}

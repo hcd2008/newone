@@ -52,6 +52,6 @@ return [
     'sql_explain'     => false,
     // Builder类
     'builder'         => '',
-    // Query类
+    // Query类 
     'query'           => '\\think\\db\\Query',
 ];

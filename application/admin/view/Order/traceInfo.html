@@ -1,0 +1,190 @@
+<include file="Public:head" />
+
+
+<script language="javascript">
+
+$(function(){
+
+	 $("#checkall").click(function(){
+	        $(":input").attr("checked",$("#checkall").attr("checked"));
+	    });
+	
+});
+function cancel()
+{
+    if($(":input[name='taskid[]'][checked=true]").size()==0)
+    {
+        alert('请选择要终止追号的奖期');
+        return false;
+    }
+    else
+    {
+   	 if(confirm("真的要终止追号任务吗?")){
+   		 $("#Form").submit();
+   	 }else{
+   		 return false;
+   	  }
+
+    }
+}
+function checkform(obj)
+{
+	
+	flag=obj.value=="处理"?"1":"0";
+
+	var ac=$("#formA").attr("action");
+
+	$("#formA").attr("action",ac+flag);
+
+	if($("#textfield").val()==""){
+		alert("请填写备注信息");
+	}else{
+		$("#formA").submit();
+		}
+	
+}
+</script>
+<body>
+	
+	<table width="100%" border="0" cellpadding="0" cellspacing="0">
+	<!--标签栏开始-->
+  <tr>
+    <td width="17" valign="top" background="__PUBLIC__/images/mail_leftbg.gif"><img src="__PUBLIC__/images/left-top-right.gif" width="17" height="29" /></td>
+    <td valign="top" background="__PUBLIC__/images/content-bg.gif"><table width="100%" height="31" border="0" cellpadding="0" cellspacing="0" class="left_topbg" id="table2">
+      <tr>
+        <td height="31"><div class="titlebt">追号详情</div></td>
+      </tr>
+    </table></td>
+    <td width="16" valign="top" background="__PUBLIC__/images/mail_rightbg.gif"><img src="__PUBLIC__/images/nav-right-bg.gif" width="16" height="29" /></td>
+  </tr><!--标签栏结束-->
+  <tr><!--左侧一坚-->
+    <td valign="middle" background="__PUBLIC__/images/mail_leftbg.gif">&nbsp;</td>
+    <td valign="top" bgcolor="#F7F8F9">
+	<!--主体表格-->
+		<table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+		 
+	
+		   <tr>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+						  	<td>
+  
+						  		
+						  	</td>
+						  </tr>
+		  <!--空行-->
+		    <tr>
+            <td>&nbsp;</td>
+          </tr>
+		  <!--功能列表开始-->
+		  <tr>
+            <td>
+            	 <form method="post" action="/jinjin/index.php/Dakehu/update">
+            <input type="hidden" name="id" value="<{$id}>"/> 
+            <table width="100%" border="0" cellpadding="0" cellspacing="0" class="edittable">
+             <tr>
+                <td >&nbsp;&nbsp;&nbsp;追号编号：<{$tracenum}></td>                
+                <td >&nbsp;&nbsp;&nbsp;</td>
+                
+                 <td >&nbsp;&nbsp;&nbsp;游戏用户：<{$username}></td>
+                <td >&nbsp;&nbsp;&nbsp;</td>
+                
+                <td >&nbsp;&nbsp;&nbsp;追号时间：<{$addtime}></td>
+                <td >&nbsp;&nbsp;&nbsp;</td>
+                           
+                <td >&nbsp;&nbsp;&nbsp;游戏：<{$lotteryname}></td>
+                <td >&nbsp;&nbsp;&nbsp;</td>
+                                                        
+              </tr>
+              <tr>
+                <td >&nbsp;&nbsp;&nbsp;玩法：<{$methodname}></td>                
+                <td >&nbsp;&nbsp;&nbsp;</td>
+                
+                 <td >&nbsp;&nbsp;&nbsp;模式：<{$mode}></td>
+                <td >&nbsp;&nbsp;&nbsp;</td>
+                
+                <td >&nbsp;&nbsp;&nbsp;开始期号：<{$issue}></td>
+                <td >&nbsp;&nbsp;&nbsp;</td>
+                           
+                <td >&nbsp;&nbsp;&nbsp;追号期数：<{$traceCount}>期</td>
+                <td >&nbsp;&nbsp;&nbsp;</td>
+                                                        
+              </tr>
+              <tr>
+                <td >&nbsp;&nbsp;&nbsp;完成期数：<{$traceWanCheng}>期</td>                
+                <td >&nbsp;&nbsp;&nbsp;</td>
+                
+                 <td >&nbsp;&nbsp;&nbsp;取消期数：<{$traceCheDan}>期</td>
+                <td >&nbsp;&nbsp;&nbsp;</td>
+                
+                <td >&nbsp;&nbsp;&nbsp;追号总金额：<{$traceCountMoney}></td>
+                <td >&nbsp;&nbsp;&nbsp;</td>
+                           
+                <td >&nbsp;&nbsp;&nbsp;完成金额：<{$traceWanChengMoney}></td>
+                <td >&nbsp;&nbsp;&nbsp;</td>
+                                                        
+              </tr>
+                <tr>
+                <td >&nbsp;&nbsp;&nbsp;中奖期数：<{$traceZhonJiang}></td>                
+                <td >&nbsp;&nbsp;&nbsp;</td>
+                
+                 <td >&nbsp;&nbsp;&nbsp;派奖总金额：<{$tracePaiMoney}></td>
+                <td >&nbsp;&nbsp;&nbsp;</td>
+                
+                <td >&nbsp;&nbsp;&nbsp;取消金额：<{$traceCheDanMoney}></td>
+                <td >&nbsp;&nbsp;&nbsp;</td>
+                           
+                <td >&nbsp;&nbsp;&nbsp;中奖后终止任务：<{$tracestop}></td>
+                <td >&nbsp;&nbsp;&nbsp;</td>
+                                                        
+              </tr>
+                <tr>
+                <td colspan="8">&nbsp;&nbsp;&nbsp;追号内容：<{$codes}></td>  
+              	</tr>
+              
+                <tr>
+                <td colspan="8" align="center">
+                
+                <input type="button" class='button yh' value="关闭" onclick="self.close();"
+>&nbsp;<input type="button" class='button yh' value="终止追号" onclick="cancel()">
+                
+                </td>  
+              	</tr>
+              
+              
+            
+            </table>
+            </form>
+            <form id="Form" action="__URL__/cheDanMany" method="post">
+            <input type="hidden" name="username" value="<{$username}>">
+            <table width="100%" border="0" align="left" cellpadding="0" cellspacing="1" bgcolor="#E9EBEF" id="viewlist" class="viewlist">
+						          <!--表头-->
+								       	 <th><input type="checkbox" id="checkall" >奖期</th>					           
+						             <th>追号  倍数</th>						           
+						             <th>追号状态</th>						            				           
+						          </tr>
+								  </thead>
+								  <volist name="traceList" id="vo">
+								    <tr bgcolor="#FFFFFF">
+								  <td>
+											<if condition="$vo['state'] eq 0 "> 
+											<input type="checkbox" name="taskid[]" value="<{$vo.id}>">
+												</if>
+										<{$vo.issue}></td>							
+										<td><{$vo.beishu}>倍</td>
+										<td><{$vo.status}></td>
+								   </tr>
+								   </volist>
+								   
+								    
+			</table>	
+			</form>						  
+            </td>
+          </tr>
+          <!--功能列表开始-->
+		</table>
+	<!--主体结束-->
+	<include file="Public:foot" />
+
+	

@@ -1,0 +1,216 @@
+<include file="Public:head" />
+<script type="text/javascript" src="__PUBLIC__/js/calendar/jquery.dyndatetime.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/calendar/lang/calendar-utf8.js"></script>
+<link rel="stylesheet" type="text/css" media="all" href="__PUBLIC__/js/calendar/css/calendar-blue2.css"  />
+<script type="text/javascript">
+jQuery(document).ready(function() {		
+	jQuery("#ordertime_min").dynDateTime({
+		ifFormat: "%Y-%m-%d %H:%M:%S",
+		daFormat: "%l;%M %p, %e %m,  %Y",
+		align: "Br",
+		electric: true,
+		singleClick: false,
+		button: ".next()",
+		showOthers: true,
+		weekNumbers: true,
+		showsTime: true
+	});
+	jQuery("#ordertime_max").dynDateTime({
+		ifFormat: "%Y-%m-%d %H:%M:%S",
+		daFormat: "%l;%M %p, %e %m,  %Y",
+		align: "Br",
+		electric: true,
+		singleClick: false,
+		button: ".next()",
+		showOthers: true,
+		weekNumbers: true,
+		showsTime: true
+	});
+	jQuery("#endtime").change(function(){
+		if(! validateInputDate(jQuery("#endtime").val()) )
+		{
+			jQuery("#endtime").val('');
+			$.alert("时间格式不正确,正确的格式为:2011-01-01 08:00");
+		}
+		if($("#starttime").val()!="")
+		{
+			if($("#starttime").val()>$("#endtime").val())
+			{
+				$("#endtime").val("");
+				$.alert("输入的时间不符合逻辑, 起始时间大于结束时间");
+			}
+		}
+	});
+	jQuery("#lotteryid").change(function(){
+		var data_method = <{$data_method}>;
+		var data_issue =  <{$data_issue}>;
+		var obj_method = $("#methodid")[0];
+		var obj_issue  = $("#issue")[0];
+		i =  $("#lotteryid").val();
+		$("#methodid").empty();
+		$("#issue").empty();
+		addItem( obj_method,'所有玩法',-10 );
+		addItem( obj_issue,'所有奖期',-10 );
+		if(i>0)
+		{
+			$.each(data_method[i],function(j,k){
+				addItem( obj_method,k.methodname,k.methodid );
+			});
+			$.each(data_issue[i],function(j,k){
+				addItem( obj_issue,k.issue,k.issue );
+			});		
+		}
+		SelectItem(obj_method,0);
+		SelectItem(obj_issue,'0');
+	});
+	$("#lotteryid").val(0);
+	$("#lotteryid").change();
+});
+
+function checkForm(obj)
+{
+	if( jQuery.trim(obj.ordertime_min.value) != "" )
+	{
+		if( false == validateInputDate(obj.ordertime_min.value) )
+		{
+			alert("时间格式不正确");
+			obj.ordertime_min.focus();
+			return false;
+		}
+	}
+	if( jQuery.trim(obj.ordertime_max.value) != "" )
+	{
+		if( false == validateInputDate(obj.ordertime_max.value) )
+		{
+			alert("时间格式不正确");
+			obj.ordertime_max.focus();
+			return false;
+		}
+	}
+}
+</script>
+<body>
+	<SPAN id=ShowSound></SPAN>
+	<table width="100%" border="0" cellpadding="0" cellspacing="0">
+	<!--标签栏开始-->
+  <tr>
+    <td width="17" valign="top" background="__PUBLIC__/images/mail_leftbg.gif"><img src="__PUBLIC__/images/left-top-right.gif" width="17" height="29" /></td>
+    <td valign="top" background="__PUBLIC__/images/content-bg.gif"><table width="100%" height="31" border="0" cellpadding="0" cellspacing="0" class="left_topbg" id="table2">
+      <tr>
+        <td height="31"><div class="titlebt">改单监控</div></td>
+      </tr>
+    </table></td>
+    <td width="16" valign="top" background="__PUBLIC__/images/mail_rightbg.gif"><img src="__PUBLIC__/images/nav-right-bg.gif" width="16" height="29" /></td>
+  </tr><!--标签栏结束-->
+  <tr><!--左侧一坚-->
+    <td valign="middle" background="__PUBLIC__/images/mail_leftbg.gif">&nbsp;</td>
+    <td valign="top" bgcolor="#F7F8F9">
+	<!--主体表格-->
+		<table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+		 
+	
+		   <tr>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+						  	<td>
+ 
+						  		
+						  	</td>
+						  </tr>
+		  <!--空行-->
+		    <tr>
+            <td>&nbsp;</td>
+          </tr>
+		  <!--功能列表开始-->
+		  <tr>
+            <td>
+            	<div class="viewlist">
+						<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+						 
+						  <!--第二行-->
+						   <!--列表开始-->
+						  <tr>
+						    <td>   
+						      <table width="100%" border="0" align="left" cellpadding="0" cellspacing="1" bgcolor="#E9EBEF" id="viewlist" class="viewlist">
+						          <!--表头-->
+								  <thead>
+								  <tr>
+						          	<th>注单编号</th>
+								   <th width="140">改单人(后台帐号)</th>
+								   <th>被改用户</th>
+								    <th>改单时间</th>
+								    <th>游戏</th>
+								    <th>玩法</th>
+								   <th>期号</th>
+								    <th>原投注内容</th>
+								 
+								    <th>总金额</th>
+								 
+						          </tr>
+								  </thead>
+								  <!--主题-->
+								<volist name="orderList" id="vo">
+								  	<tr >
+								        <td height="37" ><a href="__URL__/orderinfo/id/<{$vo.id}>/ordernum/<{$vo.ordernum}>"  title="查看投注详情" class="blue" rel="projectinfo"><{$vo.ordernum}></a></td>
+								        <td ><{$vo.username}></td>
+								         <td ><{$vo.bgname}></td>
+								        <td ><{$vo.addtime}></td>
+								        <td ><{$vo.lotteryname}></td>
+								        <td ><{$vo.methodname}></td>
+								        <td ><{$vo.issue}></td>
+								        <td class="codelist" ><{$vo.codes}></td>
+								     
+								        <td ><{$vo.money}></td>
+								       
+								    </tr>
+							  </volist>
+							       <switch name="message">
+									<case value="0">
+										 <tr>
+							    	<td height="37" colspan="14" align="center" class=needq><span>请选择查询条件之后进行查询<span></td>
+							            </tr>
+									</case>
+									<case value="2">
+										<tr>
+							    	<td height="37" colspan="14" align="center" class="no-records"><span>没有找到指定条件的投注记录</span></td>
+							             </tr>
+									</case>		
+									<case value="1">
+									 <tr align="right">
+							    	<td height="37" colspan="14">
+							    		 <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#E9EBEF" class="pagelist">						          
+								
+									  <tr>
+							            <th align="center">
+										<{$page}>
+										</th>   
+							          </tr>
+								 
+						</table> <!--分页列表结束-->
+							    	</td>
+							         </tr>
+									</case>		
+							  </switch>		  	 
+						    </table></td>
+						  </tr>
+						  <!--列表结束-->
+						  
+						  </table>
+						
+						
+						
+                </div>	
+                  <!--分页列表-->
+						 
+						
+            </td>
+          </tr>
+          <!--功能列表开始-->
+		</table>
+	<!--主体结束-->
+	
+   
+	<include file="Public:foot" />
+
+	

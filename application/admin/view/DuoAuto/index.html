@@ -1,0 +1,253 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<SCRIPT type="text/javascript" src="__PUBLIC__/js/jquery.js"></SCRIPT>
+<script type="text/javascript">
+var is_ssc_paijiang=false;
+
+
+function paijiangSsc(lotteryid,issue){
+	
+	if(is_ssc_paijiang==false) return;
+	
+	$.ajax({
+		type : 'POST',
+		
+		url  : '__APP__/Winauto/paijiang/lotteryid/'+lotteryid+'/issue/'+issue+'/auto/true/',
+		timeout :8000,
+		success : function(data){
+					//出口
+					var partn = /end/;
+                    if (partn.test(data)) {                    
+						is_ssc_paijiang=false;
+						return;
+                    }else{
+						if(is_ssc_paijiang==false) return;
+						
+						paijiangSsc(lotteryid,issue);
+					}
+				
+		},
+		error: function() {
+                    is_ssc_paijiang=false;
+					return;
+        }
+	});
+}
+function paijiang(lotteryid,issue){
+	$.ajax({
+		type : 'GET',
+		
+		url  : '__APP__/Winauto/paijiang/lotteryid/'+lotteryid+'/issue/'+issue+'/auto/true',
+		
+		
+
+		timeout : 20000,
+		success : function(data){
+				
+				
+		}
+	});
+}
+
+
+//读Baobiao
+function duBaobiao(){
+	$.ajax({
+		type : 'GET',
+		url  : '__URL__/autoBaobiao/',
+		timeout : 10000,
+		success : function(data){
+				
+				return true;
+		}
+	});
+}
+
+
+//利用ajax进行自动开奖
+//读重庆彩
+function duSsc(){
+	if(is_ssc_paijiang==true) return;
+	$.ajax({
+		type : 'GET',		
+		url  : '__URL__/ssc/isAutoDuo/1',
+		timeout : 10000,
+		success : function(data){
+				var partn = /{/;
+                    if (!partn.test(data)) {                    
+                      $("#ssc").html(data);
+						return;
+                    }
+				eval("data = " + data + ";");
+				if(data.flag==false){
+					$("#ssc").html(data.str);
+					
+				}else{
+					$("#ssc").html("正在派奖,期数为"+data.issue);
+					is_ssc_paijiang=true;
+					paijiangSsc(data.lotteryid,data.issue);
+				}
+				return true;
+		},
+		error: function() {
+                    is_ssc_paijiang=false;
+					return;
+        }
+	});
+}
+
+//读新疆彩
+function duXjcgf(){
+	$.ajax({
+		type : 'GET',
+		url  : '__URL__/xjc/isAutoDuo/1',
+		timeout : 10000,
+		success : function(data){
+				var partn = /{/;
+                    if (!partn.test(data)) {                    
+                      $("#xjc").html(data);
+						return;
+                    }
+				eval("data = " + data + ";");
+				if(data.flag==false){
+					$("#xjc").html(data.str);
+					
+				}else{
+					$("#xjc").html("正在派奖,期数为"+data.issue);
+					paijiang(data.lotteryid,data.issue);
+				}
+				return true;
+		}
+	});
+}
+//读江西彩
+function duXsc(){
+	$.ajax({
+		type : 'GET',
+		url  : '__URL__/xsc/isAutoDuo/1',
+		timeout : 10000,
+		success : function(data){
+				var partn = /{/;
+                    if (!partn.test(data)) {                    
+                      $("#xsc").html(data);
+						return;
+                    }
+				eval("data = " + data + ";");
+				if(data.flag==false){
+					$("#xsc").html(data.str);
+					
+				}else{
+					$("#xsc").html("正在派奖,期数为"+data.issue);
+					paijiang(data.lotteryid,data.issue);
+				}
+				return true;
+		}
+	});
+}
+//读排三
+function duPls(){
+	$.ajax({
+		type : 'GET',
+		url  : '__URL__/pls500wan/isAutoDuo/1',
+		timeout : 10000,
+		success : function(data){
+				var partn = /{/;
+                    if (!partn.test(data)) {                    
+                      $("#pls").html(data);
+						return;
+                    }
+				eval("data = " + data + ";");
+				if(data.flag==false){
+					$("#pls").html(data.str);
+					
+				}else{
+					$("#pls").html("正在派奖,期数为"+data.issue);
+					paijiang(data.lotteryid,data.issue);
+				}
+				return true;
+		}
+	});
+}
+//读福彩
+function duFsc(){
+	$.ajax({
+		type : 'GET',
+		url  : '__URL__/fucai500wan/isAutoDuo/1',
+		timeout : 10000,
+		success : function(data){
+				var partn = /{/;
+                    if (!partn.test(data)) {                    
+                      $("#fsc").html(data);
+						return;
+                    }
+				
+				eval("data = " + data + ";");
+				
+				if(data.flag==false){
+					$("#fsc").html(data.str);
+					
+				}else{
+					$("#fsc").html("正在派奖,期数为"+data.issue);
+					paijiang(data.lotteryid,data.issue);
+				}
+				return true;
+		}
+	});
+}
+function my18(){
+	$.ajax({
+		type : 'GET',
+		
+		url  : '__URL__/my18/isAutoDuo/1',
+		timeout : 10000,
+		success : function(data){
+				
+				
+		}
+	});
+}
+
+</script>
+<style type="text/css">
+.hm{margin-top:50px;}
+</style>
+<title>自动开奖</title>
+</head>
+<body>
+	<div id="ssc" class="hm">
+	我正在努力读取重庆官方数据,请你耐心点,给我20秒时间!
+	</div>
+	
+	
+	
+	
+	<div id="xjc" class="hm">
+	我正在努力读取新疆彩官方数据,请你耐心点,给我20秒时间!
+	</div>
+	
+	<div id="xsc" class="hm">
+	我正在努力读取江西彩官方数据,请你耐心点,给我20秒时间!
+	</div>
+	
+	<div id="pls" class="hm">
+	我正在努力读取排列三/五官方数据,请你耐心点,给我60秒时间!
+	</div>
+	
+	<div id="fsc" class="hm">
+	我正在努力读取福彩官方数据,请你耐心点,给我60秒时间!
+	</div>
+	
+	<script type="text/javascript">
+	duSsc();
+	setInterval("my18()",1000*17);
+	setInterval("duSsc()",1000*11);
+	setInterval("duBaobiao()",1000*7);
+	setInterval("duXjcgf()",1000*30);
+	setInterval("duXsc()",1000*20);
+	setInterval("duPls()",1000*90);
+	setInterval("duFsc()",1000*60);
+	</script>
+</body>
+</html>

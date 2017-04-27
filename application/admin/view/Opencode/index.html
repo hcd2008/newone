@@ -1,0 +1,174 @@
+<include file="Public:head" />
+
+<body>
+
+
+<script type="text/javascript">
+
+
+var sdpj_text="";
+var htmlid="";
+function sdpj(lotteryid,issue,htid){
+	htmlid=htid;
+	sdpj_text=$("#"+htmlid+"").html();	
+	$("#"+htmlid+"").html("<font color='red'>正在派奖中......</font>");
+	window.parent.is_ssc_paijiang=true;
+	window.parent.paijiangSsc(lotteryid,issue);
+}
+
+function sdpjEnd(){
+
+	$("#"+htmlid+"").html("已全部派奖完毕!");
+}
+
+
+</script>
+
+
+	<SPAN id=ShowSound></SPAN>
+	<table width="100%" border="0" cellpadding="0" cellspacing="0">
+	<!--标签栏开始-->
+  <tr>
+    <td width="17" valign="top" background="__PUBLIC__/images/mail_leftbg.gif"><img src="__PUBLIC__/images/left-top-right.gif" width="17" height="29" /></td>
+    <td valign="top" background="__PUBLIC__/images/content-bg.gif"><table width="100%" height="31" border="0" cellpadding="0" cellspacing="0" class="left_topbg" id="table2">
+      <tr>
+        <td height="31"><div class="titlebt">开奖号码</div></td>
+      </tr>
+    </table></td>
+    <td width="16" valign="top" background="__PUBLIC__/images/mail_rightbg.gif"><img src="__PUBLIC__/images/nav-right-bg.gif" width="16" height="29" /></td>
+  </tr><!--标签栏结束-->
+  <tr><!--左侧一坚-->
+    <td valign="middle" background="__PUBLIC__/images/mail_leftbg.gif">&nbsp;</td>
+    <td valign="top" bgcolor="#F7F8F9">
+	<!--主体表格-->
+		<table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+		 
+	
+		   <tr>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+						  	<td>
+ 
+						  		
+						  	</td>
+						  </tr>
+		  <!--空行-->
+		    <tr>
+            <td>&nbsp;</td>
+          </tr>
+		  <!--功能列表开始-->
+		  <tr>
+            <td>
+            	<div class="viewlist">
+						<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+						<tr>
+						    <td>
+						    <form action="__URL__/addCode" method="post">
+						    <input type="hidden" name="lotteryid" value="<{$lotteryid}>">
+						   <table width="100%" border="0" cellpadding="0" cellspacing="0" class="edittable">
+						           	 <tr>
+						                <td width="32%"  align="right">开奖期数：</td>
+						                <td width="3%">&nbsp;</td>
+						                <td ><input name="issue" type="text" id="issue" size="36" value="<{$issue}>"> </td>               
+						              </tr>
+						               <tr>
+						                <td width="32%"  align="right">开奖号码： </td>
+						                <td width="3%">&nbsp;</td>
+						                <td ><input name="code" type="text" id="code" size="36" > </td>                
+						              </tr>
+						               <tr>
+						                <td width="32%"  align="right">录入时间： </td>
+						                <td width="3%">&nbsp;</td>
+						                <td ><input name="addtime" type="text" id="addtime" size="36" value="<{$addtime}>"> </td>                
+						              </tr>
+						                <tr>
+					                <td width="32%"  align="center" colspan="3">
+					                	  <input type="submit" name="Submit" value="提 交" class="submit">
+					                        &nbsp;&nbsp; 
+					                        <input type="reset" name="Submit2" value="恢 复" class="submit">
+					                </td>
+					                        
+					              </tr>
+						   </table>
+						   </form>
+						    </td>
+						  </tr>
+						   <tr>
+						    <td height="30">
+						      &nbsp;
+						    </td>
+						  </tr>
+						    <tr>
+						    <td height="30">
+						       <table border="0" align="left" cellpadding="0" cellspacing="0">
+						            <tr>             
+						         
+						              
+						              <td width="80"><table width="88%" border="0" cellpadding="0" cellspacing="0">
+						                  <tr>
+						                    <td ><div align="center"><img src="__PUBLIC__/images/083.gif" width="14" height="14" /></div></td>
+						                    <td ><div align="center"><a href="__URL__/delete" onclick="return isDeltet();">删除</a></div></td>
+						                  </tr>
+						              </table>
+						              </td>	
+						            </tr>
+						        </table>
+						    </td>
+						  </tr>
+						 
+						  <!--第二行-->
+						   <!--列表开始-->
+						  <tr>
+						    <td>   <form action="__URL__/deleteCode" method="POST" id="formlist">
+						    <input type="hidden" name="lotteryid" value="<{$lotteryid}>">
+						      <table width="100%" border="0" align="left" cellpadding="0" cellspacing="1" bgcolor="#E9EBEF" id="viewlist" class="viewlist">
+						          <!--表头-->
+								  <thead>
+								  <tr>
+								   <th width="30px" ><input type="checkbox" name="CheckedAll" id="CheckedAll" /></th>	
+						          	 <th>开奖期数</th>
+						              <th>开奖号码</th>	
+						              <th>录入时间</th>
+						              <th>手工返奖</th>						           
+						          </tr>
+								  </thead>
+								  <!--主题-->
+								  <volist name="list" id="vo">		 
+						          <tr bgcolor="#FFFFFF">
+						          		<td height="18">
+											<input name="items[]" type="checkbox" value="<{$vo.id}>"/>
+										</td>				
+										<td><{$vo.issue}></td>		
+										<td><{$vo.code}></td>
+										<td><{$vo.addtime}></td>
+										<td id="sdpj<{$vo.id}>"><a href="javascript:sdpj('<{$lotteryid}>','<{$vo.issue}>','sdpj<{$vo.id}>');" >手工返奖</a></td>
+								   </tr>
+								   </volist> 	  	 
+						    </table></form></td>
+						  </tr>
+						  <!--列表结束-->
+						  
+						  </table>
+						
+						 <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#E9EBEF" class="pagelist">						          
+								
+									  <tr>
+							            <th align="center">
+										<{$page}>
+										</th>   
+							          </tr>
+								 
+						</table> <!--分页列表结束-->
+						
+                </div>	
+                 
+            </td>
+          </tr>
+          <!--功能列表开始-->
+		</table>
+	<!--主体结束-->
+	
+	<include file="Public:foot" />
+
+	

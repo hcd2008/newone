@@ -1,0 +1,152 @@
+<include file="Public:head" />
+
+
+<script language="javascript">
+
+
+
+function checkform(obj)
+{
+	
+	flag=obj.value=="处理"?"1":"0";
+
+	var ac=$("#formA").attr("action");
+
+	$("#formA").attr("action",ac+flag);
+
+	if($("#textfield").val()==""){
+		alert("请填写备注信息");
+	}else{
+		$("#formA").submit();
+		}
+	
+}
+</script>
+<body>
+	
+	<table width="100%" border="0" cellpadding="0" cellspacing="0">
+	<!--标签栏开始-->
+  <tr>
+    <td width="17" valign="top" background="__PUBLIC__/images/mail_leftbg.gif"><img src="__PUBLIC__/images/left-top-right.gif" width="17" height="29" /></td>
+    <td valign="top" background="__PUBLIC__/images/content-bg.gif"><table width="100%" height="31" border="0" cellpadding="0" cellspacing="0" class="left_topbg" id="table2">
+      <tr>
+        <td height="31"><div class="titlebt">订单详情</div></td>
+      </tr>
+    </table></td>
+    <td width="16" valign="top" background="__PUBLIC__/images/mail_rightbg.gif"><img src="__PUBLIC__/images/nav-right-bg.gif" width="16" height="29" /></td>
+  </tr><!--标签栏结束-->
+  <tr><!--左侧一坚-->
+    <td valign="middle" background="__PUBLIC__/images/mail_leftbg.gif">&nbsp;</td>
+    <td valign="top" bgcolor="#F7F8F9">
+	<!--主体表格-->
+		<table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+		 
+	
+		   <tr>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+						  	<td>
+  
+						  		
+						  	</td>
+						  </tr>
+		  <!--空行-->
+		    <tr>
+            <td>&nbsp;</td>
+          </tr>
+		  <!--功能列表开始-->
+		  <tr>
+            <td>
+            	 <form method="post" action="__URL__/updateOrder">
+            <input type="hidden" name="id" value="<{$id}>"/> 
+            <table width="100%" border="0" cellpadding="0" cellspacing="0" class="edittable">
+           
+			  <tr>
+                <td >&nbsp;&nbsp;&nbsp;帐户：<{$username}>&nbsp;&nbsp;&nbsp;<a href='__URL__/traceInfo/id/<{$tracenum}>' target='_blank'><span style="color:red;display:<{$showtrace}>">追号单详情</span></a>
+                </td>
+                <td >&nbsp;&nbsp;&nbsp;</td>
+                
+                 <td >&nbsp;&nbsp;&nbsp;游戏：<{$cnname}></td>
+                <td >&nbsp;&nbsp;&nbsp;</td>
+                
+                <td >&nbsp;&nbsp;&nbsp;开奖号码：<{$nocode}></td>
+                <td >&nbsp;&nbsp;&nbsp;</td>
+                           
+                <td >&nbsp;&nbsp;&nbsp;总金额：<{$totalprice}></td>
+                <td >&nbsp;&nbsp;&nbsp;</td>
+                                                        
+              </tr>
+              <tr>
+                <td >&nbsp;&nbsp;&nbsp;注单编号：<{$ordernum}></td>
+                <td >&nbsp;&nbsp;&nbsp;</td>
+                
+                 <td >&nbsp;&nbsp;&nbsp;玩法：
+                 <select name="methodid">
+                 <option value="<{$methodid}>"><{$methodname}></option>
+                 	<volist name="methodnameall" id="vo">
+                 		<option value="<{$vo.methodid}>"><{$vo.methodname}></option>
+                 	</volist>
+                 </select>
+                 </td>
+                <td >&nbsp;&nbsp;&nbsp;</td>
+                
+                <td >&nbsp;&nbsp;&nbsp;注单状态：<{$state}></td>
+                <td >&nbsp;&nbsp;&nbsp;</td>
+                           
+                <td >&nbsp;&nbsp;&nbsp;倍数模式：<{$beishuMode}></td>
+                <td >&nbsp;&nbsp;&nbsp;</td>
+                                                        
+              </tr>
+                <tr>
+                <td >&nbsp;&nbsp;&nbsp;投单时间：<{$writetime}></td>
+                <td >&nbsp;&nbsp;&nbsp;</td>
+                
+                 <td >&nbsp;&nbsp;&nbsp;奖期：<input type="text" name="issue" value="<{$issue}>"/></td>
+                <td >&nbsp;&nbsp;&nbsp;</td>
+                
+                <td >&nbsp;&nbsp;&nbsp;注单奖金：<{$bonus}></td>
+                <td >&nbsp;&nbsp;&nbsp;</td>
+                           
+                <td >&nbsp;&nbsp;&nbsp;动态奖金返点：<{$dypointdec}></td>
+                <td >&nbsp;&nbsp;&nbsp;</td>
+                                                        
+              </tr>
+
+
+             <tr>              
+              <td STYLE="height:26px;color:red;">&nbsp;&nbsp;&nbsp;中奖金额：<{$zjprize}></td>
+                <td >&nbsp;&nbsp;&nbsp;</td>
+                <if condition="$state eq '未开奖'">
+               	<td >&nbsp;&nbsp;&nbsp;撤单：<input type="button" value="管理员撤单"  class="button" onclick="window.location='__URL__/cheDan/id/<{$id}>/username/<{$username}>'"/></td>
+                <td colspan=6 align="left">&nbsp;&nbsp;&nbsp;</td>
+                	<else/>
+               
+                <td colspan=7 align="left">&nbsp;&nbsp;&nbsp;</td>
+                </if>
+              </tr>
+
+
+
+              <tr>
+              <td colspan=8 STYLE="height:50px;">
+             &nbsp;&nbsp;&nbsp; 投注内容：<textarea class=t1  style="width:578px;height:150px;" name="code"><{$code}></textarea>
+              </td></tr>
+              
+               <tr>
+              <td colspan=8 style="text-align:center;">
+            <input type="submit" value="确认修改"  class="submit"/>&nbsp;&nbsp;&nbsp; 
+             <input type="button" value="返回上级"  class="button" onclick="javascript:history.go(-1);"/>
+              </td></tr>
+            </table>
+            </form>
+            
+          							  
+            </td>
+          </tr>
+          <!--功能列表开始-->
+		</table>
+	<!--主体结束-->
+	<include file="Public:foot" />
+
+	

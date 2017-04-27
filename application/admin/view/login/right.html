@@ -1,0 +1,227 @@
+<link href="__PUBLIC__/images/skin.css" rel="stylesheet" type="text/css" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<META HTTP-EQUIV="pragma" CONTENT="no-cache"> 
+<META HTTP-EQUIV="Cache-Control" CONTENT="no-store, must-revalidate"> 
+<META HTTP-EQUIV="expires" CONTENT="Wed, 26 Feb 1997 08:21:57 GMT"> 
+<META HTTP-EQUIV="expires" CONTENT="0">
+<body>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+	<!--标签栏开始-->
+  <tr>
+    <td width="17" valign="top" background="__PUBLIC__/images/mail_leftbg.gif"><img src="__PUBLIC__/images/left-top-right.gif" width="17" height="29" /></td>
+    <td valign="top" background="__PUBLIC__/images/content-bg.gif"><table width="100%" height="31" border="0" cellpadding="0" cellspacing="0" class="left_topbg" id="table2">
+      <tr>
+        <td height="31"><div class="titlebt">欢迎界面</div></td>
+      </tr>
+    </table></td>
+    <td width="16" valign="top" background="__PUBLIC__/images/mail_rightbg.gif"><img src="__PUBLIC__/images/nav-right-bg.gif" width="16" height="29" /></td>
+  </tr><!--标签栏结束-->
+  <tr><!--左侧一坚-->
+    <td valign="middle" background="__PUBLIC__/images/mail_leftbg.gif">&nbsp;</td>
+    <td valign="top" bgcolor="#F7F8F9"><!--主体表格--><table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+      <tr>
+        <td colspan="2" valign="top">&nbsp;</td>
+        <td>&nbsp;</td>
+        <td valign="top">&nbsp;</td>
+      </tr>
+      <tr>
+        <td colspan="2" valign="top"><span class="left_bt">感谢您使用 时时彩管理系统</span><br>
+              <br>
+            <span class="left_txt">&nbsp;<img src="__PUBLIC__/images/ts.gif" width="16" height="16"> 提示：<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;您现在使用的是王鹏开发的一套用于构建于时时彩行业管理专业系统！如果您有任何疑问请点左下解的</span><span class="left_ts">在线客服</span><span class="left_txt">进行咨询！<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;六大栏目完美整合，功能强大，操作简单！<br>
+           
+</span></td>
+        <td width="7%">&nbsp;</td>
+        <td width="40%" valign="top">
+        	<!-- 
+        	<table width="100%" height="144" border="0" cellpadding="0" cellspacing="0" class="line_table">
+          <tr>
+            <td width="7%" height="27" background="__PUBLIC__/images/news-title-bg.gif"><img src="__PUBLIC__/images/news-title-bg.gif" width="2" height="27"></td>
+            <td width="93%" background="__PUBLIC__/images/news-title-bg.gif" class="left_bt2">库存预警</td>
+          </tr>
+          <tr>
+            <td height="102" valign="top" colspan="2">
+            	<table width="100%">
+            	<volist name="huowu" id="vo">	
+            		<tr>
+            			<td align="left" ><span class="left_txt" style="color: red">货号：{$vo.huohao} 库处不足</span></td>
+            		</tr>
+            		</volist>
+            	</table>
+            </td>
+          </tr>
+          <tr>
+            <td height="5" colspan="2">&nbsp;</td>
+          </tr>
+        </table>
+        	 -->
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td colspan="2" valign="top"><!--JavaScript部分-->
+              <SCRIPT language=javascript>
+function secBoard(n)
+{
+for(i=0;i<secTable.cells.length;i++)
+secTable.cells[i].className="sec1";
+secTable.cells[n].className="sec2";
+for(i=0;i<mainTable.tBodies.length;i++)
+mainTable.tBodies[i].style.display="none";
+mainTable.tBodies[n].style.display="block";
+}
+          </SCRIPT>
+              <!--HTML部分-->
+              <TABLE width=72% border=0 cellPadding=0 cellSpacing=0 id=secTable>
+                <TBODY>
+                  <TR align=middle height=20>
+                    <TD align="center" class=sec2 onclick=secBoard(0)>系统参数</TD>
+                    <TD align="center" class=sec1 onclick=secBoard(1)>版权说明</TD>
+                    
+                  </TR>
+                </TBODY>
+              </TABLE>
+          <TABLE class=main_tab id=mainTable cellSpacing=0 cellPadding=0 width=100% border=0>
+                
+                <!--关于tBodies集合-->
+                <TBODY style="">
+                  <TR>
+                    <TD vAlign=top align=middle><TABLE width=98% border=0 align="center" cellPadding=0 cellSpacing=0>
+                        <TBODY>
+                          <TR>
+                            <TD colspan="3"></TD>
+                          </TR>
+                          <TR>
+                            <TD height="5" colspan="3"></TD>
+                          </TR>
+                          <TR>
+                            <TD width="4%" height="25" background="__PUBLIC__/images/news-title-bg.gif"></TD>
+                            <TD height="25" colspan="2" background="__PUBLIC__/images/news-title-bg.gif" class="left_txt">系统版本：<{$info['操作系统']}></TD>
+                          </TR>
+                          <TR>
+                            <TD height="25" bgcolor="#FAFBFC">&nbsp;</TD>
+                            <TD width="75%" height="25" bgcolor="#FAFBFC" colspan="2"><span class="left_txt">服务器类型：<{$info['运行环境']}></span></TD>
+                           
+                          </TR>
+                          <TR>
+                            <TD height="25" bgcolor="#FAFBFC">&nbsp;</TD>
+                            <TD height="25" colspan="2" bgcolor="#FAFBFC"><span class="left_txt">服务器时间：<{$info['服务器时间']}></span></TD>
+                          </TR>
+                          <TR>
+                            <TD height="25" bgcolor="#FAFBFC">&nbsp;</TD>
+                            <TD height="25" colspan="2" bgcolor="#FAFBFC"><span class="left_txt">当前在线人数：<b style="color:red"><{$sumZaiXian}> </b></span></TD>
+                           
+                              
+                           
+                          </TR>
+                          <TR>
+                            <TD height="25" bgcolor="#FAFBFC">&nbsp;</TD>
+                            <TD height="25" bgcolor="#FAFBFC"><span class="left_txt">今日充值：<b style="color:blue"><{$sumCZ}></b></span></TD>
+                            <TD height="25" bgcolor="#FAFBFC"><span class="left_txt">今日提现：成功:<b style="color:blue"><{$sumTX}></b> &nbsp;&nbsp;&nbsp;拒绝:<b style="color:blue"><{$sumJJTX}></b></span></TD>
+                          </TR>
+						  <TR>
+                            <TD height="25" bgcolor="#FAFBFC">&nbsp;</TD>
+                            <TD height="25" bgcolor="#FAFBFC"><span class="left_txt">今日充值单数：<b style="color:blue"><{$sumCZNum}></b></span></TD>
+                            <TD height="25" bgcolor="#FAFBFC"><span class="left_txt">今日首次冲值用户：<b style="color:blue"></b> &nbsp;&nbsp;&nbsp;<a href="__APP__/User/xinkaihu" style="color:red">查看详情<a/></span></TD>
+                          </TR>
+                           <TR>
+                            <TD height="25" bgcolor="#FAFBFC">&nbsp;</TD>
+                            <TD height="25" bgcolor="#FAFBFC"><span class="left_txt">今日中奖：<b style="color:blue"><{$sumZJ}> </b></span></TD>
+                            <TD height="25" bgcolor="#FAFBFC"><span class="left_txt">今日返点：<b style="color:blue"><{$sumFD}></b></span></TD>
+                          </TR>
+                           <TR>
+                            <TD height="25" bgcolor="#FAFBFC">&nbsp;</TD>
+                            <TD height="25" bgcolor="#FAFBFC"><span class="left_txt">今日投注：<b style="color:blue"><{$sumTZ}> </b></span></TD>
+                            <TD height="25" bgcolor="#FAFBFC"><span class="left_txt">今日撤单：<b style="color:blue"><{$sumCD}></b></span></TD>
+                          </TR>
+                           <TR>
+                            <TD height="25" bgcolor="#FAFBFC">&nbsp;</TD>
+                            <TD height="25" bgcolor="#FAFBFC"><span class="left_txt">今日注册：<b style="color:blue"><{$sumZC}> </b></span></TD>
+                            <TD height="25" bgcolor="#FAFBFC"><span class="left_txt">今日登陆：<b style="color:blue"><{$sumDL}></b></span></TD>
+                          </TR>
+                          
+                          <TR>
+                            <TD height="5" colspan="3"></TD>
+                          </TR>
+                        </TBODY>
+                    </TABLE></TD>
+                  </TR>
+                </TBODY>
+                <!--关于display属性-->
+                <TBODY style="DISPLAY: none">
+                  <TR>
+                    <TD vAlign=top align=middle><TABLE width=98% border=0 align="center" cellPadding=0 cellSpacing=0>
+                        <TBODY>
+                          <TR>
+                            <TD colspan="3"></TD>
+                          </TR>
+                          <TR>
+                            <TD height="5" colspan="3"></TD>
+                          </TR>
+                          <TR>
+                            <TD width="4%" background="__PUBLIC__/images/news-title-bg.gif"></TD>
+                            <TD width="91%" background="__PUBLIC__/images/news-title-bg.gif" class="left_ts">《》程序说明：</TD>
+                            <TD width="5%" background="__PUBLIC__/images/news-title-bg.gif" class="left_txt">&nbsp;</TD>
+                          </TR>
+                          <TR>
+                            <TD bgcolor="#FAFBFC">&nbsp;</TD>
+                            <TD bgcolor="#FAFBFC" class="left_txt"><span class="left_ts">1、</span>本程序由王鹏全新打造 </TD>
+                            <TD bgcolor="#FAFBFC" class="left_txt">&nbsp;</TD>
+                          </TR>
+                          <TR>
+                            <TD bgcolor="#FAFBFC">&nbsp;</TD>
+                            <TD bgcolor="#FAFBFC" class="left_txt"><span class="left_ts">2、</span>本程序仅提供使用，任何违反互联网规定的行为，自行负责！</TD>
+                            <TD bgcolor="#FAFBFC" class="left_txt">&nbsp;</TD>
+                          </TR>
+                          <TR>
+                            <TD bgcolor="#FAFBFC">&nbsp;</TD>
+                            <TD bgcolor="#FAFBFC" class="left_txt"><span class="left_ts">3、</span>支持作者的劳动，请保留版权。</TD>
+                            <TD bgcolor="#FAFBFC" class="left_txt">&nbsp;</TD>
+                          </TR>
+                          <TR>
+                            <TD bgcolor="#FAFBFC">&nbsp;</TD>
+                            <TD bgcolor="#FAFBFC" class="left_txt"><span class="left_ts">4、</span>程序使用，技术支持请联系 </TD>
+                            <TD bgcolor="#FAFBFC" class="left_txt">&nbsp;</TD>
+                          </TR>
+                          <TR>
+                            <TD height="5" colspan="3"></TD>
+                          </TR>
+                        </TBODY>
+                    </TABLE></TD>
+                  </TR>
+                </TBODY>
+            </TABLE></td>
+        <td>&nbsp;</td>
+        <td valign="top"></td>
+      </tr>
+      <tr>
+        <td height="40" colspan="4"><table width="100%" height="1" border="0" cellpadding="0" cellspacing="0" bgcolor="#CCCCCC">
+          <tr>
+            <td></td>
+          </tr>
+        </table></td>
+      </tr>
+      <tr>
+        <td width="2%">&nbsp;</td>
+        <td width="51%" class="left_txt"><img src="__PUBLIC__/images/icon-mail2.gif" width="16" height="11"> 客户服务邮箱：*****@qq.com<br>
+              <img src="__PUBLIC__/images/icon-phone.gif" width="17" height="14"> 联系电话：********</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+      </tr>
+    </table><!--主体结束--></td>
+	<!--右侧一坚-->
+    <td background="__PUBLIC__/images/mail_rightbg.gif">&nbsp;</td>
+  </tr>
+  <!--底下水平一行-->
+  <tr>
+    <td valign="bottom" background="__PUBLIC__/images/mail_leftbg.gif"><img src="__PUBLIC__/images/buttom_left2.gif" width="17" height="17" /></td>
+    <td background="__PUBLIC__/images/buttom_bgs.gif"><img src="__PUBLIC__/images/buttom_bgs.gif" width="17" height="17"></td>
+    <td valign="bottom" background="__PUBLIC__/images/mail_rightbg.gif"><img src="__PUBLIC__/images/buttom_right2.gif" width="16" height="17" /></td>
+  </tr>
+</table>
+</body>

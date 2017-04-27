@@ -1,0 +1,265 @@
+<include file="Public:head" />
+<script type="text/javascript" src="__PUBLIC__/js/calendar/jquery.dyndatetime.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/calendar/lang/calendar-utf8.js"></script>
+<link rel="stylesheet" type="text/css" media="all" href="__PUBLIC__/js/calendar/css/calendar-blue2.css"  />
+<script type="text/javascript">
+jQuery(document).ready(function() {		
+	jQuery("#ordertime_min").dynDateTime({
+		ifFormat: "%Y-%m-%d %H:%M:%S",
+		daFormat: "%l;%M %p, %e %m,  %Y",
+		align: "Br",
+		electric: true,
+		singleClick: false,
+		button: ".next()",
+		showOthers: true,
+		weekNumbers: true,
+		showsTime: true
+	});
+	jQuery("#ordertime_max").dynDateTime({
+		ifFormat: "%Y-%m-%d %H:%M:%S",
+		daFormat: "%l;%M %p, %e %m,  %Y",
+		align: "Br",
+		electric: true,
+		singleClick: false,
+		button: ".next()",
+		showOthers: true,
+		weekNumbers: true,
+		showsTime: true
+	});
+	jQuery("#endtime").change(function(){
+		if(! validateInputDate(jQuery("#endtime").val()) )
+		{
+			jQuery("#endtime").val('');
+			$.alert("时间格式不正确,正确的格式为:2011-01-01 08:00");
+		}
+		if($("#starttime").val()!="")
+		{
+			if($("#starttime").val()>$("#endtime").val())
+			{
+				$("#endtime").val("");
+				$.alert("输入的时间不符合逻辑, 起始时间大于结束时间");
+			}
+		}
+	});
+	jQuery("#lotteryid").change(function(){
+		var data_method = <{$data_method}>;
+		var data_issue =  <{$data_issue}>;
+		var obj_method = $("#methodid")[0];
+		var obj_issue  = $("#issue")[0];
+		i =  $("#lotteryid").val();
+		$("#methodid").empty();
+		$("#issue").empty();
+		addItem( obj_method,'所有玩法',-10 );
+		addItem( obj_issue,'所有奖期',-10 );
+		if(i>0)
+		{
+			$.each(data_method[i],function(j,k){
+				addItem( obj_method,k.methodname,k.methodid );
+			});
+			$.each(data_issue[i],function(j,k){
+				addItem( obj_issue,k.issue,k.issue );
+			});		
+		}
+		SelectItem(obj_method,0);
+		SelectItem(obj_issue,'0');
+	});
+	$("#lotteryid").val(0);
+	$("#lotteryid").change();
+});
+
+function checkForm(obj)
+{
+	if( jQuery.trim(obj.ordertime_min.value) != "" )
+	{
+		if( false == validateInputDate(obj.ordertime_min.value) )
+		{
+			alert("时间格式不正确");
+			obj.ordertime_min.focus();
+			return false;
+		}
+	}
+	if( jQuery.trim(obj.ordertime_max.value) != "" )
+	{
+		if( false == validateInputDate(obj.ordertime_max.value) )
+		{
+			alert("时间格式不正确");
+			obj.ordertime_max.focus();
+			return false;
+		}
+	}
+}
+</script>
+<body>
+	<SPAN id=ShowSound></SPAN>
+	<table width="100%" border="0" cellpadding="0" cellspacing="0">
+	<!--标签栏开始-->
+  <tr>
+    <td width="17" valign="top" background="__PUBLIC__/images/mail_leftbg.gif"><img src="__PUBLIC__/images/left-top-right.gif" width="17" height="29" /></td>
+    <td valign="top" background="__PUBLIC__/images/content-bg.gif"><table width="100%" height="31" border="0" cellpadding="0" cellspacing="0" class="left_topbg" id="table2">
+      <tr>
+        <td height="31"><div class="titlebt">流水明细</div></td>
+      </tr>
+    </table></td>
+    <td width="16" valign="top" background="__PUBLIC__/images/mail_rightbg.gif"><img src="__PUBLIC__/images/nav-right-bg.gif" width="16" height="29" /></td>
+  </tr><!--标签栏结束-->
+  <tr><!--左侧一坚-->
+    <td valign="middle" background="__PUBLIC__/images/mail_leftbg.gif">&nbsp;</td>
+    <td valign="top" bgcolor="#F7F8F9">
+	<!--主体表格-->
+		<table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+		 
+	
+		   <tr>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+						  	<td>
+ 
+						  		
+						  	</td>
+						  </tr>
+		  <!--空行-->
+		    <tr>
+            <td>&nbsp;</td>
+          </tr>
+		  <!--功能列表开始-->
+		  <tr>
+            <td>
+            	<div class="viewlist">
+						<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+						  <tr>
+						    <td height="30"><form action="__URL__/">	
+						       <table border="0" align="left" cellpadding="0" cellspacing="0">
+						            <tr>             
+						              <td >
+类型:<select name="my_search[accounttype]"  style="width:120px;">
+<option value="-10" SELECTED>所有类型</option>
+{volist name="ordertype" id="vo"}
+	<option value="<{$vo.accountnum}>"><{$vo.accounttype}></option>
+{/volist}
+</select>				              
+用户名: <input style='width:90px;' type="text" name="username" value="" size="19" />&nbsp;&nbsp;帐变时间: <input style='width:124px;' type="text" size="19" name="starttime" id="ordertime_min" value="<{$starttime}>" /> <img class='icons_mb4' src="/images/comm/t.gif" id="time_min_button" /> 至 <input style='width:124px;' type="text" size="19" name="endtime" id="ordertime_max" value="<{$endtime}>" / > <img class='icons_mb4' src="/images/comm/t.gif"/> &nbsp;&nbsp;&nbsp;&nbsp;<button name="submit" type="submit" width='69' height='26' class="btn_search" /></button>
+
+<br><br>
+
+<select name="my_search[ztype]" id="ztype" >  
+<option value="-10">编号查询</option>
+<option value="3" >帐变编号</option>
+<option value="1" >注单编号</option>
+<option value="2" >追号编号</option>
+</select>
+<input style='width:100px;' type="text" name="ztypefield" value="" id="ztypefield">
+
+游戏名称: 
+  <select name="my_search[lotteryid]" id="lotteryid" style="width:100px;">
+  	<option value="-9">所有游戏</option>
+   <volist name="lotterylist" id="vo">
+							<option value="<{$vo.lotteryid}>"><{$vo.lotteryname}></option>
+	</volist>
+  </select>
+<span id="game_info">
+&nbsp;玩法: <select name='my_search[methodid]' id='methodid' style='width:100px;'><option value='-10' selected="selected">所有玩法</option></select>
+&nbsp;奖期: <select name='my_search[issue]' id='issue'><option value='-10' selected="selected">所有奖期</option></select>
+</span>
+&nbsp;模式: <select name="my_search[mode]" id="modes">
+<option value="-10">全部</option>
+<option value="1">元</option>
+<option value="2">角</option>
+<option value="3">分</option>
+</select>
+						              
+						              </td>
+						              
+						             
+						            </tr>
+						        </table></form>	
+						    </td>
+						  </tr>
+						  <!--第二行-->
+						   <!--列表开始-->
+						  <tr>
+						    <td>   
+						      <table width="100%" border="0" align="left" cellpadding="0" cellspacing="1" bgcolor="#E9EBEF" id="viewlist" class="viewlist">
+						          <!--表头-->
+								  <thead>
+								  <tr>
+						          	<th>帐变编号</th>
+							        <th>用户名</th>
+							       <th>时间</th>
+							        <th>类型</th>
+							        <th>游戏</th>
+							        <th>玩法</th>
+							       <th>期号</th>
+							        <th>模式</th>
+							        <th>收入</th>
+							       <th>支出</th>
+							       <th>余额</th>
+							       <th>备注</th>					           
+						          </tr>
+								  </thead>
+								  <!--主题-->
+								  <volist name="accountList" id="vo">
+							      <tr class="needchangebg">
+							    	<td ><a href="__APP__/Order/orderinfo/ordernum/<{$vo.ordernum}>"><{$vo.accountnum}></a></td>
+							        <td><{$vo.username}></td>
+							        <td ><{$vo.addtime}></td>
+							        <td><{$vo.accounttypename}></td>
+							        <td><{$vo.lotteryname}></td>
+							        <td ><{$vo.methodname}></td>
+							        <td><{$vo.issue}></td>
+							        <td ><{$vo.mode}></td>
+							        <td ><{$vo.shuolu}></td>
+							        <td><{$vo.zhichu}></td>
+							        <td ><{$vo.money_after}></td>
+							        <td title="<{$vo.beizhu}>"><{$vo.beizhu|msubstr=0,10}></td>
+							     </tr>
+							     </volist>
+							       <switch name="message">
+									<case value="0">
+										 <tr>
+							    	<td height="37" colspan="13" align="center" class=needq><span>请选择查询条件之后进行查询<span></td>
+							            </tr>
+									</case>
+									<case value="2">
+										<tr>
+							    	<td height="37" colspan="13" align="center" class="no-records"><span>没有找到指定条件的投注记录</span></td>
+							             </tr>
+									</case>		
+									<case value="1">
+									 <tr align="right">
+							    	<td height="37" colspan="13">
+							    		 <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#E9EBEF" class="pagelist">						          
+								
+									  <tr>
+							            <th align="center">
+										<{$page}>
+										</th>   
+							          </tr>
+								 
+						</table> <!--分页列表结束-->
+							    	</td>
+							         </tr>
+									</case>		
+							  </switch>		  	 
+						    </table></td>
+						  </tr>
+						  <!--列表结束-->
+						  
+						  </table>
+						
+						
+						
+                </div>	
+                  <!--分页列表-->
+						 
+						
+            </td>
+          </tr>
+          <!--功能列表开始-->
+		</table>
+	<!--主体结束-->
+	
+   
+	<include file="Public:foot" />
+
+	

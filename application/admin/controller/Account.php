@@ -4,6 +4,8 @@ use app\admin\controller\Common;
 use think\Db;
 use app\index\org\Zqpage;
 use app\cp\controller\User1;
+use think\Cache;
+use app\cp\controller\Lottery;
 class Account extends Common
 {
 	protected $condition = array();
@@ -132,7 +134,7 @@ class Account extends Common
 		// 	array('lt', $endtime),
 		// 	'and'
 		// 	);
-		$where['addtime'] = array('between time',$starttime,$endtime);
+		$where['addtime'] = array('between time',[$starttime,$endtime]);
 		$DaoAccount = Db::name('Account');
 		$where['accounttype'] = 7;
 		$where['state'] = 0;
@@ -314,8 +316,8 @@ class Account extends Common
 		// 	array('lt', $endtime),
 		// 	'and'
 		// 	);
-		$where['addtime'] = array('between time',$starttime,$endtime);
-		$username = $this->param['username'];
+		$where['addtime'] = array('between time',[$starttime,$endtime]);
+		$username = isset($this->param['username'])? $this->param['username']:'';
 		$DaoAccount = Db::name('Account');
 		$where['accounttype'] = 7;
 
@@ -445,8 +447,8 @@ class Account extends Common
 		// 	array('lt', $endtime),
 		// 	'and'
 		// 	);
-		$where['addtime'] = array('between time',$starttime,$endtime);
-		$username = $this->param['username'];
+		$where['addtime'] = array('between time',[$starttime,$endtime]);
+		$username = isset($this->param['username'])?$this->param['username']:'';
 		$DaoAccount = Db::name('account');
 		$where['accounttype'] = 6;
 
@@ -489,8 +491,8 @@ class Account extends Common
 		// 	array('lt', $endtime),
 		// 	'and'
 		// 	);
-		$where['addtime'] = array('between time',$starttime,$endtime);
-		$username = $this->param['username'];
+		$where['addtime'] = array('between time',[$starttime,$endtime]);
+		$username = isset($this->param['username'])?$this->param['username']:'';
 		$DaoAccount = Db::name('account');
 		$where['accounttype'] = 11;
 
@@ -575,15 +577,15 @@ class Account extends Common
 
 	public function search()
 	{
-		$my_search = $this->param['my_search'];
+		$my_search = isset($this->param['my_search'])?$this->param['my_search']:'';
 
 		if (empty($my_search)) {
 			$my_search = array();
 		}
 
 		$this->condition = array_filter($my_search, 'value_filter');
-		$starttime = $this->param['starttime'];
-		$endtime = $this->param['endtime'];
+		$starttime = isset($this->param['starttime'])?$this->param['starttime']:'';
+		$endtime = isset($this->param['endtime'])?$this->param['endtime']:'';
 		if (empty($starttime) && empty($endtime)) {
 			$starttime = date('Y-m-d 00:00:00');
 			$endtime = date('Y-m-d 03:00:00', strtotime('+1 days'));
@@ -594,7 +596,7 @@ class Account extends Common
 		// 	array('lt', $endtime),
 		// 	'and'
 		// 	);
-		$this->condition['addtime'] = array('between time',$starttime,$endtime);
+		$this->condition['addtime'] = array('between time',[$starttime,$endtime]);
 		if (isset($this->condition['ztype'])) {
 			$ztype = $this->condition['ztype'];
 			$ztypefield = formatstr($this->param['ztypefield']);
@@ -618,13 +620,14 @@ class Account extends Common
 
 			unset($this->condition['ztype']);
 		}
-
+		isset($this->param['lntype']) or $this->param['lntype']='';
 		$lntype = formatstr($this->param['lntype']);
 		if (!empty($lntype) && is_numeric($lntype)) {
 			$this->condition['accounttype'] = $lntype;
 		}
 
 		$regname = array();
+		isset($this->param['username']) or $this->param['username']='';
 		$formusername = formatstr($this->param['username']);
 		if (empty($formusername) || is_null($formusername)) {
 		}
@@ -632,11 +635,11 @@ class Account extends Common
 			$this->condition['username'] = $formusername;
 		}
 
-		import('@.ORG.ZQPage');
+		// import('@.ORG.ZQPage');
 		$DaoAccount = Db::name('Account');
 		$listRows = 30;
 		$count = $DaoAccount->where($this->condition)->count();
-		$p = new ZQPage($count, $listRows);
+		$p = new Zqpage($count, $listRows);
 		$this->accountList = $this->formatAccountList($DaoAccount->where($this->condition)->order('id desc')->limit($p->firstRow . ',' . $p->listRows)->select());
 		$page = $p->show();
 		$this->assign('page', $page);
@@ -662,7 +665,7 @@ class Account extends Common
 			$Tpl['endtime'] = $this->param['endtime'];
 		}
 
-		import('Home.Cp.Lottery');
+		// import('Home.Cp.Lottery');
 		$lottery = new Lottery();
 		$Tpl['data_method'] = json_encode($lottery->getMethodData());
 		$Tpl['data_issue'] = json_encode($lottery->getIssue());
@@ -680,25 +683,25 @@ class Account extends Common
 		return $Dao->order('id asc')->select();
 	}
 
-	public function formatAccountList(&$orderList)
+	public function formatAccountList($orderList)
 	{
 		if (is_null($orderList)) {
 			return NULL;
 		}
 
 		$formatOrder = array();
-		$newLmData = s('newLmData');
+		$newLmData = Cache::get('newLmData');
 
 		if (empty($newLmData)) {
 			$newLmData = array();
-			$Dao = m();
-			$lmdata = $Dao->query('SELECT l.lotteryid,l.lotteryname,m.methodid,m.methodname FROM `jiang_lottery` as l,`jiang_method` as m  WHERE l.lotteryid=m.lotteryid ;');
+			// $Dao = m();
+			$lmdata = Db::query('SELECT l.lotteryid,l.lotteryname,m.methodid,m.methodname FROM `jiang_lottery` as l,`jiang_method` as m  WHERE l.lotteryid=m.lotteryid ;');
 
 			foreach ($lmdata as $v ) {
 				$newLmData[$v['methodid']] = $v;
 			}
 
-			s('newLmData', $newLmData, 3600 * 24);
+			Cache::set('newLmData', $newLmData, 3600 * 24);
 		}
 
 		foreach ($orderList as $k => $v ) {
@@ -798,7 +801,7 @@ class Account extends Common
 			// 	array('lt', $endtime),
 			// 	'and'
 			// 	);
-			$where['addtime'] = array('between time',$starttime,$endtime);
+			$where['addtime'] = array('between time',[$starttime,$endtime]);
 			if ($starttime == $endtime) {
 				$where['addtime'] = $starttime;
 			}
@@ -845,7 +848,7 @@ class Account extends Common
 		// 	array('lt', $endtime),
 		// 	'and'
 		// 	);
-		$where['addtime'] = array('between time',$starttime,$endtime);
+		$where['addtime'] = array('between time',[$starttime,$endtime]);
 		$dataAcc = $DaoAccount->field('ordernum,username,money,accounttype,beizhu')->where($where)->select();
 		$sumCZ = 0;
 		$sumTX = 0;

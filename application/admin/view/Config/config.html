@@ -1,0 +1,242 @@
+<include file="Public:head" />
+<script type="text/javascript" src="__PUBLIC__/js/calendar/jquery.dyndatetime.js"></script>
+
+<script language="javascript">
+
+function jujue(ff,ve,vn) { formA.dingdane.value = ff;formA.id.value=ve; formA.textfield.focus();}
+function uniteBonus(obj) { formA.textfield.value = obj.value; formA.textfield.focus();}
+
+function checkform(obj)
+{
+	
+	flag=obj.value=="处理"?"1":"0";
+
+	var ac=$("#formA").attr("action");
+
+	$("#formA").attr("action",ac+flag);
+
+	if($("#textfield").val()==""){
+		alert("请填写备注信息");
+	}else{
+		$("#formA").submit();
+		}
+	
+}
+</script>
+<body>
+	
+	<table width="100%" border="0" cellpadding="0" cellspacing="0">
+	<!--标签栏开始-->
+  <tr>
+    <td width="17" valign="top" background="__PUBLIC__/images/mail_leftbg.gif"><img src="__PUBLIC__/images/left-top-right.gif" width="17" height="29" /></td>
+    <td valign="top" background="__PUBLIC__/images/content-bg.gif"><table width="100%" height="31" border="0" cellpadding="0" cellspacing="0" class="left_topbg" id="table2">
+      <tr>
+        <td height="31"><div class="titlebt">系统参数</div></td>
+      </tr>
+    </table></td>
+    <td width="16" valign="top" background="__PUBLIC__/images/mail_rightbg.gif"><img src="__PUBLIC__/images/nav-right-bg.gif" width="16" height="29" /></td>
+  </tr><!--标签栏结束-->
+  <tr><!--左侧一坚-->
+    <td valign="middle" background="__PUBLIC__/images/mail_leftbg.gif">&nbsp;</td>
+    <td valign="top" bgcolor="#F7F8F9">
+	<!--主体表格-->
+		<table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+		 
+	
+		   <tr>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+						  	<td>
+  
+						  		
+						  	</td>
+						  </tr>
+		  <!--空行-->
+		    <tr>
+            <td>&nbsp;</td>
+          </tr>
+		  <!--功能列表开始-->
+		  <tr>
+            <td>
+            	 <form method="post" action="__URL__/updateWebconfig">
+            <input type="hidden" name="id" value="1"/> 
+            <table width="100%" border="0" cellpadding="0" cellspacing="0" class="edittable">
+            <thead>
+              <tr>
+                <th colspan="4">&nbsp;&nbsp;&nbsp;&nbsp;系统参数配置</th>
+              </tr>
+             </thead> 
+			  <tr>
+                <td width="32%"  align="right">平台名称：</td>
+                <td width="3%">&nbsp;</td>
+                <td ><input name="webname" type="text" id="website" size="36" value="<{$webname}>"> </td>               
+              </tr>
+               <tr>
+                <td width="32%"  align="right">53客服帐号：</td>
+                <td width="3%">&nbsp;</td>
+                <td ><input name="53kf" type="text" id="53kf" size="36" value="<{$kf}>" > </td>               
+              </tr>
+			   <tr>
+                <td width="32%"  align="right">重庆自动采集源： </td>
+                <td width="3%">&nbsp;</td>
+                <td >
+                &nbsp; 
+				<select name='sscsrc'>
+					<option value='1' <eq name="sscsrc" value="1">selected="selected"</eq>>源1</option>
+					<option value='2' <eq name="sscsrc" value="2">selected="selected"</eq>>源2</option>
+					<option value='3' <eq name="sscsrc" value="3">selected="selected"</eq>>源3</option>
+					<option value='4' <eq name="sscsrc" value="4">selected="selected"</eq>>源4</option>
+					<option value='5' <eq name="sscsrc" value="5">selected="selected"</eq>>源5</option>
+				</select>　　
+                      </td>               
+              </tr>
+			   <tr>
+                <td width="32%"  align="right">江西自动采集源： </td>
+                <td width="3%">&nbsp;</td>
+                <td >
+                &nbsp; 
+				<select name='xscsrc'>
+					<option value='1' <eq name="xscsrc" value="1">selected="selected"</eq>>源1</option>
+					<option value='2' <eq name="xscsrc" value="2">selected="selected"</eq>>源2</option>
+					<option value='3' <eq name="xscsrc" value="3">selected="selected"</eq>>源3</option>
+					<option value='4' <eq name="xscsrc" value="4">selected="selected"</eq>>源4</option>
+					<option value='5' <eq name="xscsrc" value="5">selected="selected"</eq>>源5</option>
+				</select>　　
+                      </td>               
+              </tr>
+			   <tr>
+                <td width="32%"  align="right">新疆自动采集源： </td>
+                <td width="3%">&nbsp;</td>
+                <td >
+                &nbsp; 
+				<select name='xjcsrc'>
+					<option value='1' <eq name="xjcsrc" value="1">selected="selected"</eq>>源1</option>
+					<option value='2' <eq name="xjcsrc" value="2">selected="selected"</eq>>源2</option>
+					<option value='3' <eq name="xjcsrc" value="3">selected="selected"</eq>>源3</option>
+					<option value='4' <eq name="xjcsrc" value="4">selected="selected"</eq>>源4</option>
+					<option value='5' <eq name="xjcsrc" value="5">selected="selected"</eq>>源5</option>
+				</select>　　
+                      </td>               
+              </tr>
+               <tr>
+                <td width="32%"  align="right">是否开启平台： </td>
+                <td width="3%">&nbsp;</td>
+                <td >
+                &nbsp; <input type="radio" name="isopenweb" value="1" <eq name="isopenweb" value="1">checked</eq> >
+                      开启　　 
+                      <input type="radio" name="isopenweb" value="0" <eq name="isopenweb" value="0">checked</eq> >
+                      关闭　　
+                      </td>               
+              </tr>
+               <tr>
+                <td width="32%"  align="right">是否开启自动开奖： </td>
+                <td width="3%">&nbsp;</td>
+                <td >
+                &nbsp; <input type="radio" name="isopenwinauto" value="1" <eq name="isopenwinauto" value="1">checked</eq> >
+                      开启　　 
+                      <input type="radio" name="isopenwinauto" value="0" <eq name="isopenwinauto" value="0">checked</eq> >
+                      关闭　　
+                      </td>               
+              </tr>
+               <tr>
+                <td width="32%"  align="right">是否开启报表查询：</td>
+                <td width="3%">&nbsp;</td>
+                <td >&nbsp; <input type="radio" name="isbaobiao" value="1" <eq name="isbaobiao" value="1">checked</eq>>
+                      开启　　 
+                      <input type="radio" name="isbaobiao" value="0" <eq name="isbaobiao" value="0">checked</eq>>
+                      关闭　　</td>               
+              </tr>
+               <tr>
+                <td width="32%"  align="right">是否开启推荐注册：</td>
+                <td width="3%">&nbsp;</td>
+                <td >&nbsp; <input type="radio" name="isreg" value="1" <eq name="isreg" value="1">checked</eq>>
+                      开启　　 
+                      <input type="radio" name="isreg" value="0" <eq name="isreg" value="0">checked</eq>>
+                      关闭　　</td>               
+              </tr>
+                <tr>
+                <td width="32%"  align="right">推荐注册起始返点：</td>
+                <td width="3%">&nbsp;</td>
+                <td ><input name="regrate" type="text" id="rateid" value="<{$regrate}>" size="5" maxlength="3"></td>               
+              </tr>
+              <tr>
+                <td width="32%"  align="right">最大返点：</td>
+                <td width="3%">&nbsp;</td>
+                <td ><input name="ratemax" type="text" id="rateid" value="<{$ratemax}>" size="5" maxlength="3"></td>               
+              </tr>
+          	 <tr>
+                <td width="32%"  align="right">下级至少比自己少返点：</td>
+                <td width="3%">&nbsp;</td>
+                <td ><input name="rateid" type="text" id="rateid" value="<{$rateid}>" size="5" maxlength="3"></td>               
+              </tr>
+              <tr>
+                <td width="32%"  align="right">取款时间限制：</td>
+                <td width="3%">&nbsp;</td>
+                <td ><input name="tkstarttime" type="text" id="backtime1"  value="<{$tkstarttime}>" size="5" maxlength="8"> - <input name="tkendtime" type="text" id="backtime2"  value="<{$tkendtime}>" size="5" maxlength="8"></td>               
+              </tr>
+              <tr>
+                <td width="32%"  align="right">取款次数限制：</td>
+                <td width="3%">&nbsp;</td>
+                <td ><input name="tkcishu" type="text" id="backtime1" onKeyUp="value=this.value.replace(/\D+/g,'')" value="<{$tkcishu}>" size="5" maxlength="2"></td>               
+              </tr>
+               <tr>
+                <td width="32%"  align="right">冲值时间限制：</td>
+                <td width="3%">&nbsp;</td>
+                <td ><input name="czstarttime" type="text" id="backtime1"  value="<{$czstarttime}>" size="5" maxlength="8"> - <input name="czendtime" type="text" id="backtime2"  value="<{$czendtime}>" size="5" maxlength="8"></td>               
+              </tr>
+               <tr>
+                <td width="32%"  align="right">单笔冲值最低金额：</td>
+                <td width="3%">&nbsp;</td>
+                <td ><input name="czminmoney" type="text" id="backtime1" onKeyUp="value=this.value.replace(/\D+/g,'')" value="<{$czminmoney}>" size="5" maxlength="20"></td>               
+              </tr>
+               <tr>
+                <td width="32%"  align="right">单笔冲值最高金额：</td>
+                <td width="3%">&nbsp;</td>
+                <td ><input name="czmaxmoney" type="text" id="backtime1" onKeyUp="value=this.value.replace(/\D+/g,'')" value="<{$czmaxmoney}>" size="5" maxlength="20"></td>               
+              </tr>
+               <tr>
+                <td width="32%"  align="right">单笔取款最低金额：</td>
+                <td width="3%">&nbsp;</td>
+                <td ><input name="tkminmoney" type="text" id="backtime1" onKeyUp="value=this.value.replace(/\D+/g,'')" value="<{$tkminmoney}>" size="5" maxlength="20"></td>               
+              </tr>
+               <tr>
+                <td width="32%"  align="right">单笔取款最高金额：</td>
+                <td width="3%">&nbsp;</td>
+                <td ><input name="tkmaxmoney" type="text" id="backtime1" onKeyUp="value=this.value.replace(/\D+/g,'')" value="<{$tkmaxmoney}>" size="5" maxlength="20"></td>               
+              </tr>
+               <tr>
+                <td width="32%"  align="right">提款说明：</td>
+                <td width="3%">&nbsp;</td>
+                <td ><textarea name="tkinfo" cols="50" id="backnotic"><{$tkinfo}></textarea> </td>               
+              </tr>
+			   <tr>
+                <td width="32%"  align="right">易宝编号：</td>
+                <td width="3%">&nbsp;</td>
+                <td ><input name="merid" type="text" id="backtime1" onKeyUp="value=this.value.replace(/\D+/g,'')" value="<{$merid}>" size="15" ></td>               
+              </tr>
+               <tr>
+                <td width="32%"  align="right">易宝编钥：</td>
+                <td width="3%">&nbsp;</td>
+                <td ><textarea name="merchantkey" cols="50" id="backnotic"><{$merchantkey}></textarea> </td>               
+              </tr>
+                <tr>
+                <td width="32%"  align="center" colspan="3">
+                	  <input type="submit" name="Submit" value="提 交" class="submit">
+                        &nbsp;&nbsp; 
+                        <input type="reset" name="Submit2" value="恢 复" class="submit">
+                </td>
+                        
+              </tr>
+               
+              
+            </table>
+            </form>
+            </td>
+          </tr>
+          <!--功能列表开始-->
+		</table>
+	<!--主体结束-->
+	<include file="Public:foot" />
+
+	

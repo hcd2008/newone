@@ -1,0 +1,312 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>管理页面</title>
+<script language="javascript" type="text/javascript" src="__PUBLIC__js/jquery.js"></script>
+<load href="__PUBLIC__js/prototype.lite.js" />
+<load href="__PUBLIC__js/moo.fx.js" />
+<load href="__PUBLIC__js/moo.fx.pack.js" />
+<style>
+body {
+	font:12px Arial, Helvetica, sans-serif;
+	color: #000;
+	background-color: #EEF2FB;
+	margin: 0px;
+}
+#container {
+	width: 182px;
+}
+H1 {
+	font-size: 12px;
+	margin: 0px;
+	width: 182px;
+	cursor: pointer;
+	height: 30px;
+	line-height: 20px;	
+}
+H1 a {
+	display: block;
+	width: 182px;
+	color: #000;
+	height: 30px;
+	text-decoration: none;
+	moz-outline-style: none;
+	background-image: url(__PUBLIC__/images/menu_bgS.gif);
+	background-repeat: no-repeat;
+	line-height: 30px;
+	text-align: center;
+	margin: 0px;
+	padding: 0px;
+}
+.content{
+	width: 182px;
+	height: auto;
+	
+}
+.MM ul {
+	list-style-type: none;
+	margin: 0px;
+	padding: 0px;
+	display: block;
+}
+.MM li {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	line-height: 26px;
+	color: #333333;
+	list-style-type: none;
+	display: block;
+	text-decoration: none;
+	height: 26px;
+	width: 182px;
+	padding-left: 0px;
+}
+.MM {
+	width: 182px;
+	margin: 0px;
+	padding: 0px;
+	left: 0px;
+	top: 0px;
+	right: 0px;
+	bottom: 0px;
+	clip: rect(0px,0px,0px,0px);
+}
+.MM a:link {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	line-height: 26px;
+	color: #333333;
+	background-image: url(__PUBLIC__/images/menu_bg1.gif);
+	background-repeat: no-repeat;
+	height: 26px;
+	width: 182px;
+	display: block;
+	text-align: center;
+	margin: 0px;
+	padding: 0px;
+	overflow: hidden;
+	text-decoration: none;
+}
+.MM a:visited {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	line-height: 26px;
+	color: #333333;
+	background-image: url(__PUBLIC__/images/menu_bg1.gif);
+	background-repeat: no-repeat;
+	display: block;
+	text-align: center;
+	margin: 0px;
+	padding: 0px;
+	height: 26px;
+	width: 182px;
+	text-decoration: none;
+}
+.MM a:active {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	line-height: 26px;
+	color: #333333;
+	background-image: url(__PUBLIC__/images/menu_bg1.gif);
+	background-repeat: no-repeat;
+	height: 26px;
+	width: 182px;
+	display: block;
+	text-align: center;
+	margin: 0px;
+	padding: 0px;
+	overflow: hidden;
+	text-decoration: none;
+}
+.MM a:hover {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	line-height: 26px;
+	font-weight: bold;
+	color: #006600;
+	background-image: url(__PUBLIC__/images/menu_bg2.gif);
+	background-repeat: no-repeat;
+	text-align: center;
+	display: block;
+	margin: 0px;
+	padding: 0px;
+	height: 26px;
+	width: 182px;
+	text-decoration: none;
+}
+
+.jiangclick{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	line-height: 26px;
+	font-weight: bold;
+	color: #006600;
+	background-image: url(__PUBLIC__/images/menu_bg2.gif);
+	background-repeat: no-repeat;
+	text-align: center;
+	display: block;
+	margin: 0px;
+	padding: 0px;
+	height: 26px;
+	width: 182px;
+	text-decoration: none;
+}
+
+.MM li a.active{ color:#f40;font-weight:bold;background-image: url(__PUBLIC__/images/menu_bg2.gif);}
+</style>
+</head>
+
+<body>
+<table width="100%" height="280" border="0" cellpadding="0" cellspacing="0" bgcolor="#EEF2FB">
+  <tr>
+    <td width="182" valign="top"><div id="container">
+      <h1 class="type"><a href="javascript:void(0)" >交易管理</a></h1>
+      <div class="content">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td><img src="__PUBLIC__/images/menu_topline.gif" width="182" height="5" /></td>
+          </tr>
+        </table>
+        <ul class="MM">
+          <li><a href="<{:url('account/qukuan')}>" target="main">取款信息</a></li>
+          <li><a href="<{:url('account/cunkuan')}>" target="main">存款信息</a></li>  
+		  <li><a href="<{:url('account/hdcunkuan')}>" target="main">活动增款</a></li>  
+           <li><a href="<{:url('account/index')}>" target="main">流水帐明细</a></li> 
+		   <li><a href="<{:url('order/index')}>" target="main">交易清单</a></li>  
+		    <li><a href="<{:url('UpdateOrder/index')}>" target="main">改单监控</a></li>
+		   <li><a href="<{:url('account/cfpaijiang')}>" target="main">处理重复派奖</a></li>  
+		    <li><a href="<{:url('account/baobiao')}>" target="main">消费报费</a></li>  
+			<li><a href="<{:url('account/meiTianbaobiao')}>" target="main">每日报表</a></li> 
+        </ul>
+      </div>
+      <h1 class="type"><a href="javascript:void(0)" >帐户管理</a></h1>
+      <div class="content">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td><img src="__PUBLIC__/images/menu_topline.gif" width="182" height="5" /></td>
+          </tr>
+        </table>
+        <ul class="MM">
+          <li><a href="<{:url('user/index')}><{:url('User/')}>" target="main">会员信息</a></li>
+         
+        </ul>
+      </div>
+      <h1 class="type"><a href="javascript:void(0)" >开奖号码</a></h1>
+      <div class="content">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td><img src="__PUBLIC__/images/menu_topline.gif" width="182" height="5" /></td>
+          </tr>
+        </table>
+        <ul class="MM">
+          <li><a href="<{:url('Opencode/index/lotteryid/1')}>" target="main">重庆彩</a></li>
+          <li><a href="<{:url('Opencode/index/lotteryid/2')}>" target="main">黑龙彩</a></li>
+          <li><a href="<{:url('Opencode/index/lotteryid/3')}>" target="main">新疆彩</a></li>
+          <li><a href="<{:url('Opencode/index/lotteryid/4')}>" target="main">江西彩</a></li>
+          <li><a href="<{:url('Opencode/index/lotteryid/5')}>" target="main">时时乐</a></li>
+          <li><a href="<{:url('Opencode/index/lotteryid/6')}>" target="main">十一运夺金</a></li>
+          <li><a href="<{:url('Opencode/index/lotteryid/7')}>" target="main">多乐彩</a></li>
+          <li><a href="<{:url('Opencode/index/lotteryid/8')}>" target="main">广东十一选五</a></li>
+          <li><a href="<{:url('Opencode/index/lotteryid/11')}>" target="main">重庆十一选五</a></li>
+		  <li><a href="<{:url('Opencode/index/lotteryid/9')}>" target="main">福彩3D</a></li>  
+		  <li><a href="<{:url('Opencode/index/lotteryid/10')}>" target="main">排3排5</a></li>          
+        </ul>
+      </div>
+      <h1 class="type"><a href="javascript:void(0)" >奖金设置</a></h1>
+      <div class="content">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td><img src="__PUBLIC__/images/menu_topline.gif" width="182" height="5" /></td>
+          </tr>
+        </table>
+        <ul class="MM">
+          <li><a href="<{:url('SetPrize/index/lotteryid/1')}>" target="main">时时彩</a></li>
+		  <li><a href="<{:url('SetPrize/index/lotteryid/5')}>" target="main">时时乐</a></li> 
+          <li><a href="<{:url('SetPrize/index/lotteryid/6')}>" target="main">十一选五</a></li> 
+          <li><a href="<{:url('SetPrize/index/lotteryid/9')}>" target="main">福彩3D</a></li> 
+          <li><a href="<{:url('SetPrize/index/lotteryid/10')}>" target="main">排3排5</a></li>          
+        </ul>
+      </div>
+    </div>
+    <h1 class="type"><a href="javascript:void(0)" >自动开奖</a></h1>
+      <div class="content">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td><img src="__PUBLIC__/images/menu_topline.gif" width="182" height="5" /></td>
+          </tr>
+        </table>
+        <ul class="MM">
+          <li><a href="<{:url('DuoAuto/sscLeHe')}>" target="main">重庆彩1</a></li>
+          <li><a href="<{:url('DuoAuto/ssc500wan')}>" target="main">重庆彩2</a></li>
+		  <li><a href="<{:url('DuoAuto/hscShiPin')}>" target="main">黑龙江彩1</a></li>
+		  <li><a href="<{:url('DuoAuto/xjcShiPin')}>" target="main">新疆彩1</a></li>
+		  <li><a href="<{:url('DuoAuto/xscLeHe')}>" target="main">江西彩1</a></li>
+		  <li><a href="<{:url('DuoAuto/xscShiPin')}>" target="main">江西彩2</a></li>
+		  <li><a href="<{:url('DuoAuto/sslLeHe')}>" target="main">时时乐1</a></li>
+		  <li><a href="<{:url('DuoAuto/ssl500wan')}>" target="main">时时乐2</a></li>
+		  <li><a href="<{:url('DuoAuto/sd115LeHe')}>" target="main">十一运夺金</a></li>
+		  <li><a href="<{:url('DuoAuto/dl115LeHe')}>" target="main">多乐彩</a></li>
+		  <li><a href="<{:url('DuoAuto/gd115LeHe')}>" target="main">广东十一选五</a></li>
+		  <li><a href="<{:url('DuoAuto/cq115ShiPin')}>" target="main">重庆十一选五</a></li>
+		  <li><a href="<{:url('DuoAuto/plsLeHe')}>" target="main">排列3、5</a></li>
+		  <li><a href="<{:url('DuoAuto/pls500wan')}>" target="main">排列3、5-2</a></li>
+		  <li><a href="<{:url('DuoAuto/fucaiLeHe')}>" target="main">福彩3D</a></li>
+		  <li><a href="<{:url('DuoAuto/fucai500wan')}>" target="main">福彩3D2</a></li>
+        </ul>
+      </div>
+   
+        <h1 class="type"><a href="javascript:void(0)" >系统设置</a></h1>
+      <div class="content">
+          <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+              <td><img src="__PUBLIC__/images/menu_topline.gif" width="182" height="5" /></td>
+            </tr>
+          </table>
+        <ul class="MM">
+            <li><a href="<{:url('Config/config')}>" target="main">系统参数配置</a></li>
+             <li><a href="<{:url('Public/right')}>" target="main">系统信息</a></li>
+              <li><a href="<{:url('Config/jiazj')}>" target="main">假中奖信息</a></li>
+              <li><a href="<{:url('Config/admin')}>" target="main">管理员管理</a></li>
+          <li><a href="<{:url('Config/gonggao')}>" target="main">系统公告</a></li>
+          <li><a href="<{:url('Config/bank')}>" target="main">银行卡管理</a></li>  
+          <li><a href="<{:url('Config/showLoginInfo/usertype/0')}>" target="main">前台登入日志</a></li>  
+          <li><a href="<{:url('Config/showLoginInfo/usertype/1')}>" target="main">后台登入日志</a></li>        
+        </ul>
+      </div>
+      
+        <script type="text/javascript">
+		var contents = document.getElementsByClassName('content');
+		var toggles = document.getElementsByClassName('type');
+	
+		var myAccordion = new fx.Accordion(
+			toggles, contents, {opacity: false, duration: 400}
+		);
+		myAccordion.showThisHideOpen(contents[0]);
+
+		
+		(function($){
+			$(document).ready(function(){
+				
+				
+				$(".MM").find("a").click(function(){	
+					var a =$(this).parents(".MM");
+					a.find("li>a").attr("class","");			
+					
+					
+					//$(".MM").find("a").blur();
+				    $(this).attr("class","active");
+					
+					
+				    
+				});
+			
+				
+			});
+			})(jQuery);
+	</script>
+        </td>
+  </tr>
+</table>
+</body>
+</html>

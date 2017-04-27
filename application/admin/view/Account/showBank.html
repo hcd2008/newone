@@ -1,0 +1,170 @@
+<include file="Public:head" />
+<script type="text/javascript" src="__PUBLIC__/js/calendar/jquery.dyndatetime.js"></script>
+
+<script language="javascript">
+
+function jujue(ff,ve,vn) { formA.dingdane.value = ff;formA.id.value=ve; formA.textfield.focus();}
+function uniteBonus(obj) { formA.textfield.value = obj.value; formA.textfield.focus();}
+
+function checkform(obj)
+{
+	
+	flag=obj.value=="处理"?"1":"0";
+
+	if(flag==1){
+
+		if($("#textfield").val()==""){
+			$("#textfield").val("取款已经支付给您,请注意查收,如有问题,请与客服联系！");
+		}
+		
+	}
+
+	
+	var ac=$("#formA").attr("action");
+
+	$("#formA").attr("action",ac+flag);
+
+	if($("#textfield").val()==""){
+		alert("请填写备注信息");
+	}else{
+		$("#formA").submit();
+		}
+	
+}
+</script>
+<body>
+	
+	<table width="100%" border="0" cellpadding="0" cellspacing="0">
+	<!--标签栏开始-->
+  <tr>
+    <td width="17" valign="top" background="__PUBLIC__/images/mail_leftbg.gif"><img src="__PUBLIC__/images/left-top-right.gif" width="17" height="29" /></td>
+    <td valign="top" background="__PUBLIC__/images/content-bg.gif"><table width="100%" height="31" border="0" cellpadding="0" cellspacing="0" class="left_topbg" id="table2">
+      <tr>
+        <td height="31"><div class="titlebt">取款信息</div></td>
+      </tr>
+    </table></td>
+    <td width="16" valign="top" background="__PUBLIC__/images/mail_rightbg.gif"><img src="__PUBLIC__/images/nav-right-bg.gif" width="16" height="29" /></td>
+  </tr><!--标签栏结束-->
+  <tr><!--左侧一坚-->
+    <td valign="middle" background="__PUBLIC__/images/mail_leftbg.gif">&nbsp;</td>
+    <td valign="top" bgcolor="#F7F8F9">
+	<!--主体表格-->
+		<table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+		 
+	
+		   <tr>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+						  	<td>
+  <form id="formA" name="form1" method="post" action="__URL__/doQukuan/flag/">
+  <div>   
+   <input name="id" type="hidden" value="<{$id}>">
+    <textarea name="textfield" cols="70" rows="3" id="textfield"></textarea>
+  </div><div class="div2">
+      单号:<input name="dingdane" type="text" size="27" value="<{$ordernum}>" disabled/> 
+      <select name="select" size="1" onChange="uniteBonus(this)">
+      <option value="">请选择</option>
+       <option value="取款已经支付给您">取款已经支付(无税)</option>
+        <option value="取款已经支付给您,并扣除1%转帐税">取款已经支付(有税)</option>
+        <option value="取款已经支付给您,并扣除1%转帐税,为防止恶意取款,一次性取款100以上免税">取款已经支付(小税)</option>
+        <option value="取款已经支付给您,请注意查收,如有问题,请与客服联系！">取款已经支付</option>
+        <option value="错误的收款信息">错误的收款信息</option>
+        <option value="收款人与账号姓名不匹配">收款人与账号名不匹配</option>
+        <option value="今日此种汇款方式已达限额，请改用其他收款方式，或者等待明天在取款，很抱歉给您带来不便！">今日此种汇款方式已达限额</option>
+
+       
+
+        <option value="国家明令禁止一切洗钱行为，本站积极响应国家政策，严格控制。因此用户“当次储值后交易未达到当次储值额20%的提款”将不被受理。如果用户要求提出，网站将收取20%的异常提款处理费用,如要继续,请再次提交">反洗钱</option>
+
+      </select>
+      <label>
+      <input type="button" name="Submit" value="处理" onclick="checkform(this)"/>
+      <input type="button" name="Submit" value="拒绝" onclick="checkform(this)"/>
+      </label>
+    </div>
+</form>
+						  		
+						  	</td>
+						  </tr>
+		  <!--空行-->
+		    <tr>
+            <td>&nbsp;</td>
+          </tr>
+		  <!--功能列表开始-->
+		  <tr>
+            <td>
+            	 <form method="post" action="/jinjin/index.php/Dakehu/update">
+            <input type="hidden" name="sysid" value="3"/> 
+            <table width="100%" border="0" cellpadding="0" cellspacing="0" class="edittable">
+            <thead>
+              <tr>
+                <th colspan="4">&nbsp;&nbsp;&nbsp;&nbsp;取款信息</th>
+              </tr>
+             </thead> 
+			  <tr>
+                <td width="32%"  align="right">帐户：</td>
+                <td width="3%">&nbsp;</td>
+                <td ><{$username}></td>               
+              </tr>
+              <tr>
+                <td width="32%"  align="right">上级代理：</td>
+                <td width="3%">&nbsp;</td>
+                <td ><{$regfrom}></td>                 
+              </tr>
+               <tr>
+                <td width="32%"  align="right">姓名：</td>
+                <td width="3%">&nbsp;</td>
+                <td ><{$realname}></td>               
+              </tr>
+               <tr>
+                <td width="32%"  align="right">银行：</td>
+                <td width="3%">&nbsp;</td>
+                <td ><{$bankname}></td>               
+              </tr>
+               <tr>
+                <td width="32%"  align="right">卡号：</td>
+                <td width="3%">&nbsp;</td>
+                <td ><{$banknum}></td>               
+              </tr>
+               <tr>
+                <td width="32%"  align="right">取款金额：</td>
+                <td width="3%">&nbsp;</td>
+                <td ><{$money}></td>               
+              </tr>
+              
+          	 <tr>
+                <td width="32%"  align="right">地区：</td>
+                <td width="3%">&nbsp;</td>
+                <td ><{$province}></td>               
+              </tr>
+              <tr>
+                <td width="32%"  align="right">QQ：</td>
+                <td width="3%">&nbsp;</td>
+                <td ><{$qq}></td>               
+              </tr>
+                <tr>
+                <td width="32%"  align="right">注册时间：</td>
+                <td width="3%">&nbsp;</td>
+                <td ><{$regtime}></td>               
+              </tr>
+                <tr>
+                <td width="32%"  align="right">登入日志：</td>
+                <td width="3%">&nbsp;</td>
+                <td >
+                	<volist name="logiplist" id="vo">
+                		<{$vo}><br/>
+                	</volist>
+                </td>               
+              </tr>
+              
+            </table>
+            </form>
+            </td>
+          </tr>
+          <!--功能列表开始-->
+		</table>
+	<!--主体结束-->
+	<include file="Public:foot" />
+
+	

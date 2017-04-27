@@ -195,7 +195,7 @@ class Lottery
 				$lotteryData[$k] = array('lotteryid' => $v['lotteryid'], 'lotteryname' => $v['lotteryname']);
 			}
 
-			Cache:set('lotteryData', $lotteryData, 3600 * 24);
+			Cache::set('lotteryData', $lotteryData, 3600 * 24);
 		}
 
 		return $lotteryData;

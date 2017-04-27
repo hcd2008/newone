@@ -1,0 +1,118 @@
+<include file="Public:head" />
+
+<body>
+	<SPAN id=ShowSound></SPAN>
+	<table width="100%" border="0" cellpadding="0" cellspacing="0">
+	<!--标签栏开始-->
+  <tr>
+    <td width="17" valign="top" background="__PUBLIC__/images/mail_leftbg.gif"><img src="__PUBLIC__/images/left-top-right.gif" width="17" height="29" /></td>
+    <td valign="top" background="__PUBLIC__/images/content-bg.gif"><table width="100%" height="31" border="0" cellpadding="0" cellspacing="0" class="left_topbg" id="table2">
+      <tr>
+        <td height="31"><div class="titlebt">系统公告</div></td>
+      </tr>
+    </table></td>
+    <td width="16" valign="top" background="__PUBLIC__/images/mail_rightbg.gif"><img src="__PUBLIC__/images/nav-right-bg.gif" width="16" height="29" /></td>
+  </tr><!--标签栏结束-->
+  <tr><!--左侧一坚-->
+    <td valign="middle" background="__PUBLIC__/images/mail_leftbg.gif">&nbsp;</td>
+    <td valign="top" bgcolor="#F7F8F9">
+	<!--主体表格-->
+		<table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+		 
+	
+		   <tr>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+						  	<td>
+ 
+						  		
+						  	</td>
+						  </tr>
+		  <!--空行-->
+		    <tr>
+            <td>&nbsp;</td>
+          </tr>
+		  <!--功能列表开始-->
+		  <tr>
+            <td>
+            	<div class="viewlist">
+						<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+						    <tr>
+						    <td height="30">
+						       <table border="0" align="left" cellpadding="0" cellspacing="0">
+						            <tr>             
+						              <td width="80"><table width="90%" border="0" cellpadding="0" cellspacing="0">
+						                  <tr>
+						                    <td ><div align="center"><img src="__PUBLIC__/images/001.gif" width="14" height="14" /></div></td>
+						                    <td ><div align="center"><a href="__URL__/addGonggao">新增</a></div></td>
+						                  </tr>
+						              </table></td>
+						              
+						              <td width="80"><table width="88%" border="0" cellpadding="0" cellspacing="0">
+						                  <tr>
+						                    <td ><div align="center"><img src="__PUBLIC__/images/083.gif" width="14" height="14" /></div></td>
+						                    <td ><div align="center"><a href="__URL__/delete" onclick="return isDeltet();">删除</a></div></td>
+						                  </tr>
+						              </table></td>	
+						            </tr>
+						        </table>
+						    </td>
+						  </tr>
+						 
+						  <!--第二行-->
+						   <!--列表开始-->
+						  <tr>
+						    <td>   <form action="__URL__/delete" method="POST" id="formlist">
+						      <table width="100%" border="0" align="left" cellpadding="0" cellspacing="1" bgcolor="#E9EBEF" id="viewlist" class="viewlist">
+						          <!--表头-->
+								  <thead>
+								  <tr>
+								   <th width="30px" ><input type="checkbox" name="CheckedAll" id="CheckedAll" /></th>	
+						          	 <th>标题</th>					           
+						            
+						               <th>添加时间</th>	
+						            					           
+						          </tr>
+								  </thead>
+								  <!--主题-->
+								  <volist name="list" id="vo">		 
+						          <tr bgcolor="#FFFFFF">
+						          		<td height="18">
+											<input name="items[]" type="checkbox" value="<{$vo.id}>"/>
+										</td>				
+										<td><a href="__URL__/addGonggao/id/<{$vo.id}>"><{$vo.title}></a></td>							
+										<td><{$vo.addtime}></td>
+										<td><{$vo.money}></td>
+										
+								   </tr>
+								   </volist> 	  	 
+						    </table></form></td>
+						  </tr>
+						  <!--列表结束-->
+						  
+						  </table>
+						
+						
+						
+                </div>	
+                  <!--分页列表-->
+						 
+						 <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#E9EBEF" class="pagelist">						          
+								
+									  <tr>
+							            <th align="center">
+										<{$page}>
+										</th>   
+							          </tr>
+								 
+						</table> <!--分页列表结束-->
+            </td>
+          </tr>
+          <!--功能列表开始-->
+		</table>
+	<!--主体结束-->
+	
+	<include file="Public:foot" />
+
+	

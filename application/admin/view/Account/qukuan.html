@@ -1,0 +1,237 @@
+<include file="Public:head" />
+<script type="text/javascript" src="__PUBLIC__/js/calendar/jquery.dyndatetime.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/calendar/lang/calendar-utf8.js"></script>
+<link rel="stylesheet" type="text/css" media="all" href="__PUBLIC__/js/calendar/css/calendar-blue2.css"  />
+<script language="javascript">
+
+function Sound(flag)
+{
+		if(flag>0)
+		{
+			if(document.all("ShowSound")!=null)
+			{
+				document.all("ShowSound").innerHTML = FlashSecond;
+			}
+		}
+}
+
+function jujue(ff,ve,vn) { formA.dingdane.value = ff;formA.id.value=ve; formA.textfield.focus();}
+function uniteBonus(obj) { formA.textfield.value = obj.value; formA.textfield.focus();}
+jQuery(document).ready(function() {	
+	jQuery("#ordertime_min").dynDateTime({
+		ifFormat: "%Y-%m-%d %H:%M:%S",
+		daFormat: "%l;%M %p, %e %m,  %Y",
+		align: "Br",
+		electric: true,
+		singleClick: false,
+		button: ".next()",
+		showOthers: true,
+		weekNumbers: true,
+		showsTime: true
+	});
+	jQuery("#ordertime_max").dynDateTime({
+		ifFormat: "%Y-%m-%d %H:%M:%S",
+		daFormat: "%l;%M %p, %e %m,  %Y",
+		align: "Br",
+		electric: true,
+		singleClick: false,
+		button: ".next()",
+		showOthers: true,
+		weekNumbers: true,
+		showsTime: true
+	});
+	jQuery("#endtime").change(function(){
+		if(! validateInputDate(jQuery("#endtime").val()) )
+		{
+			jQuery("#endtime").val('');
+			$.alert("时间格式不正确,正确的格式为:2011-01-01 08:00");
+		}
+		if($("#starttime").val()!="")
+		{
+			if($("#starttime").val()>$("#endtime").val())
+			{
+				$("#endtime").val("");
+				$.alert("输入的时间不符合逻辑, 起始时间大于结束时间");
+			}
+		}
+	});
+});
+</script>
+<body>
+	<SPAN id=ShowSound></SPAN>
+	<table width="100%" border="0" cellpadding="0" cellspacing="0">
+	<!--标签栏开始-->
+  <tr>
+    <td width="17" valign="top" background="__PUBLIC__/images/mail_leftbg.gif"><img src="__PUBLIC__/images/left-top-right.gif" width="17" height="29" /></td>
+    <td valign="top" background="__PUBLIC__/images/content-bg.gif"><table width="100%" height="31" border="0" cellpadding="0" cellspacing="0" class="left_topbg" id="table2">
+      <tr>
+        <td height="31"><div class="titlebt">取款信息</div></td>
+      </tr>
+    </table></td>
+    <td width="16" valign="top" background="__PUBLIC__/images/mail_rightbg.gif"><img src="__PUBLIC__/images/nav-right-bg.gif" width="16" height="29" /></td>
+  </tr><!--标签栏结束-->
+  <tr><!--左侧一坚-->
+    <td valign="middle" background="__PUBLIC__/images/mail_leftbg.gif">&nbsp;</td>
+    <td valign="top" bgcolor="#F7F8F9">
+	<!--主体表格-->
+		<table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+		 
+	
+		   <tr>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+						  	<td>
+  <form id="formA" name="form1" method="post" action="__URL__/doQukuan/flag/0">
+  <div>   
+   <input name="id" type="hidden">
+    <textarea name="textfield" cols="70" rows="3">错误的收款信息</textarea>
+  </div><div class="div2">
+      单号:<input name="dingdane" type="text" size="27" /> 
+      <select name="select" size="1" onChange="uniteBonus(this)">
+        <option value="错误的收款信息">错误的收款信息</option>
+        <option value="收款人与账号姓名不匹配">收款人与账号名不匹配</option>
+        <option value="今日此种汇款方式已达限额，请改用其他收款方式，或者等待明天在取款！">今日此种汇款方式已达限额</option>
+
+        <!--option value="取款已经支付给您">取款已经支付(无税)</option>
+        <option value="取款已经支付给您,并扣除1%转帐税">取款已经支付(有税)</option>
+        <option value="取款已经支付给您,并扣除1%转帐税,为防止恶意取款,一次性取款100以上免税">取款已经支付(小税)</option>
+        <option value="取款已经支付给您,请注意查收,如有问题,请与客服联系！">取款已经支付</option-->
+
+        <option value="国家明令禁止一切洗钱行为，本站积极响应国家政策，严格控制。因此用户“当次储值后交易未达到当次储值额20%的提款”将不被受理。如果用户要求提出，网站将收取20%的异常提款处理费用,如要继续,请再次提交">反洗钱</option>
+
+      </select>
+      <label>
+      <input type="submit" name="Submit" value="拒绝" />
+      </label>
+    </div>
+</form>
+						  		
+						  	</td>
+						  </tr>
+		  <!--空行-->
+		    <tr>
+            <td>&nbsp;</td>
+          </tr>
+		  <!--功能列表开始-->
+		  <tr>
+            <td>
+            	<div class="viewlist">
+						<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+						  <tr>
+						    <td height="30"><form action="__URL__/qukuan">	
+						       <table border="0" align="left" cellpadding="0" cellspacing="0">
+						            <tr>             
+						              <td >
+				              
+用户名: <input style='width:90px;' type="text" name="username" value="" size="19" />&nbsp;&nbsp;帐变时间: <input style='width:124px;' type="text" size="19" name="starttime" id="ordertime_min" value="<{$starttime}>" /> <img class='icons_mb4' src="/images/comm/t.gif" id="time_min_button" /> 至 <input style='width:124px;' type="text" size="19" name="endtime" id="ordertime_max" value="<{$endtime}>" / > <img class='icons_mb4' src="/images/comm/t.gif"/> &nbsp;&nbsp;&nbsp;&nbsp;<button name="submit" type="submit" width='69' height='26' class="btn_search" /></button>
+
+
+						              
+						              </td>
+						              
+						             
+						            </tr>
+						        </table></form>	
+						    </td>
+						  </tr>
+						   <tr>
+						    <td height="30">
+
+							<!--
+						       <table border="0" align="left" cellpadding="0" cellspacing="0">
+						            <tr>             
+						         
+						              
+						              <td width="80"><table width="88%" border="0" cellpadding="0" cellspacing="0">
+						                  <tr>
+						                    <td ><div align="center"><img src="__PUBLIC__/images/083.gif" width="14" height="14" /></div></td>
+						                    <td ><div align="center"><a href="__URL__/delete" onclick="return isDeltet();">删除</a></div></td>
+						                  </tr>
+						              </table>
+						              </td>	
+						            </tr>
+						        </table>
+								-->
+						    </td>
+						  </tr>
+						  <!--第二行-->
+						   <!--列表开始-->
+						  <tr>
+						    <td>   <form action="__URL__/deleteAccount" method="POST" id="formlist"> 
+						      <table width="100%" border="0" align="left" cellpadding="0" cellspacing="1" bgcolor="#E9EBEF" id="viewlist" class="viewlist">
+						          <!--表头-->
+								  <thead>
+								  <tr>
+								  <th width="30px" ><input type="checkbox" name="CheckedAll" id="CheckedAll" /></th>
+						          	 <th>单号</th>					           
+						             <th>用户</th>						           
+						             <th>取款金额</th>
+						               <th>剩余金额</th>
+						               <th>发起时间</th>	
+						                <th>类型</th>	
+						                <th>流水与清单</th>	
+						                 <th>更改状态</th>	
+						               				           
+						          </tr>
+								  </thead>
+								  <!--主题-->
+								  <assign name="openSound" value="0" />
+								  {volist name="list" id="vo"}		 
+						          <tr bgcolor="#FFFFFF">
+						          		 <td height="18">								       		
+											<input name="items[]" type="checkbox" value="<{$vo.id}>"/>											
+										</td>				
+										<td><a href="__URL__/editBeiZhu/ordernum/<{$vo.ordernum}>"><{$vo.ordernum}></a></td>							
+										<td><a href="__URL__/showBank/id/<{$vo.id}>/"><{$vo.username}></a></td>
+										<td><{$vo.money}></td>
+										<td><{$vo.money_after}></td>										
+										<td><{$vo.addtime}></td>
+										<td title="<{$vo.beizhu}>"><{$vo.beizhu|msubstr=###,0,10|default="取款"}>
+
+										</td>
+										<td>
+											<a href="__APP__/Account/index/username/<{$vo.username}>">流水</a>&nbsp;&nbsp;&nbsp;
+											<a href="__APP__/Order/index/username/<{$vo.username}>">清单</a>
+										</td>
+										<td>	
+											<if condition="$vo['state'] eq 0 ">
+																				
+											<a href="__URL__/doQukuan/id/<{$vo.id}>/flag/1">处理</a>   &nbsp; &nbsp; &nbsp; &nbsp;<a href="#" onClick="jujue('<{$vo.ordernum}>','<{$vo.id}>','<{$vo.username}>')">拒绝</a>
+											</if>
+										</td>
+										
+								   </tr>
+								   {/volist}		  	 
+						    </table>
+						    </form>
+						    </td>
+						  </tr>
+						  <!--列表结束-->
+						  
+						  </table>
+						
+						
+						
+                </div>	
+                  <!--分页列表-->
+						 
+						 <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#E9EBEF" class="pagelist">						          
+								
+									  <tr>
+							            <th align="center">
+										<{$page}>
+										</th>   
+							          </tr>
+								 
+						</table> <!--分页列表结束-->
+            </td>
+          </tr>
+          <!--功能列表开始-->
+		</table>
+	<!--主体结束-->
+	
+   
+	<include file="Public:foot" />
+
+	

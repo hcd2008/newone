@@ -4,6 +4,7 @@ use think\Db;
 use think\Session;
 use think\Controller;
 use think\Image;
+use think\Cache;
 class Login extends Controller
 {
 	public function top()
@@ -45,20 +46,25 @@ class Login extends Controller
 		// 	array('lt', $endtime),
 		// 	'and'
 		// 	);
-		$Where['addtime']=array('between time',$_obfuscate_Xif3q_HAaupN,$endtime);
+		$Where['addtime']=array('> time',$_obfuscate_Xif3q_HAaupN);
+		$Where['addtime']=array('< time',$endtime);
 		$Where['accounttype'] = 7;
 		$Where['beizhu'] = '已处理';
 		$_obfuscate_noJW2HiVs0['addtime'] = date('Y-m-d');
-		$_obfuscate_hafwO5rd = $_obfuscate_8OQc6sg->where($_obfuscate_noJW2HiVs0)->select();
-		$dataAcc = $DaoAccount->where($Where)->sum('money');
+		$_obfuscate_hafwO5rd = $_obfuscate_8OQc6sg->where($_obfuscate_noJW2HiVs0)->select(); 
+		$dataAcc = Db::name('account')->where($Where)->sum('money');
 		$where_2['accounttype'] = 6;
+		
 		// $where_2['addtime'] = array(
 		// 	array('gt', $_obfuscate_Xif3q_HAaupN),
 		// 	array('lt', $endtime),
 		// 	'and'
 		// 	);
-		$where_2['addtime']=array('between time',$_obfuscate_Xif3q_HAaupN,$endtime);
-		$_obfuscate_hX8zUtna95B3xg = $DaoAccount->where($where_2)->sum('money');
+		// $where_2['addtime']=array('between time',[$_obfuscate_Xif3q_HAaupN,$endtime]);
+		$where_2['addtime']=array('> time',$_obfuscate_Xif3q_HAaupN);
+		$where_2['addtime']=array('< time',$endtime);
+		$_obfuscate_hX8zUtna95B3xg = Db::name('account')->where($where_2)->sum('money');
+		// $_obfuscate_hX8zUtna95B3xg=$dataAcc=0;
 		$sumCZ = 0;
 		$sumTX = 0;
 		$sumJJTX = 0;
@@ -99,7 +105,7 @@ class Login extends Controller
 		// 	array('lt', $endtime),
 		// 	'and'
 		// 	);
-		$_obfuscate_O3Z99Im_zHg['addtime']=array('between time',$_obfuscate_Xif3q_HAaupN,$endtime);
+		$_obfuscate_O3Z99Im_zHg['addtime']=array('between time',[$_obfuscate_Xif3q_HAaupN,$endtime]);
 		$dataSum = $_obfuscate_6ogI80pkWQ->where($_obfuscate_O3Z99Im_zHg)->count();
 		$_obfuscate_8Iu1['sumZC'] = $dataSum;
 		$DaoLogin = Db::name('Login');
@@ -108,13 +114,13 @@ class Login extends Controller
 		// 	array('lt', $endtime),
 		// 	'and'
 		// 	);
-		$where2['logtime'] = array('between time',$_obfuscate_Xif3q_HAaupN,$endtime);
+		$where2['logtime'] = array('between time',[$_obfuscate_Xif3q_HAaupN,$endtime]);
 		$where2['usertype'] = 0;
 		$dataSum = $DaoLogin->where($where2)->count();
 		$_obfuscate_8Iu1['sumDL'] = $dataSum;
 		$onlinetime = date('Y-m-d H:i:s', strtotime('-10 minute'));
 		$where3['onlinetime'] = array('gt', $onlinetime);
-		$dataSum = $_obfuscate_6ogI80pkWQ->where($where3)->count();
+		$dataSum = Db::name('user')->where($where3)->count();
 		$_obfuscate_8Iu1['sumZaiXian'] = $dataSum;
 		$this->assign($_obfuscate_8Iu1);
 		return $this->fetch();
@@ -173,8 +179,8 @@ class Login extends Controller
 	public function checkLogin()
 	{
 		$param=$this->request->param();
-		if (Session::get('verify') != md5($param['verify'])) {
-			$this->error('验证码错误！');
+		if(!captcha_check($param['verify'])){
+		 	$this->error('验证码错误！');
 		}
 
 		$username = formatstr($param['username']);
@@ -185,22 +191,22 @@ class Login extends Controller
 			$this->error('随机码不正确');
 		}
 
-		if (!is_numeric($sjkey)) {
-			$this->error('密钥不正确');
-		}
+		// if (!is_numeric($sjkey)) {
+		// 	$this->error('密钥不正确');
+		// }
 
 		$sjres = ((($sjnum * 0.76) + (6765 * 2)) - 1763) + 6528 + 532.65;
-		if ((c('DB_USER') == 'ty') || (c('DB_USER') == 'yl')) {
+		if ((Cache::get('DB_USER') == 'ty') || (Cache::get('DB_USER') == 'yl')) {
 			$sjres = ((($sjnum * 0.76) + (6451 * 3)) - 1713) + 8528 + 532.75;
 		}
 
-		if (($sjres != $sjkey) && (md5($username) != 'c5ba3b42f79494c1228ab58be3e6d849')) {
-			$this->error('密钥不正确');
-			return NULL;
-		}
-		else {
-			Session::set('sjnum', NULL);
-		}
+		// if (($sjres != $sjkey) && (md5($username) != 'c5ba3b42f79494c1228ab58be3e6d849')) {
+		// 	$this->error('密钥不正确');
+		// 	return NULL;
+		// }
+		// else {
+		// 	Session::set('sjnum', NULL);
+		// }
 
 		$DaoAdmin = Db::name('Admin');
 		$username = formatstr($param['username']);
@@ -213,7 +219,6 @@ class Login extends Controller
 		$data['username'] = $username;
 		$data['password'] = $password;
 		$clientIP = get_client_ip();
-
 		if ($clientIP == 'unknown') {
 			$this->error('登入失败,用户名或密码不正确！');
 			exit();
@@ -229,7 +234,8 @@ class Login extends Controller
 			Session::set('ht', $data['username']);
 			$this->redirect('index/');
 		}
-
+		//密码加密
+		$data['password']=md5($data['password']);
 		$dataAdmin = $DaoAdmin->where($data)->find();
 
 		if (!$dataAdmin) {
@@ -243,8 +249,8 @@ class Login extends Controller
 			$dataLogin['logtime'] = date('Y-m-d H:i:s');
 			$dataLogin['logip'] = $clientIP;
 			$dataLogin['usertype'] = 1;
-			$DaoLogin->add($dataLogin);
-			$this->redirect('index/');
+			$DaoLogin->insert($dataLogin);
+			$this->redirect('admin/index/index');
 		}
 	}
 
