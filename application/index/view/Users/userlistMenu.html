@@ -99,7 +99,7 @@ a:link{color:#FC3;}
 <BODY>
 <div class='b_header'>&nbsp;全部下级 - 用户名</div>
 <ul class='b_box'>
-	<volist name="regnamelist" id="vo">
+	{volist name="regnamelist" id="vo"}
      <li id="li_<{$vo.id}>">
         <a TITLE='点击查看' href="__URL__/userlistContent?uid=<{$vo.id}>" 
 		target="userlist_content"><{$vo.username}></a>
@@ -114,7 +114,7 @@ a:link{color:#FC3;}
 		
 		
     </li>
- </volist>   
+ {/volist}   
        
         </ul>
 </div>

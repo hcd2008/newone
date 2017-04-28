@@ -1,0 +1,107 @@
+{include file="Public:head" /}
+
+
+<BODY STYLE="background:#FFF url('/images/v1/main_bg_0001.jpg') 0px -490px repeat-x; padding:10px;"><DIV ID='main_box'>
+<div class="box l"></div>
+<div class="box c"></div>
+<div class="box r"></div>
+<div class="box m">
+
+<H1><SPAN class="action-span"><A href="__ACTION__" target='_self'>清空搜索条件</a></SPAN>
+<SPAN class="action-span1"><DIV class='icons_mb1'></DIV>当前位置: 返点统计报表 </SPAN><DIV style="clear:both"></DIV></H1>
+<script type="text/javascript" src="__PUBLIC__/js/calendar/jquery.dyndatetime.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/calendar/lang/calendar-utf8.js"></script>
+<link rel="stylesheet" type="text/css" media="all" href="__PUBLIC__/js/calendar/css/calendar-blue2.css"  />
+<script>
+$(document).ready(function(){
+	jQuery("#starttime").dynDateTime({
+		ifFormat: "%Y-%m-%d 03:00:00",
+		daFormat: "%l;%M %p, %e %m,  %Y",
+		align: "Br",
+		electric: true,
+		singleClick: false,
+		button: ".next()", //next sibling
+		onUpdate:function(){
+			$("#starttime").change();
+		},
+		showOthers: true,
+		weekNumbers: true,
+		showsTime: true
+	});
+	jQuery("#starttime").change(function(){
+		if(! validateInputDate(jQuery("#starttime").val()) )
+		{
+			jQuery("#starttime").val('');
+			alert("时间格式不正确,正确的格式为:2011-01-01 03:00:00");
+		}
+		if($("#endtime").val()!="")
+		{
+			if($("#starttime").val()>$("#endtime").val())
+			{
+				$("#starttime").val("");
+				alert("输入的时间不符合逻辑, 起始时间大于结束时间");
+			}
+		}
+	});
+	jQuery("#endtime").dynDateTime({
+		ifFormat: "%Y-%m-%d 03:00:00",
+		daFormat: "%l;%M %p, %e %m,  %Y",
+		align: "Br",
+		electric: true,
+		singleClick: false,
+		button: ".next()", //next sibling
+		showOthers: true,
+		onUpdate:function(){
+			$("#endtime").change();
+		},
+		weekNumbers: true,
+		showsTime: true
+	});
+	jQuery("#endtime").change(function(){
+		if(! validateInputDate(jQuery("#endtime").val()) )
+		{
+			jQuery("#endtime").val('');
+			alert("时间格式不正确,正确的格式为:2011-01-01 03:00:00");
+		}
+		if($("#starttime").val()!="")
+		{
+			if($("#starttime").val()>$("#endtime").val())
+			{
+				$("#endtime").val("");
+				alert("输入的时间不符合逻辑.");
+			}
+		}
+	});
+});
+</script>
+<div class="ld">
+<table class='st' border="0" cellspacing="0" cellpadding="0">
+<form id="getForm" action="__ACTION__">
+<tr>
+    <td>
+&nbsp;<img src="/images/icon_search.gif" width="26" height="22" border="0" TITLE="SEARCH" />
+&nbsp;起始时间:&nbsp;<input type="text" name="starttime" id="starttime" value="<{$starttime}>"> <img class='icons_mb4' src="/images/comm/t.gif"> &nbsp; 
+至 &nbsp; <input type="text" name="endtime" id="endtime" value="<{$endtime}>"/>
+<img class='icons_mb4' src="/images/comm/t.gif">&nbsp;
+<button name="submit" type="submit" width='69' height='26' class="btn_search" /></button>
+</td>
+</tr>
+</form>
+</table>
+</div>
+<div class="ld">
+<table class="lt" border="0" cellspacing="0" cellpadding="0">
+	<tr class='th'>
+    	<td width="30%">代理用户</td>
+		<td width="30%"><div class='line'></div>统计日期</td>
+		<td width="40%"><div class='line'></div>返点总额</td>
+    </tr>
+    <tr align="center" style='height:60px;line-height:36px;'>
+        <td><{$username}></td>
+        <td><{$starttime}> 至 <{$endtime}></td>
+        <td><{$countFd}>&nbsp;元</td>
+    </tr>
+</table>
+</div>
+{include file="Public:foot" /}
+

@@ -58,7 +58,7 @@ function LoginNow()
 				<div id="maintitle">通行证登录</div>	
 				<div id="maincontent">	
         	<div style="width:684px; margin:auto;">
-					<form name='login' method="post" action="__URL__/doCheckPwd" onSubmit="javascript:LoginNow(); return false;">
+					<form name='login' method="post" action="<{:url('index/login/doCheckPwd')}>" onSubmit="javascript:LoginNow(); return false;">
 					<input type="hidden" name="loginpass" id="loginpass">
 					<input type="hidden" name="validcode" id="validcode">
 					<input type="hidden" name="flag" value="login2" />

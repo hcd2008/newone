@@ -5,6 +5,7 @@ use think\Db;
 use think\Session;
 use app\cp\controller\User1;
 use think\Cache;
+use think\Config;
 class User extends Base
 {
 	public function getUserMoney()
@@ -279,7 +280,7 @@ class User extends Base
 			$this->error('您尚未设置资金密码,请到财户管理->修改密码,进行更改!');
 		}
 
-		$flag = formatstr($_GET['flag']);
+		$flag = formatstr($this->request->param['flag']);
 		$_obfuscate_8Iu1['action'] = '';
 		$url=$this->request->domain();
 		$url=$url.'/index/user/';
@@ -296,8 +297,8 @@ class User extends Base
 			$_obfuscate_8Iu1['action'] = $url.'showBangDingBank';
 			break;
 		}
-
-		unset($_SESSION['zhiJinPwd']);
+		Session::delete('zhiJinPwd');
+		// unset($_SESSION['zhiJinPwd']);
 		$this->assign($_obfuscate_8Iu1);
 		return $this->fetch();
 	}
@@ -730,7 +731,7 @@ class User extends Base
 	public function mySet()
 	{
 		$param=$this->request->param();
-		$username = $param['username'];
+		$username = isset($param['username'])?$param['username']:'';
 
 		if (empty($username)) {
 			$username = Session::get('un');

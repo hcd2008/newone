@@ -1,6 +1,8 @@
 <?php
+namespace app\index\controller;
+use app\common\controller\Base;
 
-class HelpAction extends CommonAction
+class Help extends Base
 {
 	public function game()
 	{

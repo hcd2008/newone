@@ -1,4 +1,4 @@
-<include file="Public:head" />
+{include file="Public:head" /}
 
 
 <body>
@@ -45,7 +45,7 @@
                 <th colspan="10">&nbsp;&nbsp;&nbsp;&nbsp;银行卡参数配置</th>
               </tr>
              </thead> 
-             <volist name="banklist" id="vo">
+             {volist name="banklist" id="vo"}
              <input type="hidden" name="id[]" value="<{$vo.id}>"/>
 			  <tr>
                 <td   align="right">银行名称：<{$vo.bankname}></td>
@@ -64,7 +64,7 @@
                       禁用　　
                     </td>         
               </tr>
-              </volist>
+              {/volist}
               
           
                 <tr>
@@ -84,6 +84,6 @@
           <!--功能列表开始-->
 		</table>
 	<!--主体结束-->
-	<include file="Public:foot" />
+	{include file="Public:foot" /}
 
 	

@@ -3,6 +3,7 @@ namespace app\index\controller;
 use app\common\controller\Base;
 use think\Db;
 use think\Session;
+use app\index\org\Zqpage;
 
 class Users extends Base
 {
@@ -209,7 +210,7 @@ class Users extends Base
 		$this->rate_1 = $rate_1;
 		$this->rate_2 = $rate_2;
 		$this->keepdinwei = $rate_1 - $this->rateid;
-		$this->keepdinwei2 = $rate_2 - $this->rateid2;
+		// $this->keepdinwei2 = $rate_2 - $this->rateid2;
 		$_obfuscate_eNV52sLcOA = explode(',', $dataUser['mode']);
 
 		if (empty($dataUser['mode'])) {
@@ -236,13 +237,13 @@ class Users extends Base
 
 	public function userlistFrame()
 	{
-		$Frame = $this->param['frame'];
+		$Frame = isset($this->param['frame'])?$this->param['frame']:'';
 		return $this->fetch();
 	}
 
 	public function userlistMenu()
 	{
-		$uid = $this->param['uid'];
+		$uid = isset($this->param['uid'])?$this->param['uid']:'';
 		$DaoUser = Db::name('user');
 		if (!empty($uid) && is_numeric($uid)) {
 			$where['id'] = $uid;
@@ -267,7 +268,7 @@ class Users extends Base
 
 		$username = Session::get('un');
 		$where_zhijiexiaji['regfrom'] = array('like', '%|' . $username . '|');
-		$regnamedata = $DaoUser->fielDb::name('id,username,regcount')->order('regcount desc')->where($where_zhijiexiaji)->select();
+		$regnamedata = $DaoUser->field('id,username,regcount')->order('regcount desc')->where($where_zhijiexiaji)->select();
 		$regnamelist = array();
 
 		foreach ($regnamedata as $k => $v ) {
@@ -455,7 +456,7 @@ class Users extends Base
 			$allReg[] = $dailiusername;
 			$_obfuscate_6ogI80pkWQ = Db::name('User');
 			$Where['username'] = array('in', $allReg);
-			$dataTuanDui = $_obfuscate_6ogI80pkWQ->where($Where)->suDb::name('money');
+			$dataTuanDui = $_obfuscate_6ogI80pkWQ->where($Where)->sum('money');
 			$_obfuscate_nT44rgz3TQ['error'] = '0';
 			$_obfuscate_nT44rgz3TQ['result'] = $dataTuanDui;
 		}
@@ -465,29 +466,28 @@ class Users extends Base
 
 	public function search()
 	{
-		$uid = $this->param['uid'];
+		$uid = isset($this->param['uid'])?$this->param['uid']:'';
 		$DaoUser = Db::name('User');
 		$where_u['id'] = $uid;
-		$my_search = $this->param['my_search'];
+		$my_search = isset($this->param['my_search'])?$this->param['my_search']:'';
 
 		if (empty($my_search)) {
 			$my_search = array();
 		}
 
 		$this->condition = array_filter($my_search, 'value_filter');
-		$bank_min = $this->param['bank_min'];
-		$bank_max = $this->param['bank_max'];
+		$bank_min = isset($this->param['bank_min'])?$this->param['bank_min']:'';
+		$bank_max = isset($this->param['bank_max'])?$this->param['bank_max']:'';
 		if (!empty($bank_min) && !empty($bank_max) && is_numeric($bank_min) && is_numeric($bank_max)) {
 			// $this->condition['money'] = array(
 			// 	array('gt', $bank_min),
 			// 	array('lt', $bank_max),
 			// 	'and'
 			// 	);
-			$this->condition['money']=array('gt',$bank_min);
-			$this->condition['money']=array('lt',$bank_max);
+			$this->condition['money']=array('between',[$bank_min,$bank_max]);
 		}
 
-		$username = $this->param['username'];
+		$username = isset($this->param['username'])?$this->param['username']:'';
 		if (empty($username) && empty($uid)) {
 			$username = Session::get('un');
 		}
@@ -504,15 +504,18 @@ class Users extends Base
 		if (!preg_match('/\\|' . $un . '\\|/i', $regfrom) && ($un != $username)) {
 			$this->error('该会员不是您的下级!');
 		}
-
 		$where['regfrom'] = array('like', '%|' . $username . '|');
 		$where['username'] = $username;
 		$where['_logic'] = 'or';
-		$this->condition['_complex'] = $where;
+		// $this->condition['_complex'] = $where;
+		$this->condition['regfrom']=array('like', '%|' . $username . '|');
+		$this->condition['username']=$username;
+		// $this->condition['_logic']
 		$this->condition['username'] = array('neq', Session::get('un'));
-		$sortby = $this->param['sortby'];
+		$sortby = isset($this->param['sortby'])?$this->param['sortby']:'';
+		isset($this->param['sortbymax']) or $this->param['sortbymax']='';
 		$sortbymax = ($this->param['sortbymax'] == '1' ? 'desc' : 'asc');
-		$online = $this->param['online'];
+		$online = isset($this->param['online'])?$this->param['online']:'';
 
 		if ($online == '1') {
 			$onlinetime = date('Y-m-d H:i:s', strtotime('-10 minute'));
@@ -541,7 +544,8 @@ class Users extends Base
 		//import('@.ORG.ZQPage');
 		$listRows = 30;
 		$count = $DaoUser->where($this->condition)->count();
-		$p = new ZQPage($count, $listRows);
+		$p = new Zqpage($count, $listRows);
+		// print_r($this->condition);exit;
 		$dataUser = $DaoUser->where($this->condition)->order($orderStr)->limit($p->firstRow . ',' . $p->listRows)->select();
 		$page = $p->show();
 		$this->assign('page', $page);
@@ -578,7 +582,6 @@ class Users extends Base
 
 			$formContentList[$_obfuscate_Vwty] = $v;
 		}
-
 		$this->userContentList = $formContentList;
 	}
 
@@ -589,7 +592,7 @@ class Users extends Base
 		}
 
 		$regfrom = preg_replace('/^[^|]$/', '', $regfrom);
-		$count = count(split('\\|\\|', $regfrom));
+		$count = count(explode('\\|\\|', $regfrom));
 		return $count;
 	}
 
@@ -611,9 +614,9 @@ class Users extends Base
 
 		$condition['regfrom'] = array('like', '%|' . $username . '|%');
 		$condition['addtime'] = array('gt', date('Y-m-d 00:00:01'));
-		$online = $this->param['online'];
-		$chongzhi = $this->param['chongzhi'];
-		$_obfuscate_rgvoBz8 = $this->param['ymoney'];
+		$online = isset($this->param['online'])?$this->param['online']:'';
+		$chongzhi = isset($this->param['chongzhi'])?$this->param['chongzhi']:'';
+		$_obfuscate_rgvoBz8 = isset($this->param['ymoney'])?$this->param['ymoney']:'';
 
 		if ($online == '1') {
 			$onlinetime = date('Y-m-d H:i:s', strtotime('-10 minute'));
@@ -626,6 +629,7 @@ class Users extends Base
 		$dataUser = $_obfuscate_6ogI80pkWQ->where($condition)->select();
 		$this->formatUserContentList($dataUser, $username);
 		$this->assign('userContentList', $this->userContentList);
+
 		return $this->fetch();
 	}
 }

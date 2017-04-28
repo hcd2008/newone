@@ -30,6 +30,7 @@ class Trace extends Base
 	public function index()
 	{
 		$this->show();
+		return $this->fetch();
 	}
 
 	public function show()
@@ -53,7 +54,7 @@ class Trace extends Base
 		$_obfuscate_8Iu1['orderList'] = $this->orderList;
 		$_obfuscate_8Iu1['message'] = $this->message;
 		$this->assign($_obfuscate_8Iu1);
-		return $this->fetch();
+		// return $this->fetch();
 	}
 
 	public function search()

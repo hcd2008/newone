@@ -22,11 +22,11 @@ $(document).ready(function(){
 	$("#username")[0].value = '';
 	$("#validcode_source")[0].value = '';
 	//$("#loginpass_source")[0].value = '';
-	$("#validate").attr('src',"__URL__/verify/"+Math.random());
+	$("#validate").attr('src',"/verify/"+Math.random());
 	$("#username").focus();
 }); 
 function refreshimg(){
-$("#validate").attr('src',"__URL__/verify/"+Math.random());
+$("#validate").attr('src',"/verify/"+Math.random());
 }
 function LoginNow() 
 { 

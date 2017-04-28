@@ -30,11 +30,9 @@ class Account extends Base
 
 	public function index()
 	{
-		isset($this->param['id']) or $this->param['id']='';
-		isset($this->param['projectid']) or $this->param['projectid']='';
-		$isgetdata = $this->param['isgetdata'];
-		$ordernum = $this->param['id'];
-		$projectid = $this->param['projectid'];
+		$isgetdata = isset($this->param['isgetdata'])?$this->param['isgetdata']:'';
+		$ordernum = isset($this->param['id'])?$this->param['id']:'';
+		$projectid = isset($this->param['projectid'])?$this->param['projectid']:'';
 
 		if (!empty($ordernum)) {
 			$this->getOrderNumInfo($ordernum);
@@ -47,6 +45,7 @@ class Account extends Base
 		}
 
 		$this->show();
+		return $this->fetch();
 	}
 
 	public function search()
@@ -59,8 +58,8 @@ class Account extends Base
 		}
 
 		$this->condition = array_filter($my_search, 'value_filter');
-		$starttime = $this->param['starttime'];
-		$endtime = $this->param['endtime'];
+		$starttime = isset($this->param['starttime'])?$this->param['starttime']:'';
+		$endtime = isset($this->param['endtime'])?$this->param['endtime']:'';
 		if (empty($starttime) && empty($endtime)) {
 			$starttime = date('Y-m-d 00:00:00');
 			$endtime = date('Y-m-d 03:00:00', strtotime('+1 days'));
@@ -72,6 +71,7 @@ class Account extends Base
 		// 	'and'
 		// 	);
 		$this->condition['addtime']=array('between time',[$starttime,$endtime]);
+		isset($this->param['range']) or $this->param['range']='';
 		$range = (int) $this->param['range'];
 		$date1 = strtotime($starttime);
 		$date2 = strtotime($endtime);
@@ -109,16 +109,20 @@ class Account extends Base
 
 			unset($this->condition['ztype']);
 		}
-
+		isset($this->param['lntype']) or $this->param['lntype']='';
 		$lntype = formatstr($this->param['lntype']);
 		if (!empty($lntype) && is_numeric($lntype)) {
 			$this->condition['accounttype'] = $lntype;
 		}
 
 		$username = Session::get('un');
+		isset($this->param['range']) or $this->param['range'];
 		$range = (int) $this->param['range'];
 		$regname = array();
-		$formusername = formatstr($this->param['username']);
+		if(isset($this->param['username'])){
+			$formusername = formatstr($this->param['username']);
+		}
+		
 		$DaoUser = Db::name('User');
 
 		switch ($range) {
@@ -226,7 +230,7 @@ class Account extends Base
 		$_obfuscate_8Iu1['accountList'] = $this->accountList;
 		$_obfuscate_8Iu1['message'] = $this->message;
 		$this->assign($_obfuscate_8Iu1);
-		return $this->fetch();
+		// return $this->fetch();
 	}
 
 	public function getAccountType()

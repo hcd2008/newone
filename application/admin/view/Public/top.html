@@ -1,0 +1,121 @@
+<html>
+<head>
+<title> - 管理页面</title>
+<meta http-equiv=Content-Type content=text/html;charset=utf-8>
+<SCRIPT type="text/javascript" src="__PUBLIC__/js/jquery.js"></SCRIPT>
+<script language=JavaScript>
+
+
+$(function(){
+
+	$("#shengyin").click(function(){
+
+		var str = $("#shengyin").html();
+		var str2="关闭声音";
+		if(str=="关闭声音"){
+			str2="打开声音";
+			$("#ShowSound").html("");
+		}else if(str=="打开声音"){
+			str2="关闭声音";	
+			$("#ShowSound").html(FlashSecond);		
+		}else{
+			str2="关闭声音";
+		}
+		$("#shengyin").html(str2);
+	});
+});
+function logout(){
+	if (confirm("您确定要退出控制面板吗？"))
+	top.location = "out.asp";
+	return false;
+}
+</script>
+<script language=JavaScript1.2>
+function showsubmenu(sid) {
+	var whichEl = eval("submenu" + sid);
+	var menuTitle = eval("menuTitle" + sid);
+	if (whichEl.style.display == "none"){
+		eval("submenu" + sid + ".style.display=\"\";");
+	}else{
+		eval("submenu" + sid + ".style.display=\"none\";");
+	}
+}
+</script>
+
+<script language=JavaScript1.2>
+var SoundSecond = "__PUBLIC__/second.swf";//秒钟声音文件
+var FlashSecond = "<object classid='clsid:D27CDB6E-AE6D-11cf-96B8-444553540000' codebase='http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0' width='0' height='0' id='f_s'><param name='movie' value='"+SoundSecond+"'><param name='quality' value='high'><param name='wmode' value='transparent'></object>";
+function Sound(flag)
+{
+		
+		if(flag>0)
+		{
+			if(document.all("ShowSound")!=null)
+			{
+				var str = $("#shengyin").html();
+				if(str=="关闭声音"){
+					$("#ShowSound").html(FlashSecond);
+				}				
+				$("#shengyin").show();
+			}
+		}else{
+			$("#ShowSound").html("");		
+			$("#shengyin").hide();
+		}
+}
+function showsubmenu(sid) {
+	var whichEl = eval("submenu" + sid);
+	var menuTitle = eval("menuTitle" + sid);
+	if (whichEl.style.display == "none"){
+		eval("submenu" + sid + ".style.display=\"\";");
+	}else{
+		eval("submenu" + sid + ".style.display=\"none\";");
+	}
+}
+
+_fastData = setInterval(function(){
+	
+	$.ajax({
+		type : 'POST',
+		url  : '__APP__/Account/getQkMessage',
+		timeout : 5000,
+		success : function(data){
+				quk=parseInt(data,10);
+				if(quk>0){
+					$("#qkmessage").html("<a href='__APP__/Account/qukuan' target='' style='color:red;'>当前有"+quk+"条取款信息</a>");
+					Sound(2);
+				}else{
+					$("#qkmessage").html("");
+					Sound(0);
+				}
+				
+				return true;
+		}
+	});
+},15000);
+
+
+</script>
+<base target="main">
+<load href="__PUBLIC__/images/skin.css"/>
+</head>
+<body leftmargin="0" topmargin="0">
+
+<table width="100%" height="64" border="0" cellpadding="0" cellspacing="0" class="admin_topbg">
+  <tr>
+    <td width="50%" height="64"><img src="__PUBLIC__/images/logo.png" width="262" height="64"></td>
+    <td width="50%" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="74%" height="38" class="admin_txt">管理员：<b><{$Think.session.ht}></b> 您好,感谢登陆使用！您的IP为:<{:get_client_ip()}>&nbsp;&nbsp;<span style="color:red" id="qkmessage"></span><span style="display:none;" id="shengyin">关闭声音</span></td>
+        <td width="22%"><a href="<{:url('login/logout')}>" target="_top"><img src="__PUBLIC__/images/out.gif" alt="安全退出" width="46" height="20" border="0"></a></td>
+        <td width="4%">&nbsp;</td>
+      </tr>
+      <tr>
+        <td height="19" colspan="3">&nbsp;<SPAN id="ShowSound" style="width:0px;height:0px;"></SPAN></td>
+        </tr>
+    </table></td>
+  </tr>
+</table>
+
+</body>
+</html>

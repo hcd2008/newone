@@ -1,0 +1,42 @@
+{include file="Public:head" /}
+
+
+<BODY STYLE="background:#FFF url('/images/v1/main_bg_0001.jpg') 0px -490px repeat-x; padding:10px;"><DIV ID='main_box'>
+<div class="box l"></div>
+<div class="box c"></div>
+<div class="box r"></div>
+<div class="box m">
+
+<H1>
+<SPAN class="action-span1"><DIV class='icons_mb1'></DIV>当前位置: 今日报表 </SPAN><DIV style="clear:both"></DIV></H1>
+<script type="text/javascript">
+jQuery("document").ready( function(){
+	jQuery("#chineseMoney").html(changeMoneyToChinese(<{$tuanDuiMoney}>));
+});
+</script>
+<div class="ld">
+<table class="ct" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+    	<td class="nl">我的账户: </td>
+        <td><{$username}></td>
+    </tr>
+    <tr>
+    	<td class="nl">我的呢称: </td>
+        <td><{$nickname}></td>
+    </tr>
+    <tr>
+    	<td class="nl">团队余额: </td>
+        <td><{$tuanDuiMoney}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="chineseMoney"></span></td>
+    </tr>
+    <tr>
+    	<td class="nl">今日参与游戏</td>
+    	<td><{$countTuoZhu}>&nbsp;&nbsp;游戏币</td>
+    </tr>
+    <tr>
+    	<td class="nl">今日中奖</td>
+    	<td><{$countFj}>&nbsp;&nbsp;游戏币</td>
+    </tr>
+</table>
+</div>
+{include file="Public:foot" /}
+

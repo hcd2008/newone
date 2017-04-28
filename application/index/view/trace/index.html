@@ -281,9 +281,9 @@ jQuery(document).ready(function() {
     	<td>
 			游戏名称：<select name="my_search[lotteryid]" id="lotteryid" style="width:100px;">
   						<option value="-9">所有游戏</option>
-    					<volist name="lotterylist" id="vo">
+    					{volist name="lotterylist" id="vo"}
 							<option value="<{$vo.lotteryid}>"><{$vo.lotteryname}></option>
-						</volist>						
+						{/volist}						
 					 </select>
 			<span id="game_info">
             &nbsp;&nbsp;游戏玩法: <select name='my_search[methodid]' id='methodid'><option value="-10" selected="selected">所有玩法</option></select>
@@ -325,7 +325,7 @@ jQuery(document).ready(function() {
 		<td><div class='line'></div>完成金额</td>
 		<td><div class='line'></div>状态</td>
   </tr>
-  <volist name="orderList" id="vo">
+  {volist name="orderList" id="vo"}
   		<tr align="center" class='needchangebg' >
         <td height="37" ><a href="__URL__/traceInfo?id=<{$vo.tracenum}>" target="_blank" class="blue" title="点击查看详情"><{$vo.tracenum}></a></td>
         <td ><{$vo.username}></td>
@@ -341,7 +341,7 @@ jQuery(document).ready(function() {
          <td ><{$vo.traceWanChengMoney}></td>
         <td ><{$vo.status}></td> 
     </tr>
-  </volist>
+  {/volist}
    
   <switch name="message">
 		<case value="0">

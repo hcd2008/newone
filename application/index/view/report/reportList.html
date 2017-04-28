@@ -1,0 +1,156 @@
+{include file="Public:head" /}
+
+
+<BODY STYLE="background:#FFF url('/images/v1/main_bg_0001.jpg') 0px -490px repeat-x; padding:10px;">
+<DIV ID='main_box'>
+<div class="box l"></div>
+<div class="box c"></div>
+<div class="box r"></div>
+<div class="box m">
+
+<H1><SPAN class="action-span"><A href="__ACTION__" target='_self'>清空查询条件</a></SPAN>
+<SPAN class="action-span1"><DIV class='icons_mb1'></DIV>当前位置: 报表查询 </SPAN><DIV style="clear:both"></DIV></H1>
+<script type="text/javascript" src="__PUBLIC__/js/calendar/jquery.dyndatetime.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/calendar/lang/calendar-utf8.js"></script>
+<link rel="stylesheet" type="text/css" media="all" href="__PUBLIC__/js/calendar/css/calendar-blue2.css"  />
+<script>
+jQuery(document).ready(function() {
+	jQuery("#starttime").dynDateTime({
+		ifFormat: "%Y-%m-%d %H:%M:00",
+		daFormat: "%l;%M %p, %e %m,  %Y",
+		align: "Br",
+		electric: true,
+		singleClick: false,
+		button: ".next()", //next sibling
+		onUpdate:function(){
+			$("#starttime").change();
+		},
+		showOthers: true,
+		weekNumbers: true,
+		showsTime: true
+	});
+	jQuery("#starttime").change(function(){
+		if(! validateInputDate(jQuery("#starttime").val()) )
+		{
+			jQuery("#starttime").val('');
+			alert("时间格式不正确,正确的格式为:2011-01-01 10:59");
+		}
+		if($("#endtime").val()!="")
+		{
+			if($("#starttime").val()>$("#endtime").val())
+			{
+				$("#starttime").val("");
+				alert("输入的时间不符合逻辑, 起始时间大于结束时间");
+			}
+		}
+	});
+	jQuery("#endtime").dynDateTime({
+		ifFormat: "%Y-%m-%d %H:%M:00",
+		daFormat: "%l;%M %p, %e %m,  %Y",
+		align: "Br",
+		electric: true,
+		singleClick: false,
+		button: ".next()", //next sibling
+		showOthers: true,
+		onUpdate:function(){
+			$("#endtime").change();
+		},
+		weekNumbers: true,
+		showsTime: true
+	});
+	jQuery("#endtime").change(function(){
+		if(! validateInputDate(jQuery("#endtime").val()) )
+		{
+			jQuery("#endtime").val('');
+			alert("时间格式不正确,正确的格式为:2011-01-01 12:23");
+		}
+		if($("#starttime").val()!="")
+		{
+			if($("#starttime").val()>$("#endtime").val())
+			{
+				$("#endtime").val("");
+				alert("输入的时间不符合逻辑, 起始时间大于结束时间");
+			}
+		}
+	});
+	
+});
+</script>
+
+
+<div class="ld">
+<table class='st' border="0" cellspacing="0" cellpadding="0">
+<form action="" method="GET" name="searchForm">
+<input type="hidden" name="isrequery" value="1">
+<tr>
+    <td>
+	<img src="/images/icon_search.gif" width="26" height="22" border="0" TITLE="SEARCH" />
+    时间: 
+	<input type="text" name="starttime" id="starttime" value="<{$starttime}>"  />
+	<img class='icons_mb4' src="/images/comm/t.gif">
+	&nbsp;&nbsp;至&nbsp;&nbsp;
+	<input type="text" name="endtime" id="endtime" value="<{$endtime}>" />
+	<img class='icons_mb4' src="/images/comm/t.gif">
+	
+	&nbsp;&nbsp;&nbsp;
+	代理: <input type="text" name="dailiname" size="14">&nbsp;&nbsp;&nbsp;&nbsp;
+    <button name="submit" type="submit" width='69' height='26' class="btn_search" /></button>
+	
+	</td>
+</tr>
+<tr>
+    <td>
+	
+	
+    </td>
+</tr>
+</form>
+</table>
+</div>
+<div class="ld">
+<table class="lt" border="0" cellspacing="0" cellpadding="0">
+	<tr class='th'>
+    	<td>用户名</td>
+        <td><div class='line'></div>所属组</td>
+        <td><div class='line'></div>消费</td>
+        <td><div class='line'></div>返点</td>
+        <td><div class='line'></div>存款</td>
+        <td><div class='line'></div>中奖金额</td>
+        <td><div class='line'></div>盈利</td>
+      
+    </tr>
+    <tr>
+    	<td align="center" ><{$selfName}></td>
+    	<td align="center" ><{$zhu}></td>
+    	<td align="center" ><{$selfJ_xiaofei}></td>
+    	<td align="center" ><{$selfJ_fandian}></td>
+    	<td align="center" ><{$selfJ_cunkua}></td>
+    	<td align="center" ><{$selfJ_zhongjiang}></td>
+    	<td align="center" ><{$selfJ_yingli}></td>
+    </tr>
+    {volist name="xiaji" id="vo"}
+    	<tr>
+	    	<td align="center" ><{$vo.name}></td>
+	    	<td align="center" ><{$vo.zhu}></td>
+	    	<td align="center" ><{$vo.xiajiJ_xiaofei}></td>
+	    	<td align="center" ><{$vo.xiajiJ_fandian}></td>
+	    	<td align="center" ><{$vo.xiajiJ_cunkua}></td>
+	    	<td align="center" ><{$vo.xiajiJ_zhongjiang}></td>
+	    	<td align="center" ><{$vo.xiajiJ_yingli}></td>
+   		 </tr>
+    {/volist}
+	 <tr>
+			<td align="center">总计</td>
+			<td>&nbsp;</td>
+		<td align="center" ><{$zjJ_xiaofei}></td>
+    	<td align="center" ><{$zjJ_fandian}></td>
+    	<td align="center" ><{$zjJ_cunkua}></td>
+    	<td align="center" ><{$zjJ_zhongjiang}></td>
+    	<td align="center" ><{$zjJ_yingli}></td>
+        
+        
+  </tr>
+</table>
+</div>
+
+

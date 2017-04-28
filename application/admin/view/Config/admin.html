@@ -1,4 +1,4 @@
-<include file="Public:head" />
+{include file="Public:head" /}
 
 <body>
 	<SPAN id=ShowSound></SPAN>
@@ -111,7 +111,7 @@
 						          </tr>
 								  </thead>
 								  <!--主题-->
-								  <volist name="list" id="vo">		 
+								  {volist name="list" id="vo"}		 
 						          <tr bgcolor="#FFFFFF">
 						          		<td height="18">
 											<input name="items[]" type="checkbox" value="<{$vo.id}>"/>
@@ -122,7 +122,7 @@
 										
 										
 								   </tr>
-								   </volist> 	  	 
+								   {/volist}	  	 
 						    </table></form></td>
 						  </tr>
 						  <!--列表结束-->
@@ -139,6 +139,6 @@
 		</table>
 	<!--主体结束-->
 	
-	<include file="Public:foot" />
+	{include file="Public:foot" /}
 
 	

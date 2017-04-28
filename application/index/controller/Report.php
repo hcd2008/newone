@@ -1,6 +1,6 @@
 <?php
 namespace app\index\controller;
-use app\comon\controller\Base;
+use app\common\controller\Base;
 use think\Db;
 use think\Session;
 use think\Cache;
@@ -52,7 +52,7 @@ class Report extends Base
 		// 	);
 		$Where['addtime']=array('between time',[$_obfuscate_Xif3q_HAaupN,$endtime]);
 		$DaoAccount = Db::name('Account');
-		$count = $DaoAccount->where($Where)->suDb::name('money');
+		$count = $DaoAccount->where($Where)->sum('money');
 		$_obfuscate_8Iu1['starttime'] = $_obfuscate_Xif3q_HAaupN;
 		$_obfuscate_8Iu1['endtime'] = $endtime;
 		$_obfuscate_8Iu1['username'] = $username;
@@ -70,7 +70,7 @@ class Report extends Base
 		$allReg[] = $username;
 		$_obfuscate_6ogI80pkWQ = Db::name('User');
 		$Where['username'] = array('in', $allReg);
-		$dataTuanDui = $_obfuscate_6ogI80pkWQ->where($Where)->suDb::name('money');
+		$dataTuanDui = $_obfuscate_6ogI80pkWQ->where($Where)->sum('money');
 		$_obfuscate_8Iu1['tuanDuiMoney'] = sprintf('%.4f', $dataTuanDui);
 		$_obfuscate_8Iu1['username'] = $username;
 		$_obfuscate_8Iu1['nickname'] = $User->getNickname();
@@ -85,9 +85,9 @@ class Report extends Base
 		// 	);
 		$Where['addtime']=array('between time',[$_obfuscate_Xif3q_HAaupN,$endtime]);
 		$DaoAccount = Db::name('Account');
-		$countTuoZhu = $DaoAccount->where($Where)->suDb::name('money');
+		$countTuoZhu = $DaoAccount->where($Where)->sum('money');
 		$Where['accounttype'] = 9;
-		$countFj = $DaoAccount->where($Where)->suDb::name('money');
+		$countFj = $DaoAccount->where($Where)->sum('money');
 		$_obfuscate_8Iu1['countTuoZhu'] = sprintf('%.4f', $countTuoZhu);
 		$_obfuscate_8Iu1['countFj'] = sprintf('%.4f', $countFj);
 		$this->assign($_obfuscate_8Iu1);
@@ -109,20 +109,22 @@ class Report extends Base
 
 		$_obfuscate_8Iu1['message'] = $this->message;
 		$this->assign($_obfuscate_8Iu1);
+		//hcd xiaji为空？
+		$this->assign('xiaji',array());
 		return $this->fetch();
 	}
 
 	public function search()
 	{
-		$my_search = $this->param['my_search'];
+		$my_search = isset($this->param['my_search'])?$this->param['my_search']:'';
 
 		if (empty($my_search)) {
 			$my_search = array();
 		}
 
 		$condition = array_filter($my_search, 'value_filter');
-		$starttime = $this->param['starttime'];
-		$endtime = $this->param['endtime'];
+		$starttime = isset($this->param['starttime'])?$this->param['starttime']:'';
+		$endtime = isset($this->param['endtime'])?$this->param['endtime']:'';
 		if (empty($starttime) && empty($endtime)) {
 			$starttime = date('Y-m-d 00:00:00');
 			$endtime = date('Y-m-d 03:00:00', strtotime('+1 days'));
@@ -143,7 +145,7 @@ class Report extends Base
 		// 	array('elt', $endtime),
 		// 	'and'
 		// 	);
-		$condition['addtime']=array('between time',$starttime,$endtime)
+		$condition['addtime']=array('between time',[$starttime,$endtime]);
 		$DaoWebConfig = Db::name('Webconfig');
 		$dataWeb = $DaoWebConfig->find();
 
@@ -154,7 +156,9 @@ class Report extends Base
 
 		$username = Session::get('un');
 		$condition['username'] = $username;
-		$dailiname = formatstr($this->param['dailiname']);
+		if(isset($this->param['dailiname'])){
+			$dailiname = formatstr($this->param['dailiname']);
+		}
 		$DaoUser = Db::name('User');
 		$regname = array();
 		$zhiJieRegname = array();

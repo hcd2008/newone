@@ -1,4 +1,4 @@
-<include file="Public:head" />
+{include file="Public:head" /}
 <script type="text/javascript" src="__PUBLIC__/js/calendar/jquery.dyndatetime.js"></script>
 <script type="text/javascript" src="__PUBLIC__/js/calendar/lang/calendar-utf8.js"></script>
 <link rel="stylesheet" type="text/css" media="all" href="__PUBLIC__/js/calendar/css/calendar-blue2.css"  />
@@ -217,7 +217,7 @@ QQ：<input style='width:90px;' type="text" id="projectno" name="my_search[qq]" 
 						          </tr>
 								  </thead>
 								  <!--主题-->
-								<volist name="list" id="vo">
+								{volist name="list" id="vo"}
 								  	<tr >
 								       <td height="18">
 								       		<if condition="$vo.username neq 'admin' ">
@@ -239,7 +239,7 @@ QQ：<input style='width:90px;' type="text" id="projectno" name="my_search[qq]" 
 								        <td ><{$vo.addtime}></td>
 								       
 								    </tr>
-							  </volist>
+							  {/volist}
 							       <switch name="message">
 									<case value="0">
 										 <tr>
@@ -286,6 +286,6 @@ QQ：<input style='width:90px;' type="text" id="projectno" name="my_search[qq]" 
 	<!--主体结束-->
 	
    
-	<include file="Public:foot" />
+	{include file="Public:foot" /}
 
 	

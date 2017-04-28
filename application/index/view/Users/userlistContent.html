@@ -1,4 +1,4 @@
-<include file="Public:head" /> 
+{include file="Public:head" /}
 </HEAD>
 <BODY STYLE="background:#FFF url('/images/v1/main_bg_0001.jpg') 0px -490px repeat-x; padding:10px;"><DIV ID='main_box'>
 <div class="box l"></div>
@@ -94,7 +94,7 @@ function hideTeam(obj) {
         <td><div class='line'></div>注册时间</td>
         <td><div class='line'></div>操作</td>
     </tr>
-    <volist name="userContentList" id="vo">
+    {volist name="userContentList" id="vo"}
     <if condition="$vo.self eq 1">
     	<tr  class="self_tr" >
     	<td align="left" height="20">&nbsp;&nbsp;<{$vo.username}></td>
@@ -133,7 +133,7 @@ function hideTeam(obj) {
     </tr>
     </if>
         
-    </volist>
+    {/volist}
       <tr><td class='b' colspan="7"><div style='text-align:right;'><{$page}></div></td></tr>
 </form>
 </table>

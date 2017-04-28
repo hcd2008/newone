@@ -1,4 +1,4 @@
-<include file="Public:head" />
+{include file="Public:head" /}
 
 
 <script language="javascript">
@@ -133,13 +133,13 @@ function checkform(obj)
 						             <th  >追号状态</th>						            				           
 						          </tr>
 								  </thead>
-								  <volist name="traceList" id="vo">
+								  {volist name="traceList" id="vo"}
 								   <tr bgcolor="#FFFFFF">
 										<td><{$vo.issue}></td>							
 										<td><{$vo.beishu}>倍</td>
 										<td><{$vo.status}></td>
 								   </tr>
-								   </volist>
+								   {/volist}
 								   
 								    
 			</table>							  
@@ -148,6 +148,6 @@ function checkform(obj)
           <!--功能列表开始-->
 		</table>
 	<!--主体结束-->
-	<include file="Public:foot" />
+	{include file="Public:foot" /}
 
 	

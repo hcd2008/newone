@@ -1,4 +1,4 @@
-<include file="Public:head" />
+{include file="Public:head" /}
 
 
 <script language="javascript">
@@ -84,9 +84,9 @@ function checkform(obj)
                  <td >&nbsp;&nbsp;&nbsp;玩法：
                  <select name="methodid">
                  <option value="<{$methodid}>"><{$methodname}></option>
-                 	<volist name="methodnameall" id="vo">
+                 	{volist name="methodnameall" id="vo"}
                  		<option value="<{$vo.methodid}>"><{$vo.methodname}></option>
-                 	</volist>
+                 	{/volist}
                  </select>
                  </td>
                 <td >&nbsp;&nbsp;&nbsp;</td>
@@ -147,6 +147,6 @@ function checkform(obj)
           <!--功能列表开始-->
 		</table>
 	<!--主体结束-->
-	<include file="Public:foot" />
+	{include file="Public:foot" /}
 
 	

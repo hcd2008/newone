@@ -1,4 +1,4 @@
-<include file="Public:head" />
+{include file="Public:head" /}
 
 <body>
 	<SPAN id=ShowSound></SPAN>
@@ -47,9 +47,9 @@
 						                <td width="3%">&nbsp;</td>
 						                <td >
 						                	<select name="lotteryname">
-							                	<volist name="lottery" id="vo">
+							                	{volist name="lottery" id="vo"}
 							                		<option value="<{$vo.lotteryname}>"><{$vo.lotteryname}></option>
-							                	</volist>
+							                	{/volist}
 						                	</select>
 						                </td>               
 						              </tr>
@@ -117,7 +117,7 @@
 						          </tr>
 								  </thead>
 								  <!--主题-->
-								  <volist name="list" id="vo">		 
+								  {volist name="list" id="vo"}		 
 						          <tr bgcolor="#FFFFFF">
 						          		<td height="18">
 											<input name="items[]" type="checkbox" value="<{$vo.id}>"/>
@@ -129,7 +129,7 @@
 										<td><{$vo.money}></td>
 										
 								   </tr>
-								   </volist> 	  	 
+								   {/volist}	  	 
 						    </table></form></td>
 						  </tr>
 						  <!--列表结束-->
@@ -146,6 +146,6 @@
 		</table>
 	<!--主体结束-->
 	
-	<include file="Public:foot" />
+	{include file="Public:foot" /}
 
 	

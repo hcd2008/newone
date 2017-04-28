@@ -84,13 +84,12 @@ class Index extends Base
 		$_obfuscate_8Iu1['money'] = round($dataUser['money'], 4);
 		$_obfuscate_8Iu1['nickname'] = $dataUser['nickname'];
 		$str = ltrim(rtrim($dataUser['regfrom'], '|'), '|');
-		$regArr = @split('\\|\\|', $str);
-
+		$regArr = @explode('\\|\\|', $str);
 		if (count($regArr) == 1) {
 			$_obfuscate_8Iu1['vip'] = 'VIP';
 		}
-
 		$this->assign($_obfuscate_8Iu1);
+		print_r($_obfuscate_8Iu1);
 		return $this->fetch();
 	}
 
@@ -120,7 +119,7 @@ class Index extends Base
 
 		if (empty($dataUser['logmsg'])) {
 			$zf -= 15;
-			$url = u('User/editPwd');
+			$url = url('User/editPwd');
 			$msg .= '-15 分 : 您尚未设置登录问候语! 请使用〖 <a href=\'' . $url . '\'><font color=#ff3366>修改密码</font></a>〗功能进行设置<br/>';
 		}
 

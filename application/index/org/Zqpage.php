@@ -96,7 +96,7 @@ class Zqpage
 			$_obfuscate_pn0 = array('[', ']');
 		}
 
-		$banner_web_show_tt = c('VAR_PAGE');
+		$banner_web_show_tt = Config::get('VAR_PAGE');
 		$_obfuscate_0J9maLP1Y5PBjw = ceil($this->nowPage / $this->rollPage);
 		$url = $_SERVER['REQUEST_URI'] . (strpos($_SERVER['REQUEST_URI'], '?') ? '' : '?') . $this->parameter;
 		$parse = parse_url($url);
@@ -143,8 +143,8 @@ class Zqpage
 			$prePage = '<a href=\'' . $url . '&' . $banner_web_show_tt . '=' . $preRow . '\' >' . $this->config['up'] . '</a>';
 			$theFirst = '&nbsp;&nbsp;&nbsp;&nbsp;<a href=\'' . $url . '&' . $banner_web_show_tt . '=1\' >' . $this->config['first'] . '</a>';
 		}
-
-		if ($_obfuscate_0J9maLP1Y5PBjw == $this->ColPages) {
+		isset($this->CoolPages) or $this->CoolPages='';
+		if ($_obfuscate_0J9maLP1Y5PBjw == $this->CoolPages) {
 			$_obfuscate_GtG52JTi4GE = '';
 			$theEnd = '';
 

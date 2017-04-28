@@ -1,4 +1,4 @@
-<include file="Public:head" />
+{include file="Public:head" /}
 
 <body>
 	<SPAN id=ShowSound></SPAN>
@@ -48,9 +48,9 @@
 						                <td width="3%">&nbsp;</td>
 						                <td >
 						                	<select name="lotteryname">
-							                	<volist name="lottery" id="vo">
+							                	{volist name="lottery" id="vo"}
 							                		<option  value="<{$vo.lotteryname}>" <eq name="vo.lotteryname" value="$dataJiazj.lotteryname">selected="selected"</eq> ><{$vo.lotteryname}></option>
-							                	</volist>
+							                	{/volist}
 						                	</select>
 						                </td>               
 						              </tr>
@@ -96,6 +96,6 @@
 		</table>
 	<!--主体结束-->
 	
-	<include file="Public:foot" />
+	{include file="Public:foot" /}
 
 	

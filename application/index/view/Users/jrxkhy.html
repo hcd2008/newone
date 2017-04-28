@@ -1,4 +1,4 @@
-<include file="Public:head" /> 
+{include file="Public:head" /}
 </HEAD>
 <BODY STYLE="background:#FFF url('/images/v1/main_bg_0001.jpg') 0px -490px repeat-x; padding:10px;"><DIV ID='main_box'>
 <div class="box l"></div>
@@ -76,7 +76,7 @@ function hideTeam(obj) {
 <form action="./" method="get">
 	<tr>
     	<td class='t' colspan="7"><div>
-		&nbsp;&nbsp;<a href="__ACTION__" target="userlist_content">我的今日新用户</a>			<{$usersDaoHang}>		</div></td>
+		&nbsp;&nbsp;<a href="__ACTION__" target="userlist_content">我的今日新用户</a>					</div></td>
     </tr>
     <tr class='th'>
     	<td>用户名</td>
@@ -86,7 +86,7 @@ function hideTeam(obj) {
         <td><div class='line'></div>注册时间</td>
         <td><div class='line'></div>操作</td>
     </tr>
-    <volist name="userContentList" id="vo">
+    {volist name="userContentList" id="vo"}
     <if condition="$vo.self eq 1">
     	<tr  class="self_tr" >
     	<td align="left" height="20">&nbsp;&nbsp;<{$vo.username}></td>
@@ -125,8 +125,8 @@ function hideTeam(obj) {
     </tr>
     </if>
         
-    </volist>
-      <tr><td class='b' colspan="7"><div style='text-align:right;'><{$page}></div></td></tr>
+    {/volist}
+      <tr><td class='b' colspan="7"><div style='text-align:right;'><{@$page}></div></td></tr>
 </form>
 </table>
 </div>
