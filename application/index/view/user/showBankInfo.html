@@ -76,7 +76,7 @@ $(function(){
     <td style="color:#FF0000;"><span id="copy_msg_txt" style="padding-right:10px; font-family:fixedsys;"><{$chongzhinum}></span> <a href='#' TITLE='复制' onClick="javascript:copyToClipboard( 'copy_msg_txt','【附言(充值编号)】' );return false;" ><img src="/images/comm/copy.gif" border="0" />复制</a>&nbsp;&nbsp;&nbsp;&nbsp;<font color="#FF0000">←务必将此充值编号正确填写到汇款附言里</font></td>
 </tr>
 </neq>
-<eq name="bankimgname" value="4.jpg">
+{eq name="bankimgname" value="4.jpg"}
 <tr>
 	<td class="nl" style="color:#FF0000;">特别说明：</td>
     <td style="line-height:25px; padding:5px 0; color:#333333;">
@@ -84,9 +84,9 @@ $(function(){
     2、农行开户地为:河南省 周口 中国农业银行股份有限公司 </font>
     </td>
 </tr>
-</eq>
-<eq name="bankid" value="5">
-	<eq name="ists" value="1">
+{/eq}
+{eq name="bankid" value="5"}
+	{eq name="ists" value="1"}
 <tr>
 	<td class="nl" style="color:#FF0000;">特别说明：</td>
     <td style="line-height:25px; padding:5px 0; color:#333333;">
@@ -94,8 +94,8 @@ $(function(){
     
     </td>
 </tr>
-	</eq>
-</eq>
+	{/eq}
+{/eq}
 
 
 <tr>

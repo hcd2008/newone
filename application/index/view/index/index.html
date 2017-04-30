@@ -201,10 +201,10 @@ html {overflow: hidden;}
 		  <div id="submenu-div" >
 			<ul>
 			 
-			  <li><a TITLE='首页' href="__APP__" style="border-left:none;" target="_top"><img class='link1' src='/images/comm/t.gif'>首页</a></li>
+			  <li><a TITLE='首页' href="<{:url('index')}>" style="border-left:none;" target="_top"><img class='link1' src='/images/comm/t.gif'>首页</a></li>
 			  <li><a TITLE='在线客服' style='color:#09C;padding-left:6px;' href="http://tb.53kf.com/webCompany.php?arg=10079805&style=1" target="_blank"><img src='/images/comm/t.gif'>在线客服</a></li>
 			  <li><a TITLE='刷新当前页' href="javascript:window.top.frames['mainframe'].document.location.reload();"><img class='link2' src='/images/comm/t.gif'>刷新</a></li>
-			  <li><a TITLE='退出系统' style='color:#090' onClick="return confirm('确认退出系统?');" href="__APP__/Public/logout" target="_top"><img class='link4' src='/images/comm/t.gif'>退出</a></li>
+			  <li><a TITLE='退出系统' style='color:#090' onClick="return confirm('确认退出系统?');" href="<{:url('login/logout')}>" target="_top"><img class='link4' src='/images/comm/t.gif'>退出</a></li>
 		    </ul>
 			 
 			<!--
@@ -326,9 +326,9 @@ function setCurrentMode(mode){
  <eq name="jffixed_isopen" value="1">
  <div id="jangjinmod" class="modbg3" style="display:<{$show}>">
     	<select name="jffixed" id="jffixed" style="margin-left:5px;">
-	    	<eq name="jf1700_isopen" value="1" ><option value="1" <eq name="currentmode" value="1">selected="selected"</eq> >1700</option></eq>
-	    	<eq name="jf1800_isopen" value="1" ><option value="2" <eq name="currentmode" value="2">selected="selected"</eq> >1800</option></eq>
-	    	<eq name="jf1900_isopen" value="1" ><option value="3" <eq name="currentmode" value="3">selected="selected"</eq> >1900</option></eq>
+	    	{eq name="jf1700_isopen" value="1" }<option value="1" {eq name="currentmode" value="1"}selected="selected"{/eq} >1700</option>{/eq}
+	    	{eq name="jf1800_isopen" value="1" }<option value="2" {eq name="currentmode" value="2"}selected="selected"{/eq} >1800</option></eq>
+	    	{eq name="jf1900_isopen" value="1" }<option value="3" {eq name="currentmode" value="3"}selected="selected"{/eq} >1900</option>{/eq}
     	</select>
  </div>
  </eq>

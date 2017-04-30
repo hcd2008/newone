@@ -51,7 +51,7 @@ class Login extends Controller
 	{
 		$param=$this->request->param();
 		// print_r($param);exit;
-		$username = $param['username'];
+		$username = isset($param['username'])?$param['username']:'';
 		if(!captcha_check($param['validcode_source'])){
 			$this->error("验证码错误");
 		}
@@ -92,12 +92,12 @@ class Login extends Controller
 	{
 		$param=$this->request->param();
 		// print_r($param);exit;
-		$flag = $param['flag'];
+		$flag = isset($param['flag'])?$param['flag']:'';
 
 		if ('login2' != $flag) {
 			$this->redirect('login/login');
 		}
-
+		isset($param['username']) or $param['username']='';
 		$username = formatstr($param['username']);
 		$password = $param['loginpass'];
 
@@ -139,13 +139,13 @@ class Login extends Controller
 
 	public function verify3()
 	{
-		import('ORG.Util.Image');
+		// import('ORG.Util.Image');
 		Image::buildImageVerify(4, 1, 'png', '', 30);
 	}
 
 	public function verify()
 	{
-		import('@.ORG.Captcha');
+		// import('@.ORG.Captcha');
 		$array = array('width' => 120, 'height' => 40, 'strlen' => 4, 'font' => 'Public/other/fonts/DejaVuSerif.ttf', 'sid' => 'verify');
 		$new = new Captcha($array);
 	}
@@ -153,7 +153,7 @@ class Login extends Controller
 	public function logout()
 	{
 		Session::set('un', NULL);
-		$this->redirect('public/login');
+		$this->redirect('login/login');
 	}
 
 	public function getpass()

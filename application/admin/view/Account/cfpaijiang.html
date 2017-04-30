@@ -191,7 +191,7 @@ function checkForm(obj)
 								  <!--主题-->
 								  {volist name="accountList" id="vo"}
 							      <tr class="needchangebg">
-							    	<td ><a href="__APP__/Order/orderinfo/ordernum/<{$vo.ordernum}>"><{$vo.accountnum}></a></td>
+							    	<td ><a href="<{:url('admin/Order/orderinfo',array('ordernum'=>$vo['ordernum']))}>"><{$vo.accountnum}></a></td>
 							        <td><{$vo.username}></td>
 							        <td ><{$vo.addtime}></td>
 							        <td><{$vo.accounttypename}></td>

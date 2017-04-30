@@ -13,7 +13,7 @@ class Fucai extends Base
 
 	public function index()
 	{
-		$param=$this->request->param;
+		$param=$this->request->param();
 		isset($param['flag']) or $param['flag']='';
 		$flag = formatstr($param['flag']);
 

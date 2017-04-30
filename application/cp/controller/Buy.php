@@ -140,7 +140,6 @@ class Buy extends Controller
 		$usermoney = $dataU['money'];
 		$userFd = $dataU['rate_1'];
 		$userFd2 = $dataU['rate_2'];
-
 		switch ($this->lotteryid) {
 		case 5:
 		case 6:
@@ -154,21 +153,19 @@ class Buy extends Controller
 		}
 
 		$nowtime = date('Y-m-d H:i:s');
-
 		if ($dataU['state'] == '0') {
 			$ajaxStr['stats'] = 'error';
 			$ajaxStr['data'] = array('你的帐户已被冻结');
 			return $ajaxStr;
 		}
-
-		if ($dataU['isplay'] == '0') {
-			$ajaxStr['stats'] = 'error';
-			$ajaxStr['data'] = array('该帐号存在异常,无法投注');
-			return $ajaxStr;
-		}
+		//hcd 数据库找不到该字段
+		// if ($dataU['isplay'] == '0') {
+		// 	$ajaxStr['stats'] = 'error';
+		// 	$ajaxStr['data'] = array('该帐号存在异常,无法投注');
+		// 	return $ajaxStr;
+		// }
 
 		$checkIssuesTimeOut = NULL;
-
 		if ($this->isTrace) {
 			$checkIssuesTimeOut = $this->checkIssuesTimeOut($this->lt_trace_issues);
 		}
@@ -191,7 +188,6 @@ class Buy extends Controller
 		$accountData = array();
 		// $DaoOrder = d('Order');
 		// $DaoAccount = d('account');
-
 		foreach ($this->lt_project as $key => $p ) {
 			$p = str_replace('\'', '"', $p);
 			$project = json_decode($p, true);
@@ -207,7 +203,6 @@ class Buy extends Controller
 			if ($this->lotteryid == 13) {
 				$sliderStep = Config::get('baseBouns');
 			}
-
 			if ($encode->checkCodeNum($project['methodid'], $project['nums'], $project['type'])) {
 				$ajaxStr['stats'] = 'error';
 				$ajaxStr['data'] = array('直选单式不可超过800注');
@@ -215,8 +210,11 @@ class Buy extends Controller
 				return $ajaxStr;
 				exit();
 			}
-			$jg=$encode->checkCode($project['methodid'], $project['codes'], $project['nums'], $project['money'], $project['mode'], $project['times'], $project['type']);
+			//hcd
+			// $jg=$encode->checkCode($project['methodid'], $project['codes'], $project['nums'], $project['money'], $project['mode'], $project['times'], $project['type']);
+			// print_r($jg);exit;
 			if (!$encode->checkCode($project['methodid'], $project['codes'], $project['nums'], $project['money'], $project['mode'], $project['times'], $project['type'])) {
+				//hcd
 				$failNum++;
 				$content[$key]['desc'] = $project['desc'];
 				$content[$key]['errmsg'] = '数据错误';

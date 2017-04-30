@@ -412,7 +412,7 @@ class Encode
 				break;
 
 			case 'ZX5':
-				$_obfuscate_rEkmiBpD = explode('\\|', $codes);
+				$_obfuscate_rEkmiBpD = explode('|', $codes);
 
 				if (count($_obfuscate_rEkmiBpD) != 5) {
 					return false;
@@ -445,7 +445,7 @@ class Encode
 				break;
 
 			case 'ZX4':
-				$_obfuscate_rEkmiBpD = explode('\\|', $codes);
+				$_obfuscate_rEkmiBpD = explode('|', $codes);
 
 				if (count($_obfuscate_rEkmiBpD) != 4) {
 					return false;
@@ -478,7 +478,7 @@ class Encode
 				break;
 
 			case 'ZX3':
-				$_obfuscate_rEkmiBpD = explode('\\|', $codes);
+				$_obfuscate_rEkmiBpD = explode('|', $codes);
 
 				if (count($_obfuscate_rEkmiBpD) != 3) {
 					return false;
@@ -511,7 +511,7 @@ class Encode
 				break;
 
 			case 'RX3':
-				$_obfuscate_rEkmiBpD = explode('\\|', $codes);
+				$_obfuscate_rEkmiBpD = explode('|', $codes);
 				$EM = 0;
 
 				if (count($_obfuscate_rEkmiBpD) != 5) {
@@ -550,7 +550,7 @@ class Encode
 				break;
 
 			case 'RX2':
-				$_obfuscate_rEkmiBpD = explode('\\|', $codes);
+				$_obfuscate_rEkmiBpD = explode('|', $codes);
 				$EM = 0;
 
 				if (count($_obfuscate_rEkmiBpD) != 5) {
@@ -761,7 +761,7 @@ class Encode
 				break;
 
 			case 'ZX2':
-				$_obfuscate_rEkmiBpD = explode('\\|', $codes);
+				$_obfuscate_rEkmiBpD = explode('|', $codes);
 				if (count($_obfuscate_rEkmiBpD) != 2) {
 					return false;
 				}
@@ -793,7 +793,7 @@ class Encode
 
 			case 'DWD':
 				if ($methodid == 176) {
-					$_obfuscate_rEkmiBpD = explode('\\|', $codes);
+					$_obfuscate_rEkmiBpD = explode('|', $codes);
 
 					if (count($_obfuscate_rEkmiBpD) != 3) {
 						return false;
@@ -822,7 +822,7 @@ class Encode
 					}
 				}
 				else {
-					$_obfuscate_rEkmiBpD = explode('\\|', $codes);
+					$_obfuscate_rEkmiBpD = explode('|', $codes);
 
 					if (count($_obfuscate_rEkmiBpD) != 5) {
 						return false;
@@ -854,7 +854,7 @@ class Encode
 				break;
 
 			case 'BJL':
-				$_obfuscate_rEkmiBpD = explode('\\|', $codes);
+				$_obfuscate_rEkmiBpD = explode('|', $codes);
 
 				if (count($_obfuscate_rEkmiBpD) != 2) {
 					return false;
@@ -869,7 +869,7 @@ class Encode
 				break;
 
 			case '3DWD':
-				$_obfuscate_rEkmiBpD = explode('\\|', $codes);
+				$_obfuscate_rEkmiBpD = explode('|', $codes);
 
 				if (count($_obfuscate_rEkmiBpD) != 3) {
 					return false;
@@ -900,7 +900,7 @@ class Encode
 				break;
 
 			case 'DXDS':
-				$_obfuscate_rEkmiBpD = explode('\\|', $codes);
+				$_obfuscate_rEkmiBpD = explode('|', $codes);
 				$Jvf = count($_obfuscate_rEkmiBpD);
 
 				if ($Jvf != 2) {
@@ -929,7 +929,7 @@ class Encode
 				break;
 
 			case 'SDZX3':
-				$_obfuscate_rEkmiBpD = explode('\\|', $codes);
+				$_obfuscate_rEkmiBpD = explode('|', $codes);
 
 				if (count($_obfuscate_rEkmiBpD) != 3) {
 					return false;
@@ -993,7 +993,7 @@ class Encode
 				break;
 
 			case 'SDZX2':
-				$_obfuscate_rEkmiBpD = explode('\\|', $codes);
+				$_obfuscate_rEkmiBpD = explode('|', $codes);
 
 				if (count($_obfuscate_rEkmiBpD) != 2) {
 					return false;
@@ -1067,7 +1067,7 @@ class Encode
 				break;
 
 			case 'SDDWD':
-				$_obfuscate_rEkmiBpD = explode('\\|', $codes);
+				$_obfuscate_rEkmiBpD = explode('|', $codes);
 
 				if (count($_obfuscate_rEkmiBpD) != 3) {
 					return false;

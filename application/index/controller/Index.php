@@ -89,7 +89,6 @@ class Index extends Base
 			$_obfuscate_8Iu1['vip'] = 'VIP';
 		}
 		$this->assign($_obfuscate_8Iu1);
-		print_r($_obfuscate_8Iu1);
 		return $this->fetch();
 	}
 

@@ -370,7 +370,7 @@ class User extends Base
 		$username = Session::get('un');
 		// $DaoUser = Db::name('user');
 		// import('@.Cp.User');
-		$user = new User();
+		$user = new User1($username);
 		$chongzhinum = $user->getIdByUserName($username);
 		// $DaoBank = Db::name('Bank');
 		$where['state'] = 1;

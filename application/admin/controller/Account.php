@@ -33,9 +33,11 @@ class Account extends Common
 		$cfissue = isset($this->param['cfissue'])?$this->param['cfissue']:'';
 		$cftype = isset($this->param['cftype'])?$this->param['cftype']:'';
 		$lotteryid = isset($this->param['lotteryid'])?$this->param['lotteryid']:'';
-
 		if (empty($cfissue)) {
 			$this->assign('message', $message);
+			//hcd 解决accountList未定义的问题
+			$this->assign('accountList',array());
+			$this->assign('page','');
 			return $this->fetch();
 			return NULL;
 		}
@@ -46,7 +48,9 @@ class Account extends Common
 		$condition['beizhu'] = array('exp', ' is null ');
 		$condition['accounttype'] = $cftype;
 		$listRows = 30;
+		print_r($condition);exit;
 		$dataAcc = $DaoAccount->where($condition)->group('ordernum')->having(' count(ordernum) > 1 ')->select();
+		echo $dataAcc;exit;
 		$DaoUser = Db::name('User');
 
 		foreach ($dataAcc as $v ) {
@@ -89,12 +93,12 @@ class Account extends Common
 		else {
 			$message = 1;
 		}
-
 		$p = new Zqpage($count, $listRows);
+		$accountList=array();
 		$accountList = $this->formatAccountList($DaoAccount->where($condition)->order('id desc')->limit($p->firstRow . ',' . $p->listRows)->select());
+
 		$page = $p->show();
 		$Tpl['accountList'] = $accountList;
-		print_r($Tpl);
 		$this->assign('message', $message);
 		$this->assign('page', $page);
 		$this->assign($Tpl);
@@ -920,6 +924,10 @@ class Account extends Common
 		$Tpl['sumCZNum'] = $sumCZNum;
 		$Tpl['sumYK'] = sprintf('%.02f', $sumYK);
 		$this->assign($Tpl);
+		//hcd 
+		$this->assign('starttime',$starttime);
+		$this->assign('endtime',$endtime);
+		$this->assign('page','');
 		return $this->fetch();
 	}
 }
