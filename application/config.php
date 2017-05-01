@@ -142,6 +142,7 @@ return [
     'view_replace_str'       => [
         '__PUBLIC__' => '/public/static/',
         '__APP__'=>'/',
+        '__ASSETS__' => '/public/assets/',
        
     ],
     // 默认跳转页面对应的模板文件
@@ -270,4 +271,5 @@ return [
     'PAGE_ROLLPAGE'         => 5,      // 分页显示页数
     'PAGE_LISTROWS'         => 20,     // 分页每页显示记录数
     'VAR_PAGE'              => 'p',
+    'theme'=>2
 ];

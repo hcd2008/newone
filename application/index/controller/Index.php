@@ -72,6 +72,22 @@ class Index extends Base
 		}
 
 		$this->assign($_obfuscate_XONJEA);
+		$username = Session::get('un');
+		// $_obfuscate_6ogI80pkWQ = m('User');
+		$Where['username'] = $username;
+		$dataUser = Db::name('user')->where($Where)->find();
+		$_obfuscate_8Iu1['money'] = round($dataUser['money'], 4);
+		$_obfuscate_8Iu1['nickname'] = $dataUser['nickname'];
+		$str = ltrim(rtrim($dataUser['regfrom'], '|'), '|');
+		$regArr = @explode('||', $str);
+		if (count($regArr) == 1) {
+			$_obfuscate_8Iu1['vip'] = 'VIP';
+		}
+		$this->assign($_obfuscate_8Iu1);
+		//通知公告
+		$Where['title'] = array('neq', '顶部公告');
+		$datagonggao = Db::name('gonggao')->order('addtime desc')->limit(0,11)->select();
+		$this->assign('gglist', $datagonggao);
 		return $this->fetch();
 	}
 
@@ -84,7 +100,7 @@ class Index extends Base
 		$_obfuscate_8Iu1['money'] = round($dataUser['money'], 4);
 		$_obfuscate_8Iu1['nickname'] = $dataUser['nickname'];
 		$str = ltrim(rtrim($dataUser['regfrom'], '|'), '|');
-		$regArr = @explode('\\|\\|', $str);
+		$regArr = @explode('||', $str);
 		if (count($regArr) == 1) {
 			$_obfuscate_8Iu1['vip'] = 'VIP';
 		}

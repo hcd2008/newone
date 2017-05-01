@@ -1,340 +1,168 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<HTML xmlns="http://www.w3.org/1999/xhtml">
-<HEAD>
-<META http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<TITLE><{$webname}></TITLE>
-<STYLE type="text/css">
-.gonggaodiv div{height:32px;overflow:hidden;}
-</STYLE>
-<LINK href="__PUBLIC__/css/v1/main.css" rel="stylesheet" type="text/css" />
-<SCRIPT type="text/javascript" src="__PUBLIC__/js/jquery.js"></SCRIPT>
-<script language="javascript" type="text/javascript" src="__PUBLIC__/js/common.js"></script>
-<SCRIPT type="text/javascript" src="__PUBLIC__/js/artDialog/jquery.artDialog.js?skin=black"></SCRIPT>
-<SCRIPT language="javascript" type="text/javascript">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta content="IE=EmulateIE8" http-equiv="X-UA-Compatible" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>首页－汇华国际</title>
+<link href='__ASSETS__skin/main/bl_ococ.css' rel="stylesheet" type="text/css" />
+<link href="__ASSETS__skin/js/jqueryuiskin/smoothness/jquery-ui-1.8.21.custom.css" rel="stylesheet" type="text/css" />
 
-function show(type,username,lotteryname,issue,countissue,yinkui){
-	if(type==0){
-		strcontent="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font color=blue>尊敬的玩家"+username+"</font><br><br><br>&nbsp;&nbsp;"+lotteryname+"&nbsp;&nbsp;第<font color=green>"+issue+"</font>期&nbsp;&nbsp;已经开奖<br><br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;您共有<font color=red>"+countissue+"</font>条投注记录<br><br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;本期盈亏为￥<font color=red>"+yinkui+"</font>";
-	}
-	if(type==1){
-		strcontent="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font color=blue>尊敬的玩家"+username+"</font><br><br><br>&nbsp;&nbsp;&nbsp;&nbsp;<font color=red>您的提款已经处理,请查收!</font>";
-	}
-	if(type==2){
-		strcontent="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font color=blue>尊敬的玩家"+username+"</font><br><br><br>&nbsp;&nbsp;<font color=green>您本次冲值￥<font color=red>"+yinkui+"</font>元已经到帐,请查收!</font>";
-	}
-	$.dialog({
-	    title: '温馨提示',
-	    width: 280,// 
-	    content: strcontent,
-	    icon: 'face-smile',
-	    left:'100%',
-	    top:'100%',
-	    time: 16
-	});
-}
+<script type="text/javascript" src="__ASSETS__skin/js/jquery-1.8.0.min.js"></script>
 
-var  resizeTimer = null;
-jQuery(document).ready(function(){
-	
-	jQuery("#mainbox").height( jQuery(document).height()-jQuery("#topbox").height() );
-	jQuery("#leftbox").height( jQuery("#mainbox").height() );
-	$(window).resize(function(){
-		if(resizeTimer==null){
-			resizeTimer = setTimeout("resizewindow()",300);
-		}
-	}); 
-
-	jQuery("#dragbutton").click(function(){
-		if( jQuery(this).attr("class") == "img_arrow_l" ){
-			jQuery(this).attr("class",'img_arrow_r');
-			jQuery("#leftbox").css({width:"0px"}).hide();
-			jQuery("#mainbox").css({width:"100%"});
-		}else{
-			jQuery(this).attr("class",'img_arrow_l');
-			jQuery("#leftbox").css({width:"160px"}).show();
-			jQuery("#mainbox").css({width:"auto"});
-		}
-	});
-
-$(function(){
-
-	var _wrap=$('#zjtgul');
-	var _interval=2000;
-	var _moving;
-	_wrap.hover(function(){
-		clearInterval(_moving);
-	},function(){
-		_moving=setInterval(function(){
-			var _field=_wrap.find('li:first');
-			var _h=_field.height();
-			_field.animate({marginTop:-_h+'px'},600,function(){
-				_field.css('marginTop',0).appendTo(_wrap);
-			})
-		},_interval)
-	}).trigger('mouseleave');
-});
-
-_permgetdata = setInterval(function(){
-	$.ajax({
-		type : 'POST',
-		url  : '__URL__/getZJMessage',
-		data : 'flag=gettoprize',
-		timeout : 5000,
-		success : function(data){
-				var partn = /empty/;				
-				if( !partn.exec(data)){
-					eval("data="+data+";");
-					var html = '';
-					$.each(data,function(i,n){
-						html += '<li>恭喜 【<span class=c1>'+n.name+'</span>】 '+n.lottery+' <span class=c2>'+n.issue+'</span> 期, 喜中 <span class=c3>'+n.prize+'</span> 大奖!</li>';
-					});
-					$("#zjtgul").empty();
-					$(html).appendTo("#zjtgul");
-					
-				}
-				return true;
-		}
-		
-	});
-},290000);
-
-
-_permg = setInterval(function(){
-
-	$.ajax({
-		type : 'POST',
-		url  : '__URL__/getKaiJiangMessage',
-		data : 'flag=gettoprize',
-		timeout : 5000,
-		success : function(data){
-				
-				var partn = /empty/;				
-				if( !partn.exec(data)){
-					eval("data="+data+";");
-				
-
-					show(data.type,data.username,data.lotteryname,data.issue,data.countissue,data.yinkui);
-					
-				}
-				return true;
-		}
-		
-	});
-	
-},10*1000);
-
-
-_fastData = setInterval(function(){
-	var $lf = $("#leftusermoney",window.top.frames['leftframe'].document);
-	$.ajax({
-		type : 'POST',
-		url  : '__APP__/User/getUserMoney',
-		timeout : 5000,
-		success : function(data){
-				var partn = /logout/;
-				
-				
-				if( partn.exec(data) ){
-					
-					alert("此账号在别处登陆,您被迫下线!");					
-					window.top.location.href="__APP__/Public/login";
-					return false;
-				}
-				eval("data="+data+";");
-				//用户余额
-				
-				if( data.money != 'empty' ){
-					if(data.money=="" || data.money == null){
-						return true;
-					}
-					var dd = moneyFormat(data.money);					
-					$lf.html(dd);
-				}
-				return true;
-		}
-	});
-},1000*6*10);
-
-});
-function resizewindow(){
-	jQuery("#mainbox").height( jQuery(window).height()-jQuery("#topbox").height() );
-	jQuery("#leftbox").height( jQuery(window).height()-jQuery("#topbox").height() );
-	resizeTimer = null;
-}
-
-
-function jiangurl(){
-		data2=0;
-	$.ajax({
-		type : 'GET',
-		async:false,
-		url  : '__APP__/User/getTodayXiaoFei/ajax/jiang',
-		timeout : 5000,
-		success : function(data){
-		//window.location.href="/369/1.php?m="+data+"";
-		//window.open("/369/1.php?m="+data+"");
-
-			data2=data;
-		
-		}
-	});
-window.open("/369/1.php?m="+data2+"");
-	
-}
-
-</script>
-<SCRIPT LANGUAGE='JavaScript'>function ResumeError() {return true;} window.onerror = ResumeError; </SCRIPT>
+<script type="text/javascript" src="__ASSETS__skin/js/jqueryui/jquery-ui-1.8.23.custom.min.js"></script>
+<script type="text/javascript" src="__ASSETS__skin/js/jqueryui/i18n/jquery.ui.datepicker-zh-CN.js"></script>
+<script type="text/javascript" src="__ASSETS__skin/main/onload.js"></script>
+<script type="text/javascript" src="__ASSETS__skin/common.js"></script>
 <style>
-html {overflow: hidden;}
-</style>
-</HEAD>
-<BODY>
-<table width="100%" border="0" cellpadding="0" cellspacing="0">
-<tr>
-	<td id="topbox">
-		<div id="header-div">
-		
-		  <div id="logo-div" onclick="javascript:window.top.location='./';">
-		  <img src="/images/comm/t.gif" class='main_logo' title="返回首页"/>
-		  </div>
-		 
-		  <div id="submenu-div" >
-			<ul>
-			 
-			  <li><a TITLE='首页' href="<{:url('index')}>" style="border-left:none;" target="_top"><img class='link1' src='/images/comm/t.gif'>首页</a></li>
-			  <li><a TITLE='在线客服' style='color:#09C;padding-left:6px;' href="http://tb.53kf.com/webCompany.php?arg=10079805&style=1" target="_blank"><img src='/images/comm/t.gif'>在线客服</a></li>
-			  <li><a TITLE='刷新当前页' href="javascript:window.top.frames['mainframe'].document.location.reload();"><img class='link2' src='/images/comm/t.gif'>刷新</a></li>
-			  <li><a TITLE='退出系统' style='color:#090' onClick="return confirm('确认退出系统?');" href="<{:url('login/logout')}>" target="_top"><img class='link4' src='/images/comm/t.gif'>退出</a></li>
-		    </ul>
-			 
-			<!--
-			<ul style="width:100px;background: url('');margin-right:20px;">
-		  		<li>
-		  		<a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=615939276&site=qq&menu=yes"><img border="0" src="/images/button_11-1.gif" alt="点击这里给我发消息" title="点击这里给我发消息"></a>
-		  		</li>
-		  	</ul>
-			<ul style="width:100px;background: url('');margin-right:30px;">
-		  		<li>
-		  		
-		  		<img onclick="jiangurl();" style="cursor:pointer"  border="0" src="__PUBLIC__/images/888889.gif" width="128px" height="40px">
-		  		
-		  		</li>
-		  	</ul>
-			-->
-  			</div>
-</div></td></tr></table> 
-<table width="100%" border="0" cellpadding="0" cellspacing="0">
-	
-	<tr>
-    	<td style="width:160px; height:100%; background: #D94733;" valign="top" id="leftbox">
-            <iframe name="leftframe" id="leftframe" frameborder="0" width="100%" height="100%" scrolling="auto" style="overflow:visible;" src="__URL__/menu/"></iframe>
-        </td>
-        <td valign="top" id="dragbox"><img src="/images/comm/t.gif" class='img_arrow_l' border="0" id="dragbutton" style="cursor:pointer;" /></td>
-        
-        <td id="mainbox" valign="top">
-        <iframe name="mainframe" id="mainframe" frameborder="0" width="100%" height="100%" scrolling="auto" style="overflow:visible;" src="__URL__/main/"></iframe>
-        </td>
-         
-    </tr> 
-</table>
-
-<div class="gonggaodiv">
-	<div>
-		<ul id="zjtgul">
-		{foreach $zjdata as $k=>$vo}
-			<li>恭喜 【<span class=c1><{$vo.name}></span>】 <{$vo.lottery}> <span class=c2><{$vo.issue}></span> 期, 喜中 <span class=c3><{$vo.prize}></span> 大奖!</li>
-		{/foreach}
-		</ul>
-	</div>
-</div>
-<script language="javascript" type="text/javascript">
-
-jQuery(document).ready(function(){
-	$("#Showjiangjin").click(function(){
-		
-		$("#jangjinmod").show();
-		$("#Showjiangjin").css("color","blue");
-		$("#jfauto").css("color","black");
-		var jffixed=$("#jffixed").val();
-		if(setCurrentMode(jffixed)){
-			window.top.frames['mainframe'].document.location.reload();
-		}
-		
-	});
-	$("#jfauto").click(function(){
-		
-		$("#jangjinmod").hide();
-		$("#jfauto").css("color","blue");
-		$("#Showjiangjin").css("color","black");
-		if(setCurrentMode("4")){
-			window.top.frames['mainframe'].document.location.reload();
-		}
-		
-	});
-	$("#jffixed").change(function(){
-		var jffixed=$("#jffixed").val();
-		
-		if(setCurrentMode(jffixed)){
-			window.top.frames['mainframe'].document.location.reload();
-		}
-	});
-	var currentmode="<{$currentmode}>";
-	if(currentmode=="4"){
-		$("#jfauto").css("color","blue");
-		$("#Showjiangjin").css("color","black");
-	}else{
-		$("#Showjiangjin").css("color","blue");
-		$("#jfauto").css("color","black");
-	}
-});
-
-function setCurrentMode(mode){
-	if(mode==null || mode=="") return false;
-	
-	$.ajax({
-		type : 'POST',
-		url  : '__APP__/User/setCurrentMode',
-		data : 'mode='+mode,
-		timeout : 5000,
-		success : function(data){
-			
-			if("error"==data){				
-				alert("设置失败,请刷新");
-			}
-		},
-		error: function(){
-			alert("由于网络延迟,请重新选择");
-		}
-	});
-	
-	return true;
+body{
+background:url(__ASSETS__images/bg<{$Think.cookie.theme_bg}>.jpg) center top repeat;background-size:cover;
+filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='__ASSETS__/images/bg<{$Think.cookie.theme_bg}>.jpg',sizingMethod='scale');
 }
-
-</script>
-<div class="automode">
-<div class="usermod">模式:
-<eq name="jfauto_isopen" value="1">
-<a href="javascript:return false;" id="jfauto" style="color:black;">自由调节</a>
-</eq>
-<eq name="modeNum" value="2">
-&nbsp;&nbsp;/&nbsp;&nbsp;
-</eq>
-<eq name="jffixed_isopen" value="1">
-<a style="cursor:pointer" id="Showjiangjin" >固定奖金</a> 
-</eq>
- </div>
- <eq name="jffixed_isopen" value="1">
- <div id="jangjinmod" class="modbg3" style="display:<{$show}>">
-    	<select name="jffixed" id="jffixed" style="margin-left:5px;">
-	    	{eq name="jf1700_isopen" value="1" }<option value="1" {eq name="currentmode" value="1"}selected="selected"{/eq} >1700</option>{/eq}
-	    	{eq name="jf1800_isopen" value="1" }<option value="2" {eq name="currentmode" value="2"}selected="selected"{/eq} >1800</option></eq>
-	    	{eq name="jf1900_isopen" value="1" }<option value="3" {eq name="currentmode" value="3"}selected="selected"{/eq} >1900</option>{/eq}
-    	</select>
- </div>
- </eq>
- <div style="clear: both;"></div>
+</style>
+<!--[if IE 6]>
+  <script type="text/javascript" src="__ASSETS__skin/js/DD_belatedPNG_0.0.8a.js" ></script>  
+  <script type="text/javascript">
+  DD_belatedPNG.fix('*');
+  </script>
+<![endif]-->
+</head>
+<body>
+<div id="mainbody">
+<div id="header">
+    <div class="headbox">
+    <div class="headbox_left"><img src="__ASSETS__/images/common/logo.png"/></div>
+    <div class="headbox_center">
+    <div class="fm userInfo"><table>
+    <tbody>
+        <tr>
+        <td>用户：<em><{$nickname}></em></td>
+        <td>余额：<strong style="color:#F00"><{$money}></strong>&nbsp;</td>
+        <td style="position:relative"><a target="mainframe" href="javascript:;"  onclick="reloadMemberInfo()"><img src="__ASSETS__/images/common/ref.png" alt="刷新余额"></a></td>
+        <td><!--消息：
+        <strong class="msgnum">
+        <a target="mainframe" href="/">0</a>
+        </strong>-->
+        <div class="headbox_chongzhi"><a target="mainframe" href="<{:url('index/User/showChonZhi')}>">充值</a></div></td>
+        <td><div class="headbox_chongzhi"><a target="mainframe"  href="<{:url('index/User/showZhiJinPwd',array('flag'=>'tx'))}>">提现</a></div></td>
+        </tr>
+    </tbody>
+</table></div>
+    <div id="topmenubox">
+    <ul class="toggle">
+    <li><a class="topmenubg topmenu_b_1" href="<{:url('index/index')}>"><span>平台首页</span></a></li>
+    <li><a target="mainframe" class="topmenubg topmenu_b_2" href="<{:url('user/index')}>"><span>个人中心</span></a></li>
+    <li><a target="mainframe" class="topmenubg topmenu_b_3" href="<{:url('game/record')}>" ><span>投注记录</span></a></li>
+    <li><a target="mainframe" class="topmenubg topmenu_b_4" href="<{:url('reports/account')}>" ><span>报表管理</span></a></li>
+    <li><a target="mainframe" class="topmenubg topmenu_b_5" href="<{:url('team/user_index')}>"><span>代理团队</span></a> </li>
+   
+    <li><a target="mainframe" class="topmenubg topmenu_b_6" href="#"><span>平台活动</span></a></li>
+    <li><a target="mainframe" class="topmenubg topmenu_b_7" href="http://tb.53kf.com/webCompany.php?arg=10079805&style=1" target="_blank" style="cursor: pointer"><span>联系客服</span></a></li>
+    </ul>
+    </div>
+    
+    </div>
+    <div class="headbox_rightline"></div>
+    <div class="headbox_right">
+    <a target="mainframe" href="<{:url('login/logout')}>"><div class="headbox_right1"></div></a>
+    <div class="headbox_right2 changebg">
+      <a href="javascript:;"><img src="__ASSETS__/images/common/1.jpg" alt="橘红风格"></a>
+      <a href="javascript:;"><img src="__ASSETS__/images/common/2.jpg" alt="淡雅蓝风格"></a>
+      <a href="javascript:;"><img src="__ASSETS__/images/common/3.jpg" alt="紫色风格"></a>
+      <a href="javascript:;"><img src="__ASSETS__/images/common/4.jpg" alt="青绿风格"></a>
+      <a href="javascript:;"><img src="__ASSETS__/images/common/5.jpg" alt="木纹风格"></a>
+      <a href="javascript:;"><img src="__ASSETS__/images/common/6.jpg" alt="木纹风格"></a>
+    </div>
+    </div>
+    </div>
+    <div class="clear"></div>
 </div>
-
-
-</BODY>
-</HTML>
+<div class="bodybox">
+<div class="bodybox_left">
+<div id="menubar">
+        <div class="menubotton"><a href="javascript:;">游戏大厅</a></div>
+        <ul>
+            <li><a target="mainframe" class="menubq menu_b_1" href="<{:url('index/ssc/index')}>">重庆时时彩</a></li>
+            <li><a target="mainframe" class="menubq menu_b_1" href="<{:url('index/xjc/index')}>">新疆时时彩</a></li>
+        </ul>
+        <div class="menubotton"><a href="javascript:;">低频彩</a></div>
+        <ul>
+            <li><a target="mainframe" class="menubq menu_b_1" href="<{:url('index/fucai/index')}>">福彩3D</a></li>
+            <li><a target="mainframe" class="menubq menu_b_1" href="<{:url('index/pls/index')}>">排列三、五</a></li>
+        </ul>
+        <div class="menubotton"><a  href="javascript:;">活动中心</a></div>
+        <ul>
+            <li><a target="mainframe" class="menubq menu_b_1" href="#">客户端下载</a></li>
+            <li><a target="mainframe" class="menubq menu_b_1" href="<{:url('index/User/dailify')}>">代理返佣</a></li>
+            <li><a target="mainframe" class="menubq menu_b_1" href="<{:url('index/user/dbqb')}>">夺宝奇兵</a></li>
+            <li><a target="mainframe" class="menubq menu_b_1" href="<{:url('index/user/hlsong')}>">欢乐送</a></li>
+        </ul>
+        <div class="menubotton"><a  href="javascript:;">游戏记录</a></div>
+        <ul>
+            <li TITLE='投注记录查看' ALT='投注记录查看'><a class="menubq menu_b_1" target="mainframe" href="<{:url('index/order/index')}>">投注记录</a></li>
+            <li TITLE='追号记录查看' ALT='追号记录查看'><a class="menubq menu_b_1" target="mainframe" href="<{:url('index/trace/index')}>">追号记录</a></li>
+        </ul>
+        <div class="menubotton"><a  href="javascript:;">用户管理</a></div>
+        <ul>
+            <li TITLE='所有用户信息' ALT='所有用户信息'><a target="mainframe" class="menubq menu_b_1" href="<{:url('index/Users/userlistFrame')}>">用户列表</a></li>
+            <li TITLE='增加下级用户' ALT='增加下级用户'><a target="mainframe" class="menubq menu_b_1" href="<{:url('index/Users/index')}>">增加用户</a></li>
+            <li TITLE='修改自己的昵称' ALT='修改自己的昵称'><a target="mainframe" class="menubq menu_b_1" href="<{:url('index/User/editNickName')}>">修改昵称</a></li>
+            <li TITLE='查看各彩种奖金' ALT='查看各彩种奖金'><a target="mainframe" class="menubq menu_b_1" href="<{:url('index/User/mySet')}>">奖金详情</a></li>
+            <li TITLE='查看今日新开户' ALT='查看今日新开户'><a target="mainframe" class="menubq menu_b_1" href="<{:url('index/Users/jrxkhy')}>">今日新开会员</a></li>
+        </ul>
+        <div class="menubotton"><a  href="javascript:;">报表管理</a></div>
+        <ul>
+            <li TITLE='查看所有账变信息' ALT='查看所有账变信息'><a class="menubq menu_b_1" target="mainframe" href="<{:url('index/Account/index')}>">账变列表</a></li>
+            <li TITLE='查询游戏统计信息' ALT='查询游戏统计信息'><a class="menubq menu_b_1" target="mainframe" href="<{:url('index/Report/reportList')}>">报表查询</a></li>
+            <li TITLE='统计返点情况' ALT='统计返点情况'><a class="menubq menu_b_1" target="mainframe" href="<{:url('index/Report/countFd')}>">返点统计</a></li>
+            <li TITLE='今日游戏统计' ALT='今日游戏统计'><a class="menubq menu_b_1" target="mainframe" href="<{:url('index/Report/todayReport')}>">今日报表</a></li>
+        </ul>
+        <div class="menubotton"><a  href="javascript:;">账户管理</a></div>
+        <ul>
+            <li TITLE='修改登陆密码和资金密码' ALT='修改登陆密码和资金密码'><a class="menubq menu_b_1" target="mainframe" href="<{:url('index/user/editPwd')}>">修改密码</a></li>
+            <li TITLE='填写充值申请' ALT='填写充值申请'><a class="menubq menu_b_1" target="mainframe" href="<{:url('index/user/showChonZhi')}>">充值申请</a></li>
+            <li TITLE='填写提现申请' ALT='填写提现申请'><a class="menubq menu_b_1" target="mainframe" href="<{:url('index/user/showZhiJinPwd',array('flag'=>'tx'))}>">提现申请</a></li>
+            <li TITLE='管理我的银行卡' ALT='管理我的银行卡'><a class="menubq menu_b_1" target="mainframe" href="<{:url('index/user/showZhiJinPwd',array('flag'=>'yhk'))}>">我的资料</a></li>
+        </ul>
+        <div class="menubotton"><a  href="javascript:;">帮助中心</a></div>
+        <ul>
+            <li TITLE='信息中心' ALT='信息中心'><a class="menubq menu_b_1" target="mainframe" href="<{:url('index/index/main')}>">信息中心</a></li>
+            <li TITLE='玩法介绍' ALT='玩法介绍'><a class="menubq menu_b_1" target="mainframe" href="<{:url('index/Help/game')}>">玩法介绍</a></li>
+            <li TITLE='平台功能介绍' ALT='平台功能介绍'><a class="menubq menu_b_1" target="mainframe" href="<{:url('index/Help/fun')}>">功能介绍</a></li>
+            <li TITLE='常见问题说明' ALT='常见问题说明'><a class="menubq menu_b_1" target="mainframe" href="<{:url('index/Help/general')}>">常见问题</a></li>
+        </ul>
+</div>
+</div>
+<div class="bodybox_center">
+<iframe name="mainframe" id="mainframe" frameborder="0" width="100%" height="100%" scrolling="no" style="overflow:visible;" src="__URL__/main/"></iframe>
+</div>
+<div class="bodybox_right">
+<div class="homepaihang">
+<div class="paihangtiele" id="phb"><span class="paihangico">今日排行榜</span></div>
+<div class=paihanggao> 
+<table cellpadding="0" cellspacing="0" class="phbtbl">
+            <tr>
+                <th width="35">排名</th>
+                <th>用户名</th>
+                <th>总盈利额</th>
+            </tr>
+           
+   <tr><td><span class=jp>1</span></td><td>g***05</td><td>66,886.00</td></tr><tr><td><span class=yp>2</span></td><td>g***06</td><td>64,000.00</td></tr><tr><td><span class=tp>3</span></td><td>g***02</td><td>60,218.00</td></tr><tr><td><span style=background:url(__ASSETS__/images/common/titlebg.png)repeat;padding-left:6px;padding-right:6px;>4</span></td><td>g***88</td><td>56,800.00</td></tr><tr><td><span style=background:url(__ASSETS__/images/common/titlebg.png)repeat;padding-left:6px;padding-right:6px;>5</span></td><td>g***22</td><td>45,307.00</td></tr><tr><td><span style=background:url(__ASSETS__/images/common/titlebg.png)repeat;padding-left:6px;padding-right:6px;>6</span></td><td>g***09</td><td>34,897.00</td></tr><tr><td><span style=background:url(__ASSETS__/images/common/titlebg.png)repeat;padding-left:6px;padding-right:6px;>7</span></td><td>g***48</td><td>32,806.00</td></tr><tr><td><span style=background:url(__ASSETS__/images/common/titlebg.png)repeat;padding-left:6px;padding-right:6px;>8</span></td><td>g***24</td><td>21,900.00</td></tr><tr><td><span style=background:url(__ASSETS__/images/common/titlebg.png)repeat;padding-left:6px;padding-right:6px;>9</span></td><td>g***u9</td><td>19,880.00</td></tr><tr><td><span style=background:url(__ASSETS__/images/common/titlebg.png)repeat;padding-left:2px;padding-right:2px;>10</span></td><td>c***98</td><td>10,800.00</td></tr>      
+  </table></div> 
+</div>
+<div class="rightggtitle"><span class="gonggaoico">通知公告</span><a target="mainframe" href="/index.php/notice/info">更多...</a></div>
+<ul class="tipslist">
+    {volist name="gglist" id="vo"}
+        <li><a target="mainframe" href="#"><{$vo.title}></a><em><{:date('Y-m-d',strtotime($vo['addtime']))}></em><span class="tipstxt"></span></li>
+    {/volist}
+      </ul>
+    
+            </div>
+        </div>
+    </div></div>
+</div>
+</div>
+<div id="wanjinDialog"></div>
+<div class="clear"></div>
+<div id="footer">Copyright &copy;&nbsp;2016 汇华国际&nbsp;本系统建议请使用IE8.0以上或Chrome，Firefox浏览器分辨率1440x900效果最佳</div> 
+</body>
+</html>

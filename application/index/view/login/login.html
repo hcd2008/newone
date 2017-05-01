@@ -1,102 +1,140 @@
- <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<HTML xmlns="http://www.w3.org/1999/xhtml">
-<HEAD><META http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-<TITLE>用户登陆</TITLE>
-<SCRIPT LANGUAGE='JavaScript'>function ResumeError() {return true;} window.onerror = ResumeError; </SCRIPT> 
-<SCRIPT type="text/javascript" src="__PUBLIC__js/jquery.js"></SCRIPT>
-<SCRIPT type="text/javascript" src="__PUBLIC__js/jquery.md5.js"></SCRIPT>
-<LINK href="__PUBLIC__css/v1/login.css" rel="stylesheet" type="text/css" />
-</HEAD><BODY>
-<script type="text/javascript">
-if(top.location != self.location) {top.location=self.location;}
-$(document).ready(function(){
-	$("input.text").focus(
-		function(){
-			$("input.text").parent().parent().removeClass("inputGreen");
-			$(this).parent().parent().addClass("inputGreen");}
-	);
-	$("input.text").blur(
-		function(){ 
-			$(this).parent().parent().removeClass("inputGreen");}
-	);
-	$("#username")[0].value = '';
-	$("#validcode_source")[0].value = '';
-	//$("#loginpass_source")[0].value = '';
-	$("#validate").attr('src',"/verify/"+Math.random());
-	$("#username").focus();
-}); 
-function refreshimg(){
-$("#validate").attr('src',"/verify/"+Math.random());
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta content="IE=EmulateIE8" http-equiv="X-UA-Compatible" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>汇华国际</title>
+<style>
+.gonggao {
+	color: #eee;
+	float: left;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	height: 41px;
+	left: 190px;
+	line-height: 41px;
+	width: 335px;
+	overflow: hidden;
+	position: relative;
+	white-space: nowrap;
 }
-function LoginNow() 
-{ 
-    var loginuser = $("#username").val();
-    var randnum = $("#validcode_source").val();
-    if (loginuser == ''){
-        alert('请填写 登入账号');
-        return false;
-    }
-    if (randnum == '') {
-        alert('请填写 图片验证码');
-        return false;
-    }
-    var submitvc = $.md5(randnum);
-	$("#validcode")[0].value = submitvc;
-    document.forms['login'].submit();     
+.qiehuan {
+	color: #eee;
+	float: left;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	height: 41px;
+	right: 280px;
+	line-height: 41px;
+	overflow: hidden;
+	position: absolute;
+	white-space: nowrap;
 }
+</style>
+<script type="text/javascript" src="__PUBLIC__login/skin/js/jquery-1.8.0.min.js"></script>
+<link rel="stylesheet" type="text/css" href="__PUBLIC__login/files/login.css">
+<link rel="stylesheet" type="text/css" href="__PUBLIC__login/files/buttons.css">
+</head>
+<body>
+<div class="bg mu_wen_ui" style="z-index: 2; display: block;"></div>
+<div id="mainBg" class="mainBg" style="top: 30px;">
+  <div class="header">
+    <div class="logoTxt">
+      <div class="gy">汇 华 国 际 娱 乐 城</div>
+      <div>Welcome to hui hua international</div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="containerBg"></div>
+    {if $step==1}
+    <div class="main step1" style="display: block;">
+    <form action="<{:url('login/checkPwd')}>" method="post">
+      <div class="loginTitle ">通 行 证 登 录</div>
+      <div class="clearfix">
+        <label>通行证帐号：</label>
+        <input type="text" name="username" id='username' class="fieldStyle step1Txt">
+      </div>
+      <div class="clearfix">
+        <label>验证码：</label>
+        <input style="width:140px;" type="text" name="validcode_source" maxlength="4" id='vcode' class="fieldStyle step1Txt">
+        <img width="74" height="32" border="0" align="absmiddle" src="<{:captcha_src()}>" title="看不清楚，换一张图片" id="vcode_img" onclick="this.src='<{:captcha_src()}>?'+(new Date()).getTime()"/> </div>
+      <div class="clearfix"> <!-- <a id="loginSubmit" class="button glow button-rounded button-flat-action"> <i class="icon-refresh"></i> <b>下&nbsp;一&nbsp;步</b> </a> <--><input id="loginSubmit" class="button glow button-rounded button-flat-action" type="submit" value="下&nbsp;一&nbsp;步"></--> <a class="wjPwd">忘记密码？</a> </div>
+    </div>
+    </form>
+    {/if}
+    {if $step==2}
+    <div class="main step2" style="display: block;">
+      <div class="loginTitle ">通 行 证 登 录</div>
+      <div style="padding-top:20px;" class="clearfix clearfix2">
+        <label>登录账号：</label>
+        <span id="vipNameDisplay"><{$username}></span> </div>
+      <div class="clearfix clearfix2 fix3">
+        <label>安全提示：</label>
+        <div class="welcomeTxt"><span>账户密码不要过于简单，不得外露给他人。</span>
+          <div style="margin-left:90px; color:#79BA29;"><{$wenhouyu}></div>
+        </div>
+      </div>
+      <div class="clearfix">
+      <form method="post" action="<{:url('login/doCheckPwd')}>" id='form1'>
+      	<input type="hidden" name="validcode" id="validcode">
+      	<input type="hidden" name="flag" value="login2" />
+        <input class="inp-1 img-login" name="username" value="<{$username}>" id='username1' type="hidden"/>
+        <label>登录密码：</label>
+        <input style="width:140px;" type="password" name="loginpass" id="vipPassword" class="fieldStyle step2Txt">
+        </div>
+        <div class="clearfix"> <a id="loginSubmit2" class="button glow button-rounded button-flat-action"> <i class="icon-refresh"></i> <b>登&nbsp;&nbsp;录</b> </a>
+          <a class="wjPwd">忘记密码？</a> </div>
+      </form>
+    </div>
+    {/if}
+    <div class="container-right">
+      <p>温馨提示</p>
+      浏览器建议：首选 <a title="谷歌浏览器下载" target="_black" href="https://www.google.com/intl/zh-CN/chrome/browser/?hl=zh-CN"><font color="#35CE2F"> Chrome谷歌</font></a>， <a title="火狐浏览器下载" target="_black" href="http://www.firefox.com.cn/"><font color="#F27114">火狐浏览器</font></a>，其次为 <a title="IE浏览器下载" target="_black" href="http://windows.microsoft.com/zh-cn/internet-explorer/download-ie"><font color="#1FA5ED">IE8.0</font></a> 以上浏览器可达到Web端最佳动态效果。尽量不要使用IE6.0、IE7.0浏览器。
+      <p>屏幕分辨率最低要求：1024 * 768</p>
+    </div>
+  </div>
+</div>
+<div class="footerBg"> 
+  <div class="footerTxt">Copyright © 2017 汇华国际 All Rights Reserved.</div>
+</div>
+<script>
+$(function(){
+	$('#mainBg').css({'top':(document.documentElement.clientHeight-284)/2-140});
+	$('input:text:first').focus();
+	$('#loginSubmit').click(function(){
+		var username = $('#username').val();
+		var vcode =$('#vcode').val();
+		if(!username){
+			alert('请填写登录账号');
+			return false;
+		}
+		if(!vcode){
+			alert('请填写验证码');
+			return false;
+		}
+		$.getJSON('<{:url("index/misc/verify")}>?code='+vcode,function(o){
+			if(o.code == 0){
+				alert(o.msg)
+				$('#vcode_img').click();
+				return false;	
+			}
+			$('.step1').hide();
+			$('.step2').show();
+		});
+		$('#vipNameDisplay').text(username);
+		$('#username1').val(username);
+			//verify
+	});
+	$('#loginSubmit2').click(function(){
+		var vipPassword = $('#vipPassword').val();
+		if(!vipPassword){
+			alert('请填写登录密码');
+			return false;
+		}
+		$('#form1').submit();
+	});
+});
+
 </script>
-<div id="allbox">
-    <div id="header">
-       <div id="header_content">
-          <div id="header_logo"></div>
-          <div id="header_right">
-			  <div id="header_tips"><{$Think.config.tishi}> &nbsp;<a href="/汇华国际.zip">客户端下载</a></div>
-			  <div id="header_menu" style='margin-left:400px;'>
-			  <!--
-				<ul id="menu">
-		<li class="link1"><a href="#1"><img src="/images/comm/t.gif" width="100" height="33" border="0" title="登录系统"/></a></li>
-		<li class="link2"><a href="#2"><img src="/images/comm/t.gif" width="110" height="33" border="0" title="帮助"/></a></li>
-				</ul>
-				//-->
-			   </div>
-           </div>
-         </div>  	
-     </div>
-     <div id="top_line"></div>
-		<div id="reg_content">
-			<div id="content_reg_box_top"></div>
-			<div id="content_reg_box_center">
-				<div id="maintitle">帐号登录</div>	
-				<div id="maincontent">	
-        	<div style="width:684px; margin:auto;">
-					<form name='login' method="post" action="__URL__/checkPwd" onSubmit="javascript:LoginNow(); return false;" >
-					<input type="hidden" name="validcode" id="validcode">
-					<input type="hidden" name="flag" value="login" />
-            		<div style="width:100%;text-align:center;">
-                    	<font color="#FF0000"></font>
-                    </div>
-                    <div class="content_reg_line">
-                    	<div class="form_title">登录账号：</div>
-                        <div class="form_word">
-						<span class="inputBox input180"><cite><input type="text" name="username" id="username" maxlength="32" value="" class="text"/></cite></span>
-						</div>
-                    </div>
-					<div class="content_reg_line">
-                    	<div class="form_title">图片验证码：</div>
-                        <div class="form_word"><span class="inputBox input60"><cite><input type="text" name="validcode_source" id="validcode_source" maxlength="4" value="" class="text"/></cite></span></div> 
-						<img width="160" height="40" border="0" align="absmiddle" src="<{:captcha_src()}>" title="看不清楚，换一张图片" id="vcode_img" onclick="this.src='<{:captcha_src()}>?'+(new Date()).getTime()"/>
-                    </div>
-                    <div style="border-top:1px dotted #ccc; width:90%; margin:5px auto; height:1px; font-size:0; overflow:hidden;margin-bottom:20px;"></div>
-					<div style="height:30px; text-align:center;">
-                    <input name="Submit" type="image" id="Submit" src="/images/comm/t.gif" class='inputNext' title="下一步" width="104" height="30"/>
-                    &nbsp;&nbsp;<a href="__URL__/getpass">忘记密码？</a></div>
-					<div style="padding-top:32px; margin:2px 0px; text-align:center;">小提示: 使用 <font color=red>IE (Internet Explorer ) 8.0</font> 浏览器可达到最佳使用效果 </div>
-					</form>
-            </div>
-        </div>&nbsp;
-	</div>
-	<div id="content_reg_box_bottom"></div>
-</div>
-</div>
-</BODY>
-</HTML>
+</body>
+</html>

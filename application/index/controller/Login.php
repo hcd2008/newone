@@ -3,6 +3,7 @@ namespace app\index\controller;
 use think\Controller;
 use think\Db;
 use think\Session;
+use think\Cookie;
 
 class Login extends Controller
 {
@@ -38,6 +39,7 @@ class Login extends Controller
 
 	public function login()
 	{
+		$this->assign("step",1);
 		return $this->fetch();
 	}
 	/**
@@ -52,6 +54,7 @@ class Login extends Controller
 		$param=$this->request->param();
 		// print_r($param);exit;
 		$username = isset($param['username'])?$param['username']:'';
+		isset($param['validcode_source']) or $param['validcode_source']='';
 		if(!captcha_check($param['validcode_source'])){
 			$this->error("验证码错误");
 		}
@@ -78,8 +81,10 @@ class Login extends Controller
 
 		$_obfuscate_8Iu1['logmsg'] = $_obfuscate_PqXxySXj;
 		$_obfuscate_8Iu1['username'] = $username;
+		$this->assign("wenhouyu",$_obfuscate_PqXxySXj);
 		$this->assign($_obfuscate_8Iu1);
-		return $this->fetch();
+		$this->assign("step",2);
+		return $this->fetch('login/login');
 	}
 	/**
 	 * 验证密码
@@ -102,17 +107,17 @@ class Login extends Controller
 		$password = $param['loginpass'];
 
 		if (is_null($username)) {
-			$this->error('登入失败,登入信息不完整!');
+			$this->error('登入失败,登入信息不完整!','login/login');
 		}
 
 		if (empty($password)) {
-			$this->error('登入失败,登入信息不完整!');
+			$this->error('登入失败,登入信息不完整!','login/login');
 		}
 
 		// $DaoUser = d('User');
 		$where['username'] = $username;
 		$where['state'] = 1;
-		$where['password'] = $password;
+		$where['password'] = md5($password);
 		$dataUser = Db::name('user')->where($where)->find();
 
 		if (!$dataUser) {
@@ -133,6 +138,9 @@ class Login extends Controller
 			$data['logkey'] = $logkey;
 			Db::name('login')->insert($data);
 			Session::set('un', $username);
+			if(!Cookie::has('theme_bg')){
+				Cookie::set('theme_bg',2);
+			}
 			$this->redirect('index/index');
 		}
 	}

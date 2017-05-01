@@ -86,7 +86,7 @@
         body {
             color: #333;
             font: 16px Verdana, "Helvetica Neue", helvetica, Arial, 'Microsoft YaHei', sans-serif;
-            margin: 0;
+            margin: 0px;
             padding: 0 20px 20px;
         }
         h1{
@@ -226,8 +226,6 @@
             width: 100%;
             margin: 12px 0;
             box-sizing: border-box;
-            table-layout:fixed;
-            word-wrap:break-word;            
         }
         .exception-var table caption{
             text-align: left;
@@ -248,10 +246,10 @@
         .exception-var table td{
             padding: 0 6px;
             vertical-align: top;
-            word-break: break-all;
+            word-break: break-word;
         }
         .exception-var table td:first-child{
-            width: 28%;
+            width: 12px;
             font-weight: bold;
             white-space: nowrap;
         }
@@ -294,7 +292,7 @@
                 <div>
                     <h2>[<?php echo $code; ?>] <?php echo sprintf('%s in %s', parse_class($name), parse_file($file, $line)); ?></h2>
                 </div>
-                <div><h1><?php echo nl2br(htmlentities($message)); ?></h1></div>
+                <div><h1><?php echo htmlentities($message); ?></h1></div>
             </div>
         
     </div>
@@ -410,9 +408,7 @@
     <?php } ?>
 
     <div class="copyright">
-        <a title="官方网站" href="http://www.thinkphp.cn">ThinkPHP</a> 
-        <span>V<?php echo THINK_VERSION; ?></span> 
-        <span>{ 十年磨一剑-为API开发设计的高性能框架 }</span>
+      
     </div>
     <?php if(\think\App::$debug) { ?>
     <script>
