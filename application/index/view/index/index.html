@@ -92,7 +92,7 @@ filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='__ASSETS__/images
         <div class="menubotton"><a  href="javascript:;">活动中心</a></div>
         <ul>
             <li><a target="mainframe" class="menubq menu_b_1" href="#">客户端下载</a></li>
-            <li><a target="mainframe" class="menubq menu_b_1" href="<{:url('index/User/dailify')}>">代理返佣</a></li>
+            <!-- <li><a target="mainframe" class="menubq menu_b_1" href="<{:url('index/user/dailify')}>">代理返佣</a></li> -->
             <li><a target="mainframe" class="menubq menu_b_1" href="<{:url('index/user/dbqb')}>">夺宝奇兵</a></li>
             <li><a target="mainframe" class="menubq menu_b_1" href="<{:url('index/user/hlsong')}>">欢乐送</a></li>
         </ul>
@@ -152,7 +152,7 @@ filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='__ASSETS__/images
 <div class="rightggtitle"><span class="gonggaoico">通知公告</span><a target="mainframe" href="/index.php/notice/info">更多...</a></div>
 <ul class="tipslist">
     {volist name="gglist" id="vo"}
-        <li><a target="mainframe" href="#"><{$vo.title}></a><em><{:date('Y-m-d',strtotime($vo['addtime']))}></em><span class="tipstxt"></span></li>
+        <li><a target="mainframe" href="#"><{$vo.title}></a><em><{:date('m-d',strtotime($vo['addtime']))}></em><span class="tipstxt"></span></li>
     {/volist}
       </ul>
     
