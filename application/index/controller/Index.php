@@ -90,7 +90,9 @@ class Index extends Base
 		$this->assign('gglist', $datagonggao);
 		return $this->fetch();
 	}
-
+	public function home(){
+		return $this->fetch();
+	}
 	public function menu()
 	{
 		$username = Session::get('un');
