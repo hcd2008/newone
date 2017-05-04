@@ -386,7 +386,7 @@ class Order extends Base
 		$count = $DaoOrder->where($this->condition)->count();
 		//hcd
 		$p = new Zqpage($count, $listRows);
-		$this->orderList = $this->formatOrderList($DaoOrder->where($this->condition)->order('id desc')->limit($p->firstRow . ',' . $p->listRows)->paginate(10));
+		$this->orderList = $this->formatOrderList($DaoOrder->where($this->condition)->order('id desc')->limit($p->firstRow . ',' . $p->listRows)->select());
 		$page = $p->show();
 		$this->assign('page', $page);
 

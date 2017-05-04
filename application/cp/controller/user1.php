@@ -206,7 +206,7 @@ class User1 extends Controller
 		return $regusername;
 	}
 
-	public function isRegFanWei($uname, $sessionname)
+	public function isRegFanWei($uname, $sessionname='')
 	{
 		if (empty($sessionname)) {
 			$sessionname = $this->getUsername();

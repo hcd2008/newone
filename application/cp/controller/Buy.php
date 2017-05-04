@@ -323,6 +323,7 @@ class Buy extends Controller
 						}
 
 						$sql_m = 'update jiang_user set money=money-' . $usemoney . ' where username=\'' . $username . '\'';
+
 						if (Db::query($sql_m) && Db::name('order')->insertAll($data)) {
 							$accountnum = date('ymdhis');
 							$accountData['username'] = $username;
@@ -392,8 +393,7 @@ class Buy extends Controller
 						$accountData['mode'] = $project['mode'];
 						$accountData['addtime'] = $nowtime;
 						$sql_m = 'update jiang_user set money=money-' . $usemoney . ' where username=\'' . $username . '\'';
-
-						if (Db::query($sql_m)) {
+						if (Db::execute($sql_m)) {
 							// $DaoOrder->data($data)->add();
 							Db::name('order')->insert($data);
 							// $DaoAccount->data($accountData)->add();
