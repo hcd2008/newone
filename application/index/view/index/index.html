@@ -152,7 +152,7 @@ filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='__ASSETS__/images
 <div class="rightggtitle"><span class="gonggaoico">通知公告</span><a target="mainframe" href="/index.php/notice/info">更多...</a></div>
 <ul class="tipslist">
     {volist name="gglist" id="vo"}
-        <li><a target="mainframe" href="#"><{$vo.title}></a><em><{:date('m-d',strtotime($vo['addtime']))}></em><span class="tipstxt"></span></li>
+        <li><a target="mainframe" href="<{:url('index/main')}>"><{$vo.title}></a><em><{:date('m-d',strtotime($vo['addtime']))}></em><span class="tipstxt"></span></li>
     {/volist}
       </ul>
     

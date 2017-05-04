@@ -104,12 +104,12 @@ function hideTeam(obj) {
         <td align="center"><{$vo.addtime}></td>
         <td align="center">
         			<eq name="vo.jibie" value="1">
-			            <a href="__URL__/editUser?username=<{$vo.username}>">编辑</a>
+			            <a href="<{:url('index/Users/editUser',array('username'=>$vo['username']))}>">编辑</a>
 			        </eq>    
 			            <if condition="$vo.jibie eq 1">
-							 <a href="__APP__/Account?username=<{$vo.username}>&range=2">帐变</a>
+							 <a href="<{:url('index/Account/index',array('username'=>$vo['username'],'range'=>2))}>">帐变</a>
 			             </if>
-                          <a href="__APP__/User/mySet/username/<{$vo.username}>">用户详情</a>
+                          <a href="<{:url('index/user/myset',array('username'=>$vo['username']))}>">用户详情</a>
             <a href="javascript:" onclick="getTeamBank(this,<{$vo.id}>)">团队余额</a>
                                 </td>
     </tr>
@@ -122,12 +122,12 @@ function hideTeam(obj) {
         <td align="center"><{$vo.addtime}></td>
         <td align="center">
         			<eq name="vo.jibie" value="1">
-			             <a href="__URL__/editUser?username=<{$vo.username}>">编辑</a>
+			             <a href="<{:url('index/Users/editUser',array('username'=>$vo['username']))}>">编辑</a>
 			         </eq>    
 			            <if condition="$vo.jibie eq 1">
-							  <a href="__APP__/Account?username=<{$vo.username}>&range=2">帐变</a>
+							  <a href="<{:url('index/Account/index',array('username'=>$vo['username'],'range'=>2))}>">帐变</a>
 			             </if>
-                        <a href="__APP__/User/mySet/username/<{$vo.username}>">用户详情</a>
+                        <a href="<{:url('index/user/myset',array('username'=>$vo['username']))}>">用户详情</a>
             <a href="javascript:" onclick="getTeamBank(this,<{$vo.id}>)">团队余额</a>
                                 </td>
     </tr>

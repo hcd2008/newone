@@ -138,8 +138,8 @@ class Account extends Base
 			// 	array('elt', $endtime),
 			// 	'and'
 			// 	);
-			$where_reg['addtime']=array('>=time',$starttime);
-			$where_reg['addtime']=array('<=time',$endtime);
+			$where_reg['addtime']=array('>= time',$starttime);
+			$where_reg['addtime']=array('<= time',$endtime);
 			$data_reg = $DaoBaoBiao->field('username')->where($where_reg)->select();
 
 			foreach ($data_reg as $v ) {

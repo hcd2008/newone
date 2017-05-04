@@ -4,6 +4,7 @@ use app\common\controller\Base;
 use think\Db;
 use think\Session;
 use app\index\org\Zqpage;
+use app\cp\controller\User1;
 
 class Users extends Base
 {
@@ -319,6 +320,8 @@ class Users extends Base
 		$_obfuscate_8Iu1['jfauto'] = ($_obfuscate_eNV52sLcOA[3] == 1 ? 'checked' : '');
 		if (($_obfuscate_eNV52sLcOA[0] == 1) || ($_obfuscate_eNV52sLcOA[1] == 1) || ($_obfuscate_eNV52sLcOA[2] == 1)) {
 			$_obfuscate_8Iu1['jffixed'] = 'checked';
+		}else{
+			$_obfuscate_8Iu1['jffixed'] = '';
 		}
 
 		$_obfuscate_8Iu1['jfauto_isopen'] = $this->jfauto_isopen;
@@ -444,14 +447,14 @@ class Users extends Base
 
 		$_obfuscate_nT44rgz3TQ = array();
 		// import('@.Cp.User');
-		$User = new User(Session::get('un'));
+		$User = new User1(Session::get('un'));
 		$dailiusername = $User->getUserNameById($uid);
 
 		if (!$User->isRegFanWei($dailiusername)) {
 			$_obfuscate_nT44rgz3TQ['error'] = 'error';
 		}
 		else {
-			$User = new User($dailiusername);
+			$User = new User1($dailiusername);
 			$allReg = $User->getRegFrom(3);
 			$allReg[] = $dailiusername;
 			$_obfuscate_6ogI80pkWQ = Db::name('User');
