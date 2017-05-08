@@ -1,11 +1,8 @@
 {include file="Public:head" /}
-<BODY STYLE="background:#FFF url('/images/v1/main_bg_0001.jpg') 0px -490px repeat-x; padding:10px;"><DIV ID='main_box'>
-<div class="box l"></div>
-<div class="box c"></div>
-<div class="box r"></div>
-<div class="box m">
+<link href='__ASSETS__skin/main/bl_ococ.css' rel="stylesheet" type="text/css" />
+<BODY>
 
-<H1><SPAN class="action-span"><A href="__ACTION__" target='_self'>清空查询条件</a></SPAN>
+<H1><SPAN class="action-span"><A href="<{:url('order/index')}>" target='_self'>清空查询条件</a></SPAN>
 <SPAN class="action-span1"><DIV class='icons_mb1'></DIV>当前位置: 投注记录 </SPAN><DIV style="clear:both"></DIV></H1>
 <script type="text/javascript" src="__PUBLIC__/js/calendar/jquery.dyndatetime.js"></script>
 <script type="text/javascript" src="__PUBLIC__/js/calendar/lang/calendar-utf8.js"></script>
@@ -116,7 +113,7 @@ jQuery(document).ready(function() {
 		$pid = $(this).attr("oid");
 		
 		$.blockUI({
-            message: '<div style="width:200px;padding:10px 100px;background-color:#fff;border:4px #666 solid;"><img src="/images/comm/loading.gif" style="margin-right:10px;">正在读取投注详情...</div>',
+            message: '<div style="width:200px;padding:10px 100px;border:4px #666 solid;"><img src="/images/comm/loading.gif" style="margin-right:10px;">正在读取投注详情...</div>',
             overlayCSS: {backgroundColor: '#000000',opacity: 0.3,cursor:'wait'}
             });
 		$.ajax({
@@ -236,117 +233,123 @@ jQuery(document).ready(function() {
 .cancelline{background-color:#CCCCCC; color:#FFFFFF;}
 </style>
 
-<div class="ld">
-<table class='st' border="0" cellspacing="0" cellpadding="0">
-<form action="__URL__/" >
-<input type="hidden" name="isgetdata" value="1">
-	<tr>
-    	<td>
-        	游戏时间：<input type="text" id="starttime" name="starttime" style="width:150px;" value="<{$starttime}>" /> <img class='icons_mb4' src="/images/comm/t.gif" id="time_min_button" style="cursor:pointer;" /> 至
-   					<input type="text" name="endtime" id="endtime" style="width:150px;" value="<{$endtime}>" /> <img class='icons_mb4' src="/images/comm/t.gif" id="time_min_button" style="cursor:pointer;" />&nbsp;&nbsp;
-					状态:
-                    <select name="my_search[state]">
-                    <option value="-5" selected="selected">全部</option>
-					<option value="0" >未开奖</option>
-                    <option value="1" >已中奖</option>
-                    <option value="2" >未中奖</option>                    
-                    <option value="3" >已撤单</option>
-                    </select>&nbsp;&nbsp;&nbsp;&nbsp;<button name="submit" type="submit" width='69' height='26' class="btn_search" /></button>
-		</td>
-    </tr>
-    <tr>
-    	<td>
-			游戏名称：<select name="my_search[lotteryid]" id="lotteryid" style="width:100px;">
-  						<option value="-9">所有游戏</option>
-    					{volist name="lotterylist" id="vo"}
-							<option value="<{$vo.lotteryid}>"><{$vo.lotteryname}></option>
-						{/volist}						
-					 </select>
-			<span id="game_info">
-            &nbsp;&nbsp;游戏玩法: <select name='my_search[methodid]' id='methodid'><option value="-10" selected="selected">所有玩法</option></select>
-			&nbsp;&nbsp;游戏奖期: <select name='my_search[issue]' id='issue'><option value='-10' selected="selected">所有奖期</option></select>
-            </span>
-            &nbsp;&nbsp;游戏模式: 
-              <select name="my_search[mode]" id="modes" style="width:80px;">
-                <option value="-10">所有模式</option>
-                           <option value="1">元</option>
-                        <option value="2">角</option>
-                        <option value="3">分</option>
-                          </select>
-    <tr>
-    	<td>
-        	注单编号：<input style='width:60px;' type="text" id="projectno" name="my_search[ordernum]" value="" style="width:150px;" />
-						&nbsp;&nbsp;游戏用户：<input style='width:90px;' type="text" name="username" id="username" value="" />
-			&nbsp;&nbsp;	范围: <select name='range'><OPTION selected value="1">自己</OPTION><OPTION  value="2">直接下级</OPTION>					&nbsp;&nbsp;<font color=#009900>温馨提示: 点击注单编号可以查看详细注单信息以及撤单.</font>
-		</td>
-     </tr>
-</form>
-</table></div>
+<div class="pagemain">
+  <div class="geren_menu">
 
-
-
-<div class="ld" >
-<table class="lt" border="0" cellspacing="0" cellpadding="0" >
-	<tr class='th'>
-    <td height="43" align="center">注单编号</td>
-    <td align="center"><div class='line'></div>用户</td>
-    <td align="center"><div class='line'></div>投注时间</td>
-    <td align="center"><div class='line'></div>游戏</td>
-    <td align="center"><div class='line'></div>玩法</td>
-    <td align="center"><div class='line'></div>期号</td>
-    <td align="center"><div class='line'></div>投注内容</td>
-    <td align="center"><div class='line'></div>倍数</td>
-    <td align="center"><div class='line'></div>模式</td>
-    <td align="center"><div class='line'></div>总金额</td>
-    <td align="center"><div class='line'></div>奖金</td>
-   
-    <td align="center"><div class='line'></div>开奖号码</td>
-   
-    <td align="center"><div class='line'></div>状态</td>
-  </tr>
-  {volist name="orderList" id="vo"}
-  		<tr align="center" class='needchangebg' >
-        <td height="37" ><a href="javascript:"  title="查看投注详情" class="blue" rel="projectinfo" oid="<{$vo.id}>"><{$vo.ordernum}></a></td>
-        <td ><{$vo.username}></td>
-        <td ><{$vo.addtime}></td>
-        <td ><{$vo.lotteryname}></td>
-        <td ><{$vo.methodname}></td>
-        <td ><{$vo.issue}></td>
-        <td class="codelist" ><{$vo.codes}></td>
-        <td ><{$vo.beishu}></td>
-        <td ><{$vo.mode}></td>
-        <td ><{$vo.money}></td>
-        <td ><{$vo.zjprize}></td>
-       
-        <td ><{$vo.kjcode}></td>
-         
-        <td ><{$vo.status}></td> 
-    </tr>
-  {/volist}
-   
-  <switch name="message">
-		<case value="0">
-			 <tr>
-    	<td height="37" colspan="13" align="center" class=needq><span>请选择查询条件之后进行查询<span></td>
-            </tr>
-		</case>
-		<case value="2">
-			<tr>
-    	<td height="37" colspan="13" align="center" class="no-records"><span>没有找到指定条件的投注记录</span></td>
-             </tr>
-		</case>		
-		<case value="1">
-		 <tr align="right">
-    	<td height="37" colspan="25"><{$page}></td>
-         </tr>
-		</case>		
-  </switch>
-  
- 
-  
-  	
+    <ul>
+    <li class="current"><a href="<{:url('order/index')}>"><img alt="" src="/public/images/icon/icon (3).png">投注记录</a></li>
+    <li><a href="<{:url('trace/index')}>"><img alt="" src="/public/images/icon/icon (4).png">追号记录</a></li>
+    </ul>
+  </div>
+  <div class="search">
+  	<table class='st' border="0" cellspacing="0" cellpadding="0">
+  	<form action="" method="post" >
+  	<input type="hidden" name="isgetdata" value="1">
+  		<tr>
+  	    	<td>
+  	        	游戏时间：<input type="text" id="starttime" name="starttime" style="width:150px;" value="<{$starttime}>" /> <img class='icons_mb4' src="/images/comm/t.gif" id="time_min_button" style="cursor:pointer;" /> 至
+  	   					<input type="text" name="endtime" id="endtime" style="width:150px;" value="<{$endtime}>" /> <img class='icons_mb4' src="/images/comm/t.gif" id="time_min_button" style="cursor:pointer;" />&nbsp;&nbsp;
+  						状态:
+  	                    <select name="my_search[state]">
+  	                    <option value="-5" selected="selected">全部</option>
+  						<option value="0" >未开奖</option>
+  	                    <option value="1" >已中奖</option>
+  	                    <option value="2" >未中奖</option>                    
+  	                    <option value="3" >已撤单</option>
+  	                    </select>&nbsp;&nbsp;&nbsp;&nbsp;<button name="submit" type="submit" width='69' height='26' class="btn_search" /></button>
+  			</td>
+  	    </tr>
+  	    <tr>
+  	    	<td>
+  				游戏名称：<select name="my_search[lotteryid]" id="lotteryid" style="width:100px;">
+  	  						<option value="-9">所有游戏</option>
+  	    					{volist name="lotterylist" id="vo"}
+  								<option value="<{$vo.lotteryid}>"><{$vo.lotteryname}></option>
+  							{/volist}						
+  						 </select>
+  				<span id="game_info">
+  	            &nbsp;&nbsp;游戏玩法: <select name='my_search[methodid]' id='methodid'><option value="-10" selected="selected">所有玩法</option></select>
+  				&nbsp;&nbsp;游戏奖期: <select name='my_search[issue]' id='issue'><option value='-10' selected="selected">所有奖期</option></select>
+  	            </span>
+  	            &nbsp;&nbsp;游戏模式: 
+  	              <select name="my_search[mode]" id="modes" style="width:80px;">
+  	                <option value="-10">所有模式</option>
+  	                           <option value="1">元</option>
+  	                        <option value="2">角</option>
+  	                        <option value="3">分</option>
+  	                          </select>
+  	    <tr>
+  	    	<td>
+  	        	注单编号：<input style='width:60px;' type="text" id="projectno" name="my_search[ordernum]" value="" style="width:150px;" />
+  							&nbsp;&nbsp;游戏用户：<input style='width:90px;' type="text" name="username" id="username" value="" />
+  				&nbsp;&nbsp;	范围: <select name='range'><OPTION selected value="1">自己</OPTION><OPTION  value="2">直接下级</OPTION>					&nbsp;&nbsp;<font color=#009900>温馨提示: 点击注单编号可以查看详细注单信息以及撤单.</font>
+  			</td>
+  	     </tr>
+  	</form>
+  	</table>
+  </div>
+  <div class="display biao-cont"> 
+    <!--下注列表-->
+    
+    <table width="100%" class="table_b">
       
+        <tr class="table_b_th">
+          <td height="43" align="center">注单编号</td>
+		    <td align="center"><div class='line'></div>用户</td>
+		    <td align="center"><div class='line'></div>投注时间</td>
+		    <td align="center"><div class='line'></div>游戏</td>
+		    <td align="center"><div class='line'></div>玩法</td>
+		    <td align="center"><div class='line'></div>期号</td>
+		    <td align="center"><div class='line'></div>投注内容</td>
+		    <td align="center"><div class='line'></div>倍数</td>
+		    <td align="center"><div class='line'></div>模式</td>
+		    <td align="center"><div class='line'></div>总金额</td>
+		    <td align="center"><div class='line'></div>奖金</td>
+		   
+		    <td align="center"><div class='line'></div>开奖号码</td>
+		   
+		    <td align="center"><div class='line'></div>状态</td>
+        </tr>
+        {volist name="orderList" id="vo"}
+        	<tr align="center" class='needchangebg' >
+              <td height="37" ><a href="javascript:"  title="查看投注详情" class="blue" rel="projectinfo" oid="<{$vo.id}>"><{$vo.ordernum}></a></td>
+              <td ><{$vo.username}></td>
+              <td ><{$vo.addtime}></td>
+              <td ><{$vo.lotteryname}></td>
+              <td ><{$vo.methodname}></td>
+              <td ><{$vo.issue}></td>
+              <td class="codelist" ><{$vo.codes}></td>
+              <td ><{$vo.beishu}></td>
+              <td ><{$vo.mode}></td>
+              <td ><{$vo.money}></td>
+              <td ><{$vo.zjprize}></td>
+             
+              <td ><{$vo.kjcode}></td>
+               
+              <td ><{$vo.status}></td> 
+          </tr>
+        {/volist}
+         
+        {switch name="message"}
+      		{case value="0"}
+      			 <tr>
+          	<td height="37" colspan="13" align="center" class=needq><span>请选择查询条件之后进行查询<span></td>
+                  </tr>
+      		{/case}
+      		{case value="2"}
+      			<tr>
+          	<td height="37" colspan="13" align="center" class="no-records"><span>没有找到指定条件的投注记录</span></td>
+                   </tr>
+      		{/case}		
+      		{case value="1"}
+      		 <tr align="right">
+          	<td height="37" colspan="25"><{$page}></td>
+               </tr>
+      		{/case}		
+        {/switch}
     </table>
+    <!--下注列表 end --> 
+  </div>
 </div>
 
 {include file="Public:foot" /}

@@ -1,11 +1,7 @@
-﻿{layout name='layout'}
+﻿{include file="Public:head" /}
 
 
-<BODY STYLE="background:#FFF url('/images/v1/main_bg_0001.jpg') 0px -490px repeat-x; padding:10px;"><DIV ID='main_box'>
-<div class="box l"></div>
-<div class="box c"></div>
-<div class="box r"></div>
-<div class="box m">
+<BODY>
 
 <H1>
 <SPAN class="action-span1"><DIV class='icons_mb1'></DIV>当前位置: 信息中心 </SPAN><DIV style="clear:both"></DIV></H1>
@@ -19,6 +15,7 @@ $(document).ready(function(){
 	$("a[rel='notice']:first").click();
 });
 </script>
+<div class="pagemain">
 <div class=d450><table border=0 cellspacing=0 cellpadding=0>
 <tr class=t><td class=tl></td><td class=tm>&nbsp;</td><td class=tr></td></tr>
 <tr class=mm><td class=ml><img src='/images/comm/t.gif'></td><td>
@@ -75,4 +72,6 @@ $(document).ready(function(){
 </td><td class=mr><img src='/images/comm/t.gif'></td></tr>
 <tr class=b><td class=bl></td><td class=bm>&nbsp;</td><td class=br></td></tr></table>
 </div>
+</div>
+{include file="Public:foot" /}
 

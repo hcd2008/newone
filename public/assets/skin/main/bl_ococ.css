@@ -4,7 +4,7 @@ body{color:#ffffff;font:12px/150% Arial,"微软雅黑","Microsoft Sans Serif","�
 #mainbody{ margin-top:7px}
 .gamemain{width:912px; padding:0px 0px; margin:0 auto;height:auto;min-height:550px;_height:550px; padding-top:280px}
 .touzhumain{width:790px; padding:0px 0px; margin:0 auto;}
-#footer{width:1440px;height:30px;margin:0 auto; text-align:center; color:#fff; margin-bottom:10px; background:url(../../images/common/footbg.png) repeat top; line-height:30px;}
+#footer{width:1280px;height:30px;margin:0 auto; text-align:center; color:#fff; margin-bottom:10px; background:url(../../images/common/footbg.png) repeat top; line-height:30px;}
 .clear{clear:both;}
 #bodytop{width:100%; height:0px;  background-color:#FFF;}
 .bodytop{width:960px; margin:0 auto; height:22px;line-height:22px; color:#000;}
@@ -18,9 +18,9 @@ td a{font-family:宋体,Arial;}
 .spn11{font-size:16px; font-family:"Microsoft YaHei","微软雅黑","Microsoft JhengHei","宋体"; color:#000; font-weight:bold;}
 .spn16{font-size:16px; font-family:"Microsoft YaHei","微软雅黑","Microsoft JhengHei","宋体"; color:#f00; font-weight:bold;}
 
-.headbox{width:1440px; height:91px;  margin:0 auto; margin-top:0px}
+.headbox{width:1280px; height:91px;  margin:0 auto; margin-top:0px}
 .headbox_left{width:220px;height:91px; float:left;background:url(../../images/common/topicobg.png) repeat center; text-align:center;}
-.headbox_center{width:1174px;height:91px; float:left; background:url(../../images/common/headbg.png) repeat center;}
+.headbox_center{width:1014px;height:91px; float:left; background:url(../../images/common/headbg.png) repeat center;}
 .headbox_rightline{width:1px;height:91px; float:left; background:;}
 .headbox_right{width:45px;height:91px; float:left; background:url(../../images/common/topicobg.png) repeat center;}
 .headbox_right1{width:45px;height:45px; float:left;background:url(../../images/common/exit2.png) no-repeat center;position:relative}
@@ -87,10 +87,10 @@ td a{font-family:宋体,Arial;}
 
 
 /*中间区域开始*/
-.bodybox{width:1440px; height:700px; margin:0px auto;_margin:0px auto;}
+.bodybox{width:1280px; height:700px; margin:0px auto;_margin:0px auto;}
 .bodybox_left{width:220px;height:1300px; float:left;background:url(../../images/common/headbg.png) repeat center;_margin-top:0px}
-.bodybox_center{width:970px;height:1300px; float:left; position:relative}
-.bodybox_right{width:250px; float:left;background:url(../../images/common/titlebg.png) repeat center;}
+.bodybox_center{width:820px;height:1300px; float:left; position:relative}
+.bodybox_right{width:240px; float:left;background:url(../../images/common/titlebg.png) repeat center;}
 
 #menubar{width:220px;float:left;_margin-top:-19px;position:relative;}
 #menubar h3{color:#fff;text-shadow:0 1px 0 #000;font-family:"微软雅黑"; font-weight:normal;font-size:15px;height:40px; line-height:40px;display:block;width:100%; text-align:center; background:url(../../images/common/menutitlebg.png)}
@@ -506,7 +506,7 @@ th.fc {
 .pagemain{width:790px; margin:0 auto;background: none repeat scroll 0 0 ; margin-top:10px}
 .pagemain .display{height:auto;min-height:380px;_height:380px;}
 .pagemain .biao-cont{}
-.pagemain .search{line-height:44px;text-align: center; background:url(../../images/common/titlebg.png) repeat center; height:44px; color:#fff; float:left;margin-top:6px;margin-bottom:6px; width:100%}
+.pagemain .search{ background:url(../../images/common/titlebg.png) repeat center;  color:#fff; margin-top:6px;margin-bottom:6px; width:100%}
 .pagemain .search .chazhao{margin:0px; padding:0px}
 .pagemain .search input{background:url(../../images/common/headbg.png) repeat;color:#fff; padding-left:3px;line-height:26px;}
 .pagemain .search select{background:url(../../images/common/headbg.png) repeat;color:#fff; padding:4px 1px 4px 0px;line-height:26px; height:26px;}
@@ -647,3 +647,5 @@ th.fc {
 #wanjinDialog  table{width:100%;}
 #wanjinDialog th{font-weight:bold; padding-bottom:5px; border-bottom:1px #CCC solid;}
 #wanjinDialog #all-count,#wanjinDialog #all-amount{font-size:14px; font-weight:bold; font-weight:bold; color:#F00;}
+.table_b a{color:#fff;text-decoration: none;}
+.st td{padding: 5px;}
