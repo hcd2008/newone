@@ -1,11 +1,7 @@
 {include file="Public:head" /}
 
 
-<BODY STYLE="background:#FFF url('/images/v1/main_bg_0001.jpg') 0px -490px repeat-x; padding:10px;"><DIV ID='main_box'>
-<div class="box l"></div>
-<div class="box c"></div>
-<div class="box r"></div>
-<div class="box m">
+<BODY>
 
 <H1>
 <SPAN class="action-span1"><DIV class='icons_mb1'></DIV>当前位置: 今日报表 </SPAN><DIV style="clear:both"></DIV></H1>
@@ -14,8 +10,8 @@ jQuery("document").ready( function(){
 	jQuery("#chineseMoney").html(changeMoneyToChinese(<{$tuanDuiMoney}>));
 });
 </script>
-<div class="ld">
-<table class="ct" border="0" cellspacing="0" cellpadding="0">
+<div class="pagemain">
+<table class="table_b" border="0" cellspacing="0" cellpadding="0">
 	<tr>
     	<td class="nl">我的账户: </td>
         <td><{$username}></td>

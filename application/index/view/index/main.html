@@ -1,6 +1,17 @@
 ﻿{include file="Public:head" /}
 
-
+<style>
+	.fenshu{
+		background-color: #4c4c4c;
+	    border: 6px solid #fff;
+	    font-family: "Arial","Verdana","宋体";
+	    font-size: 50px;
+	    height: 80px;
+	    line-height: 80px;
+	    text-align: center;
+	    width: 120px;
+	}
+</style>
 <BODY>
 
 <H1>
@@ -16,62 +27,27 @@ $(document).ready(function(){
 });
 </script>
 <div class="pagemain">
-<div class=d450><table border=0 cellspacing=0 cellpadding=0>
-<tr class=t><td class=tl></td><td class=tm>&nbsp;</td><td class=tr></td></tr>
-<tr class=mm><td class=ml><img src='/images/comm/t.gif'></td><td>
-
-<table border=0 cellspacing=0 cellpadding=0>
-<tr>
-	<td width=170 align=center valign=middle><table border=0 cellspacing=0 cellpadding=0 class=tb1><tr><td><{$zf}></td></tr></table></td>
-	<td width=2><img src='/images/comm/t.gif' class='l1'></td>
-	<td valign=top><table border=0 cellspacing=0 cellpadding=0 class=tb2><tr><td STYLE='padding-top:10px;line-height:18px;'>
-您的账户安全评分为: <{$zf}> 分 ( 满分100 )<br/><br/>
-<{$msg}>
-</td></tr></table></td></tr>
-</table>
-
-</td><td class=mr><img src='/images/comm/t.gif'></td></tr>
-<tr class=b><td class=bl></td><td class=bm>&nbsp;</td><td class=br></td></tr></table>
-</div>
-
-<br/><br/>
-
-<div class=d450><table border=0 cellspacing=0 cellpadding=0>
-<tr class=t><td class=tl></td><td class=tm>&nbsp;</td><td class=tr></td></tr>
-<tr class=mm><td class=ml><img src='/images/comm/t.gif'></td><td>
-<table border=0 cellspacing=0 cellpadding=0><tr>
-	<td align=left valign=top width=290 align=center valign=middle>
-		<font color=red>&nbsp;系统公告</font><br/><br/>
-		<table border=0 cellspacing=0 cellpadding=2>
-				{volist name="list" id="vo" key="k" }
-						<?php
-							if( $vo['title']=='顶部公告'){
-								continue;
-							}
-						?>
-					{if $k==1}
-						<tr><td width=12>&nbsp;</td><td width=75><{$vo.addtime|strtotime|date="Y-m-d",###}></td><td><a href='javascript:' rel="notice" id="<{$vo.id}>"  style="color:#FF0000; font-weight:bold;"><{$vo.title}></a></td></tr>
-					{else}
-						<tr><td width=12>&nbsp;</td><td width=75><{$vo.addtime|strtotime|date="Y-m-d",###}></td><td><a href='javascript:' rel="notice" id="<{$vo.id}>"><{$vo.title}></a></td></tr>
-					{/if}
-				{/volist}
-					
-				</table>
-	</td>
-	<td valign=top width=2><img src='/images/comm/t.gif' class='l1'></td>
-    <td align=left valign=top>
-	<table border=0 cellspacing=0 cellpadding=0 class=tb2 style="table-layout:fixed;">
-	<volist name="list" id="vo">
-	
-        <tr id="notice_content_<{$vo.id}>" style="display:none;"><td><{$vo.content}></td></tr>
-   </volist>
-       
-        </table></td>
-</tr></table>
-
-</td><td class=mr><img src='/images/comm/t.gif'></td></tr>
-<tr class=b><td class=bl></td><td class=bm>&nbsp;</td><td class=br></td></tr></table>
-</div>
+	<table class="table_b">
+		<tr>
+			<td class="fenshu" width="30%"><{$zf}></td>
+			<td>您的账户安全评分为: <{$zf}> 分 ( 满分100 )<br/><br/>
+<{$msg}></td>
+		</tr>
+	</table>
+	<table class="table_b">
+		{volist name="list" id="vo" key="k" }
+				<?php
+					if( $vo['title']=='顶部公告'){
+						continue;
+					}
+				?>
+			{if $k==1}
+				<tr><td width=75><{$vo.addtime|strtotime|date="Y-m-d",###}></td><td><a href='javascript:' rel="notice" id="<{$vo.id}>"  style="color:#FF0000; font-weight:bold;"><{$vo.title}></a></td></tr>
+			{else}
+				<tr><td width=75><{$vo.addtime|strtotime|date="Y-m-d",###}></td><td><a href='javascript:' rel="notice" id="<{$vo.id}>"><{$vo.title}></a></td></tr>
+			{/if}
+		{/volist}
+	</table>
 </div>
 {include file="Public:foot" /}
 

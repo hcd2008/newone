@@ -81,6 +81,7 @@ class Users extends Base
 	{
 		$DaoUser = Db::name('User');
 		$data = $this->param;
+		isset($data['username']) or $data['username']='';
 		$data['username'] = strtolower($data['username']);
 		$jffixed = (empty($this->param['jffixed']) ? 0 : 1);
 		$jfauto = (empty($this->param['jfauto']) ? 0 : 1);

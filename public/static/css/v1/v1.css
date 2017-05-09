@@ -135,14 +135,14 @@ font-size:14px;line-height:36px;color:#4A4A4A}
 
 /* table div style */
 .tab-div{margin: 0 0 10px 0}
-#tabbar-div{background:#FFF url('/images/v1/left.png') 0px -788px repeat-x; padding-left: 10px;height: 32px}
+#tabbar-div{background:#F4F5F9; padding-left: 10px;height: 32px;}
 #tabbar-div .tab-front{background:#FFF;line-height: 26px;height:26px;float:left; font-weight: bold;cursor: pointer;color:#333;margin:6px 0px 0px 8px}
-#tabbar-div .tab-front .tabbar-left{background:url('/images/v1/left.png') -89px -432px no-repeat;height:26px;width:5px;float:left}
-#tabbar-div .tab-front .tabbar-right{background:url('/images/v1/left.png') -95px -432px no-repeat;height:26px;width:6px;float:left}
-#tabbar-div .tab-back{background:#E42100;line-height: 26px;height:26px;float:left;cursor: pointer;color:#FFF;margin:6px 0px 0px 8px}
-#tabbar-div .tab-back .tabbar-left{background:url('/images/v1/left.png') -102px -432px no-repeat;height:26px;width:5px;float:left}
-#tabbar-div .tab-back .tabbar-right{background:url('/images/v1/left.png') -108px -432px no-repeat;height:26px;width:6px;float:left}
-#tabbar-div .content{padding:0px 12px;float:left}
+#tabbar-div .tab-front .tabbar-left{height:26px;width:5px;float:left}
+#tabbar-div .tab-front .tabbar-right{height:26px;width:6px;float:left}
+#tabbar-div .tab-back{background:#999;line-height: 26px;height:26px;float:left;cursor: pointer;color:#FFF;margin:6px 0px 0px 8px}
+#tabbar-div .tab-back .tabbar-left{height:26px;width:5px;float:left}
+#tabbar-div .tab-back .tabbar-right{height:26px;width:6px;float:left}
+#tabbar-div .content{padding:0px 12px;float:left;}
 .help-content{padding:20px 15px}
 
 

@@ -1,11 +1,7 @@
 {include file="Public:head" /}
-<BODY STYLE="background:#FFF url('/images/v1/main_bg_0001.jpg') 0px -490px repeat-x; padding:10px;"><DIV ID='main_box'>
-<div class="box l"></div>
-<div class="box c"></div>
-<div class="box r"></div>
-<div class="box m">
+<BODY>
 
-<H1><SPAN class="action-span"><A href="__ACTION__" target='_self'>清空搜索条件</a></SPAN>
+<H1><SPAN class="action-span"><A href="<{:url('index/account/index')}>" target='_self'>清空搜索条件</a></SPAN>
 <SPAN class="action-span1"><DIV class='icons_mb1'></DIV>当前位置: 账变列表 </SPAN><DIV style="clear:both"></DIV></H1>
 <script type="text/javascript" src="__PUBLIC__/js/calendar/jquery.dyndatetime.js"></script>
 <script type="text/javascript" src="__PUBLIC__/js/calendar/lang/calendar-utf8.js"></script>
@@ -97,11 +93,18 @@ function checkForm(obj)
 	}
 }
 </script>
-<div class="ld">
-<table class='st' border="0" cellspacing="0" cellpadding="0">
+<style>
+	.st td{
+		color:#777;
+	}
+	
+</style>
+<div class="pagemain">
+<table class='table_b' border="0" cellspacing="0" cellpadding="0">
 <form action="" method="get" name="search" onsubmit="return checkForm(this)">
 <input type="hidden" name="isrequery" value="1" />
-<tr><td width='168'>类型:<select name="my_search[accounttype]" multiple="multiple" size='7' style="width:120px;">
+<tr><td width='168'>类型:
+<select name="my_search[accounttype]" multiple="multiple" size='7' style="width:120px;">
 <option value="-10" SELECTED>所有类型</option>
 {volist name="ordertype" id="vo"}
 	<option value="<{$vo.accountnum}>"><{$vo.accounttype}></option>
@@ -149,21 +152,21 @@ function checkForm(obj)
 </div></td></tr></form></table></div>
 
 
-<div class="ld">
-<table class="lt" border="0" cellspacing="0" cellpadding="0">
-	<tr class='th'>
-    	<td>帐变编号</td>
-        <td><div class='line'></div>用户名</td>
-        <td><div class='line'></div>时间</td>
-        <td><div class='line'></div>类型</td>
-        <td><div class='line'></div>游戏</td>
-        <td><div class='line'></div>玩法</td>
-        <td><div class='line'></div>期号</td>
-        <td><div class='line'></div>模式</td>
-        <td><div class='line'></div>收入</td>
-        <td><div class='line'></div>支出</td>
-        <td><div class='line'></div>余额</td>
-        <td><div class='line'></div>备注</td>
+<div class="pagemain">
+<table class="table_b" border="0" cellspacing="0" cellpadding="0">
+	<tr class="table_b_th">
+    	<th>帐变编号</th>
+        <th>用户名</th>
+        <th>时间</th>
+        <th>类型</th>
+        <th>游戏</th>
+        <th>玩法</th>
+        <th>期号</th>
+        <th>模式</th>
+        <th>收入</th>
+        <th>支出</th>
+        <th>余额</th>
+        <th>备注</th>
     </tr>
     {volist name="accountList" id="vo"}
       <tr class="needchangebg">
@@ -181,23 +184,23 @@ function checkForm(obj)
         <td align="center" title="<{$vo.beizhu}>"><{$vo.beizhu|msubstr=0,10}></td>
     </tr>
      {/volist}
-         <switch name="message">
-		<case value="0">
+         {switch name="message"}
+		{case value="0"}
 			 <tr>
     	<td height="37" colspan="13" align="center" class=needq><span>请选择查询条件之后进行查询<span></td>
             </tr>
-		</case>
-		<case value="2">
+		{/case}
+		{case value="2"}
 			<tr>
     	<td height="37" colspan="13" align="center" class="no-records"><span>没有找到指定条件的投注记录</span></td>
              </tr>
-		</case>		
-		<case value="1">
+		{/case}		
+		{case value="1"}
 		 <tr align="right">
     	<td height="37" colspan="25"><{@$page}></td>
          </tr>
-		</case>		
-  </switch>
+		{/case}		
+  {/switch}
     </table>
 </div>
 {include file="Public:foot" /}

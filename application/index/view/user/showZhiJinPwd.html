@@ -1,60 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<HTML xmlns="http://www.w3.org/1999/xhtml">
-<HEAD><TITLE>资金密码检查</TITLE>
-<META http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<META http-equiv="Pragma" content="no-cache" />
-<LINK href="__PUBLIC__/css/v1/v1.css" rel="stylesheet" type="text/css" />
-<script language="javascript" type="text/javascript" src="__PUBLIC__/js/jquery.js"></script>
-<script language="javascript" type="text/javascript" src="__PUBLIC__/js/common.js"></script>
-<script language="javascipt" type="text/javascript">
-$(function(){
-    if($(".needchangebg:even").eq(0).html() != null){
-        $(".needchangebg:even").find("td").css("background","#FAFCFE");
-        $(".needchangebg:odd").find("td").css("background","#F9F9F9");
-        $(".forzenuser").find("td").css("background","#FFE8E8");
-		$(".self_tr").find("td").css("background","#FFF4D2");
-        $(".needchangebg").hover(function(){
-            $(this).find("td").css("background","#E8F2FF");
-            $(".forzenuser").find("td").css("background","#FFE8E8");
-        },function(){
-            $(".needchangebg:even").find("td").css("background","#FAFCFE");
-            $(".needchangebg:odd").find("td").css("background","#F9F9F9");
-            $(".forzenuser").find("td").css("background","#FFE8E8");
-        }
-        );
-    }else{
-        $(".needchangebg:odd").find("td").css("background","#FAFCFE");
-        $(".needchangebg:even").find("td").css("background","#F9F9F9");
-		$(".forzenuser").find("td").css("background","#FFE8E8");
-		$(".self_tr").find("td").css("background","#FFF4D2");
-        $(".gametitle").css("background","#F9F9F9");
-        $(".needchangebg").hover(function(){
-            $(this).find("td").css("background","#E8F2FF");
-            $(".gametitle").css("background","#F9F9F9");
-        },function(){
-            $(".lt tr:odd").find("td").css("background","#FAFCFE");
-            $(".lt tr:even").find("td").css("background","#F9F9F9");
-            $(".gametitle").css("background","#F9F9F9");
-        }
-        );
-    }
-})
-</script>
-<SCRIPT LANGUAGE='JavaScript'>function ResumeError() {return true;} window.onerror = ResumeError; </SCRIPT> 
-</HEAD>
-<BODY STYLE="background:#FFF url('/images/v1/main_bg_0001.jpg') 0px -490px repeat-x; padding:10px;"><DIV ID='main_box'>
-<div class="box l"></div>
-<div class="box c"></div>
-<div class="box r"></div>
-<div class="box m">
-
+{include file="Public:head" /}
+<BODY>
 <H1>
 <SPAN class="action-span1"><DIV class='icons_mb1'></DIV>当前位置: 资金密码检查 </SPAN><DIV style="clear:both"></DIV></H1>
 <script>
 </script>
 <body onLoad="document.updateform.secpass.focus();">
-<div class="ld">
-<table class="ct" border="0" cellspacing="0" cellpadding="0">
+<div class="pagemain">
+<table class="table_b" border="0" cellspacing="0" cellpadding="0">
 <form action="<{$action}>" method="post" name="updateform">
 <input type="hidden" name="flag" value="check" />
 <input type="hidden" name="nextcon" value="account" />
@@ -69,9 +21,4 @@ $(function(){
   </form>
 </table>
 </div>
-<div id="footer"><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td align="center"><table align="center" width="450">
-<tr><td align="left"><font color='#000000'>浏览器建议：首选IE 8.0浏览器，其次为火狐浏览器。</font></td></tr>
-</table></td></tr><tr><td></td></tr></table></div>
-<br/><br/>
-</div></div>
-</BODY></HTML>
+{include file="Public:foot" /}

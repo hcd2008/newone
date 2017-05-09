@@ -1,63 +1,5 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<HTML xmlns="http://www.w3.org/1999/xhtml">
-<HEAD><TITLE>自动充值</TITLE>
-<META http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<META http-equiv="Pragma" content="no-cache" />
-<LINK href="__PUBLIC__/css/v1/v1.css" rel="stylesheet" type="text/css" />
-<script language="javascript" type="text/javascript" src="__PUBLIC__/js/jquery.js"></script>
-<script language="javascript" type="text/javascript" src="__PUBLIC__/js/common.js"></script>
-<script language="javascipt" type="text/javascript">
-$(function(){
-    if($(".needchangebg:even").eq(0).html() != null){
-        $(".needchangebg:even").find("td").css("background","#FAFCFE");
-        $(".needchangebg:odd").find("td").css("background","#F9F9F9");
-        $(".forzenuser").find("td").css("background","#FFE8E8");
-		$(".self_tr").find("td").css("background","#FFF4D2");
-        $(".needchangebg").hover(function(){
-            $(this).find("td").css("background","#E8F2FF");
-            $(".forzenuser").find("td").css("background","#FFE8E8");
-        },function(){
-            $(".needchangebg:even").find("td").css("background","#FAFCFE");
-            $(".needchangebg:odd").find("td").css("background","#F9F9F9");
-            $(".forzenuser").find("td").css("background","#FFE8E8");
-        }
-        );
-    }else{
-        $(".needchangebg:odd").find("td").css("background","#FAFCFE");
-        $(".needchangebg:even").find("td").css("background","#F9F9F9");
-		$(".forzenuser").find("td").css("background","#FFE8E8");
-		$(".self_tr").find("td").css("background","#FFF4D2");
-        $(".gametitle").css("background","#F9F9F9");
-        $(".needchangebg").hover(function(){
-            $(this).find("td").css("background","#E8F2FF");
-            $(".gametitle").css("background","#F9F9F9");
-        },function(){
-            $(".lt tr:odd").find("td").css("background","#FAFCFE");
-            $(".lt tr:even").find("td").css("background","#F9F9F9");
-            $(".gametitle").css("background","#F9F9F9");
-        }
-        );
-    }
-
-
-		
-	$(":radio").click(function(){
-			if($(this).val()==5){
-					$(".jh").show();
-			}else{
-				$(".jh").hide();	
-			}
-	});
-    
-})
-</script>
-<SCRIPT LANGUAGE='JavaScript'>function ResumeError() {return true;} window.onerror = ResumeError; </SCRIPT> 
-</HEAD>
-<BODY STYLE="background:#FFF url('/images/v1/main_bg_0001.jpg') 0px -490px repeat-x; padding:10px;"><DIV ID='main_box'>
-<div class="box l"></div>
-<div class="box c"></div>
-<div class="box r"></div>
-<div class="box m">
+{include file="Public:head" /}
+<BODY>
 
 <H1> <!-- <SPAN class="action-span"><A href="/account_savelist.shtml?check=790" target='_self'>充值记录</a></SPAN>--><SPAN class="action-span"></SPAN>
 <SPAN class="action-span1"><DIV class='icons_mb1'></DIV>当前位置: 充值 </SPAN><DIV style="clear:both"></DIV></H1>
@@ -121,30 +63,28 @@ function changbank(obj){
 div .q{color:#222;padding-left:18px;padding-top:3px;}
 div .a{color:#070;padding-left:18px;padding-top:3px;padding-bottom:12px;}
 .jh{display:none;}
+.table_b{
+	text-align: left;
+}
+.table_b td{
+	padding: 5px;
+}
 </STYLE>
-<div class="tab-div">
-	<div id="tabbar-div">
-		<span class="tab-front" id="general_tab_0">
-		  <span class="tabbar-left"></span>
-		  <span class="content">自动充值</span>
-		  <span class="tabbar-right"></span>
-		</span>
-	    <!-- 
-		<span class="tab-back" id="general_tab_2">
-		    <span class="tabbar-left"></span>
-		    <span class="content" onclick="window.location.href='./account_savelist.shtml?check=790'">充值记录</span>
-		    <span class="tabbar-right"></span>
-		</span>
-		 -->
-	</div>
+<div class="pagemain">
+	<div class="geren_menu">
 
-<div class="ld" style='width:99%;margin:5px 0px 0px 0px;'>
-<table width="100%" class="ct" border="0" cellspacing="0" cellpadding="0">
-<form action="__URL__/showBankInfo" method="post" name="drawform" id="drawform" onsubmit="return checkForm(this)">
+	  <ul>
+	  <li class="current"><a href="<{:url('user/showChonZhi')}>"><img alt="" src="/public/images/icon/icon (3).png">自动充值</a></li>
+	  </ul>
+	</div>
+</div>
+<div class="pagemain">
+<table width="100%" class="table_b">
+<form action="<{:url('user/showBankInfo')}>" method="post" name="drawform" id="drawform" onsubmit="return checkForm(this)">
 <input type="hidden" name="flag" value="confirm" />
 <tr>
-	<td class="nl"><font color="#FF3300">充值使用需知:</font></td>
-	<td STYLE='line-height:23px;padding:5px 0px'>
+	<td width="100px;"><font color="#FF3300">充值使用需知:</font></td>
+	<td>
 	<!--每天的充值处理时间为：<font style="font-size:16px;color:#F30;font-weight:bold;">9:00-2:00</font><br />//
 	充值金额低于<font style="font-size:16px;color:#F30;font-weight:bold;">100</font>&nbsp;不享受“充值即返手续费”的优惠<br/>
 	-->
@@ -156,10 +96,10 @@ div .a{color:#070;padding-left:18px;padding-top:3px;padding-bottom:12px;}
 	</td>
 </tr>
 <tr>
-	<td class="nl">充值银行: </td>
-    <td style='height:60px;'>
+	<td >充值银行: </td>
+    <td>
     {volist name="banklist" id="vo"}
-    <input type="radio" id='bank_1' name="bankinfo" value="<{$vo.id}>"  onclick="changbank(this)" />&nbsp;<label for='bank_1'><img STYLE='cursor:pointer;' src="/images/bank/<{$vo.id}>.jpg" /></label>&nbsp;&nbsp;&nbsp;
+    <input class="hcd" type="radio" id='bank_1' name="bankinfo" value="<{$vo.id}>"  onclick="changbank(this)" />&nbsp;<label for='bank_1'><img STYLE='cursor:pointer;' src="/images/bank/<{$vo.id}>.jpg" /></label>&nbsp;&nbsp;&nbsp;
 
 	<?php
 		if($i>3){
@@ -172,7 +112,7 @@ div .a{color:#070;padding-left:18px;padding-top:3px;padding-bottom:12px;}
 	
     	
 	-->
-	 <input type="radio" id='bank_1' name="bankinfo" value="888"  onclick="changbank(this)" />&nbsp;<label for='bank_1'><img STYLE='cursor:pointer;' src="/images/bank/yeepay.png"  width="125" height="35"/></label>&nbsp;&nbsp;&nbsp;
+	 <input class="hcd" type="radio" id='bank_1' name="bankinfo" value="888"  onclick="changbank(this)" />&nbsp;<label for='bank_1'><img STYLE='cursor:pointer;' src="/images/bank/yeepay.png"  width="125" height="35"/></label>&nbsp;&nbsp;&nbsp;
 	
     &nbsp;&nbsp;<span style="color:red; display:none"><input type="radio" name="bankinfo" value="" /></span>
     </td>
@@ -213,9 +153,4 @@ div .a{color:#070;padding-left:18px;padding-top:3px;padding-bottom:12px;}
 </form>
 </table>
 </div>
-<div id="footer"><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td align="center"><table align="center" width="450">
-<tr><td align="left"><font color='#000000'>浏览器建议：首选IE 8.0浏览器，其次为火狐浏览器。</font></td></tr>
-</table></td></tr><tr><td></td></tr></table></div>
-<br/><br/>
-</div></div>
-</BODY></HTML>
+{include file="Public:foot" /}

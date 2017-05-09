@@ -1,12 +1,8 @@
 {include file="Public:head" /}
 </HEAD>
-<BODY STYLE="background:#FFF url('/images/v1/main_bg_0001.jpg') 0px -490px repeat-x; padding:10px;"><DIV ID='main_box'>
-<div class="box l"></div>
-<div class="box c"></div>
-<div class="box r"></div>
-<div class="box m">
+<BODY>
 
-<H1><SPAN class="action-span"><A href="__APP__/Users/" target='mainframe'>增加用户</a></SPAN>
+<H1><SPAN class="action-span"><A href="<{:url('users/addUser')}>" target='mainframe'>增加用户</a></SPAN>
 <SPAN class="action-span1"><DIV class='icons_mb1'></DIV>当前位置: 用户列表 </SPAN><DIV style="clear:both"></DIV></H1>
 <SCRIPT type="text/javascript" src="__PUBLIC__/js/calendar/jquery.dyndatetime.js"></SCRIPT>
 <script type="text/javascript" src="__PUBLIC__/js/calendar/lang/calendar-utf8.js"></SCRIPT>
@@ -42,6 +38,12 @@ function hideTeam(obj) {
     jQuery(obj).closest("tr").hide();
 }
 </script>
+<style>
+    .pagemain input.hcd{
+        width:10px;
+    }
+</style>
+<div class="pagemain">
 <div class="ld">
 <table class='st' border="0" cellspacing="0" cellpadding="0">
 <form action="__URL__/userlistContent" method="get" name="search" onSubmit="return checkForm(this)">
@@ -56,10 +58,9 @@ function hideTeam(obj) {
                     <option value="bank" >账户余额</option>
                     
                 </select>
-                <input type="checkbox" name="sortbymax" value="1"   />从大到小
+                <input type="checkbox" name="sortbymax" value="1" class="hcd"  />从大到小
                 
-                
-                <input type="checkbox" name="online" value="1"   />当前在线
+                <input type="checkbox" name="online" value="1" class="hcd"  />当前在线
 		
 		</td>
     </tr>
@@ -81,7 +82,7 @@ function hideTeam(obj) {
 
 <div class="ld" >
 <table class="lt" border="0" cellspacing="0" cellpadding="0">
-<form action="./" method="get">
+<form action="" method="get">
 	<tr>
     	<td class='t' colspan="7"><div>
 		&nbsp;&nbsp;<a href="__ACTION__" target="userlist_content">我的用户</a>			<{$usersDaoHang}>		</div></td>
@@ -139,9 +140,4 @@ function hideTeam(obj) {
 </table>
 </div>
 
-<div id="footer"><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td align="center"><table align="center" width="450">
-<tr><td align="left"><font color='#000000'>浏览器建议：首选IE 8.0浏览器，其次为火狐浏览器。</font></td></tr>
-</table></td></tr><tr><td></td></tr></table></div>
-<br/><br/>
-</div></div>
 </BODY></HTML>

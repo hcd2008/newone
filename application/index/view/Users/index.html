@@ -1,7 +1,8 @@
 {include file="Public:head" /}
 <script language="javascript" src="__PUBLIC__/js/dialog/jquery.dialogUI.js"></script>
-<BODY STYLE='background-color:#838383;'>
-<DIV ID='main_box_s2'><DIV class='icons_mb2'></DIV>当前位置: 增加用户 </DIV>
+<BODY>
+<H1>
+<SPAN class="action-span1"><DIV class='icons_mb1'></DIV>当前位置: 增加用户 </SPAN><DIV style="clear:both"></DIV></H1>
 <br/><STYLE>
 .ct2 .nl{width:14%;}
 .tab-div-s2 .bd{width:806px;_width:804px;*+margin-top:0px;}
@@ -11,6 +12,8 @@
 .tabbar-div-s3 .tab-front .content{padding:0px 5px 0px 4px;}
 .tabbar-div-s3 .tab-back {margin:0px 3px 0px 3px;}
 .tabbar-div-s3 .tab-back .content{padding:0px 5px 0px 4px;}
+.table_b{text-align: left;}
+.table_b td{padding:5px;}
 </STYLE>
 <script type="text/javascript">
 ;(function($){
@@ -176,15 +179,17 @@ function filterPercent(num){
 	return num;
 }
 </script>
-
+<style>
+	
+</style>
 <CENTER>
 <div class="div_s1" style='text-align:left'>
 <form method="post" name="updateform" action="__URL__/addUser" onsubmit="return checkform(this)">
 <input type="hidden" name="addtype" id="addtype" value="ks" />
 <input type="hidden" name="flag" value="insert" />
 <div class='header'><DIV class='icons_mb3'></DIV> 填写基本信息</div>
-<div class="tab-div-s2" STYLE='border-top: 1px solid #505050;'>
-    <div STYLE='background-color:#333;'><table class="ct2" border="0" cellspacing="0" cellpadding="0">
+<div class="tab-div-s2 table_b" STYLE='border-top: 1px solid #505050;'>
+    <div STYLE='background-color:#333;'><table class="table_b" border="0" cellspacing="0" cellpadding="0">
 	    <eq name='isreg' value='1'>
 	    <tr>
 		<td class="nl">推荐注册:</td>
@@ -239,7 +244,7 @@ function filterPercent(num){
       	</table>
      </div>
      
-	<table width='100%' border="0" cellspacing="0" cellpadding="0"><tr><td id="tabbar-div-s2">
+	<table  width='100%' border="0" cellspacing="0" cellpadding="0"><tr><td id="tabbar-div-s2">
 	    <span class="tab-front"  id="general_tab_0">
 		  <span class="tabbar-left"></span>
 		  <span class="content">返点设置</span>
@@ -248,10 +253,10 @@ function filterPercent(num){
 	
 	</td></tr>
 	</table>
-	<div class='bd'><div class='bd2' id="general_txt_0"><BR/>
+	<div><div  id="general_txt_0"><BR/>
 		
 	 <div STYLE='margin:0 0 18px 40px;font-size:14px;color:#FFF;'>
-	 <table>
+	 <table class="table_b">
 	 	<tr>
 	 		<td>时时彩返点: </td>
 	 		<td><input type="text" name="dinwei" id="dinwei" style='width:45px;'/> %</td>
@@ -277,8 +282,4 @@ function filterPercent(num){
 	</div></div>
 	
 </div></form></div>
-<BR/><div class="div_s1" style='line-height:22px;'>
-<table STYLE='background-color:#E3E3E3;' width="100%" align="center" border="0" cellspacing="0" cellpadding="0">
-<tr><td align="center"><font color='#333333'>浏览器建议：首选IE 8.0浏览器，其次为火狐浏览器。</font><br/>
-</td></tr></table>
-</div></CENTER><br/><br/></BODY></HTML>
+</BODY></HTML>

@@ -1,5 +1,5 @@
 @import url("bl_stand.css");
-body{color:#ffffff;font:12px/150% Arial,"微软雅黑","Microsoft Sans Serif","宋体";text-align:left;}
+body{font:12px/150% Arial,"微软雅黑","Microsoft Sans Serif","宋体";text-align:left;}
 
 #mainbody{ margin-top:7px}
 .gamemain{width:912px; padding:0px 0px; margin:0 auto;height:auto;min-height:550px;_height:550px; padding-top:280px}
@@ -512,7 +512,8 @@ th.fc {
 .pagemain .search select{background:url(../../images/common/headbg.png) repeat;color:#fff; padding:4px 1px 4px 0px;line-height:26px; height:26px;}
 .pagemain .search select option{background-color:#525252;border:0px;color:#fff;}
 .pagemain input{background:url(../../images/common/headbg.png) repeat;height:26px;margin-left:2px;margin-right:2px;width:80px;vertical-align:middle; padding-left:4px; border:0px;color:#fff; line-height:26px}
-.pagemain select{background:url(../../images/common/headbg.png) repeat;height:26px;margin-left:2px;margin-right:2px;vertical-align:middle;width:77px; border:0px; color:#FFF;line-height:26px}
+.pagemain input.hcd{width:20px;}
+.pagemain select{background:url(../../images/common/headbg.png) repeat;margin-left:2px;margin-right:2px;vertical-align:middle;width:77px; border:0px; color:#FFF;}
 .pagemain input.btn
 {
 	*line-height:24px!important;
@@ -600,8 +601,9 @@ th.fc {
 .geren_menu li.current:hover{color:#36363;background:url(../../images/common/titlebg.png) repeat center;}
 
 /*内容显示*/
-.table_b{margin:5px 0 10px;text-align:center;background:url(../../images/common/titlebg.png) repeat center; float:left}
-.table_b td{border: 1px dashed #dddddd; padding:0px;height:27px;}
+.table_b{margin:5px 0 10px;text-align:left;background:url(../../images/common/titlebg.png) repeat center; width:100%;}
+.table_b td{border: 1px dashed #dddddd; padding:0px;height:27px;padding:5px;color:#fff;}
+.table_b th{height:27px;padding:5px;}
 .table_b_th{background:url(../../images/common/titlebg.png) repeat center;height:38px;text-align:center;color:#fff; font-weight:normal;font-size:14px;}
 .table_b_tr_a{background:url(../../images/common/titlebg.png) repeat center;height:33px;text-align:center;}
 .table_b_tr_b{height:27px;text-align:center;}
@@ -649,3 +651,4 @@ th.fc {
 #wanjinDialog #all-count,#wanjinDialog #all-amount{font-size:14px; font-weight:bold; font-weight:bold; color:#F00;}
 .table_b a{color:#fff;text-decoration: none;}
 .st td{padding: 5px;}
+input.shijian{width:120px;}
