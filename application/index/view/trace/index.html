@@ -1,52 +1,6 @@
-﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<HTML xmlns="http://www.w3.org/1999/xhtml">
-<HEAD><TITLE>追号记录</TITLE>
-<META http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<META http-equiv="Pragma" content="no-cache" />
-<LINK href="__PUBLIC__/css/v1/v1.css" rel="stylesheet" type="text/css" />
-<script language="javascript" type="text/javascript" src="__PUBLIC__/js/jquery.js"></script>
-<script language="javascript" type="text/javascript" src="__PUBLIC__/js/common.js"></script>
-<script language="javascipt" type="text/javascript">
-$(function(){
-    if($(".needchangebg:even").eq(0).html() != null){
-        $(".needchangebg:even").find("td").css("background","#FAFCFE");
-        $(".needchangebg:odd").find("td").css("background","#F9F9F9");
-        $(".forzenuser").find("td").css("background","#FFE8E8");
-		$(".self_tr").find("td").css("background","#FFF4D2");
-        $(".needchangebg").hover(function(){
-            $(this).find("td").css("background","#E8F2FF");
-            $(".forzenuser").find("td").css("background","#FFE8E8");
-        },function(){
-            $(".needchangebg:even").find("td").css("background","#FAFCFE");
-            $(".needchangebg:odd").find("td").css("background","#F9F9F9");
-            $(".forzenuser").find("td").css("background","#FFE8E8");
-        }
-        );
-    }else{
-        $(".needchangebg:odd").find("td").css("background","#FAFCFE");
-        $(".needchangebg:even").find("td").css("background","#F9F9F9");
-		$(".forzenuser").find("td").css("background","#FFE8E8");
-		$(".self_tr").find("td").css("background","#FFF4D2");
-        $(".gametitle").css("background","#F9F9F9");
-        $(".needchangebg").hover(function(){
-            $(this).find("td").css("background","#E8F2FF");
-            $(".gametitle").css("background","#F9F9F9");
-        },function(){
-            $(".lt tr:odd").find("td").css("background","#FAFCFE");
-            $(".lt tr:even").find("td").css("background","#F9F9F9");
-            $(".gametitle").css("background","#F9F9F9");
-        }
-        );
-    }
-})
-</script>
-<SCRIPT LANGUAGE='JavaScript'>function ResumeError() {return true;} window.onerror = ResumeError; </SCRIPT> 
-</HEAD>
-<BODY STYLE="background:#FFF url('/images/v1/main_bg_0001.jpg') 0px -490px repeat-x; padding:10px;"><DIV ID='main_box'>
-<div class="box l"></div>
-<div class="box c"></div>
-<div class="box r"></div>
-<div class="box m">
+﻿{include file="Public:head" /}
+<link href='__ASSETS__skin/main/bl_ococ.css' rel="stylesheet" type="text/css" />
+<BODY>
 
 <H1><SPAN class="action-span"><A href="__ACTION__" target='_self'>清空查询条件</a></SPAN>
 <SPAN class="action-span1"><DIV class='icons_mb1'></DIV>当前位置: 追号记录 </SPAN><DIV style="clear:both"></DIV></H1>
@@ -266,111 +220,111 @@ jQuery(document).ready(function() {
 .cancelline{background-color:#CCCCCC; color:#FFFFFF;}
 </style>
 
-<div class="ld">
-<table class='st' border="0" cellspacing="0" cellpadding="0">
-<form action="__URL__/" >
-<input type="hidden" name="isgetdata" value="1">
-	<tr>
-    	<td>
-        	游戏时间：<input type="text" id="starttime" name="starttime" style="width:150px;" value="<{$starttime}>" /> <img class='icons_mb4' src="/images/comm/t.gif" id="time_min_button" style="cursor:pointer;" /> 至
-   					<input type="text" name="endtime" id="endtime" style="width:150px;" value="<{$endtime}>" /> <img class='icons_mb4' src="/images/comm/t.gif" id="time_min_button" style="cursor:pointer;" />&nbsp;&nbsp;
-					 &nbsp;&nbsp;&nbsp;&nbsp;<button name="submit" type="submit" width='69' height='26' class="btn_search" /></button>
-		</td>
-    </tr>
-    <tr>
-    	<td>
-			游戏名称：<select name="my_search[lotteryid]" id="lotteryid" style="width:100px;">
-  						<option value="-9">所有游戏</option>
-    					{volist name="lotterylist" id="vo"}
-							<option value="<{$vo.lotteryid}>"><{$vo.lotteryname}></option>
-						{/volist}						
-					 </select>
-			<span id="game_info">
-            &nbsp;&nbsp;游戏玩法: <select name='my_search[methodid]' id='methodid'><option value="-10" selected="selected">所有玩法</option></select>
-			&nbsp;&nbsp;游戏奖期: <select name='my_search[issue]' id='issue'><option value='-10' selected="selected">所有奖期</option></select>
-            </span>
-            &nbsp;&nbsp;游戏模式: 
-              <select name="my_search[mode]" id="modes" style="width:80px;">
-                <option value="-10">所有模式</option>
-                           <option value="1">元</option>
-                        <option value="2">角</option>
-                        <option value="3">分</option>
-                          </select>
-    <tr>
-    	<td>
-        	追号编号：<input style='width:60px;' type="text" id="projectno" name="my_search[tracenum]" value="" style="width:150px;" />
-						&nbsp;&nbsp;游戏用户：<input style='width:90px;' type="text" name="username" id="username" value="" />
-			&nbsp;&nbsp;范围: <select name='range'><OPTION  value="4">全部</OPTION><OPTION selected value="1">自己</OPTION><OPTION  value="2">直接下级</OPTION><OPTION  value="3">所有下级</OPTION></select>						&nbsp;&nbsp;<font color=#009900>温馨提示: 点击注单编号可以查看详细注单信息以及撤单.</font>
-		</td>
-     </tr>
-</form>
-</table></div>
+<div class="pagemain">
+  <div class="geren_menu">
 
-
-
-<div class="ld" >
-<table class="lt" border="0" cellspacing="0" cellpadding="0">
-	<tr class='th'>
-    <td height="43">追号编号</td>
-		<td><div class='line'></div>用户名</td>
-		<td><div class='line'></div>追号时间</td>
-		<td><div class='line'></div>游戏</td>
-		<td><div class='line'></div>玩法</td>
-		<td><div class='line'></div>开始期数</td>
-		<td><div class='line'></div>追号期数</td>
-		<td><div class='line'></div>完成期数</td>
-		<td><div class='line'></div>追号内容</td>
-		<td><div class='line'></div>模式</td>
-		<td><div class='line'></div>总金额</td>
-		<td><div class='line'></div>完成金额</td>
-		<td><div class='line'></div>状态</td>
-  </tr>
-  {volist name="orderList" id="vo"}
-  		<tr align="center" class='needchangebg' >
-        <td height="37" ><a href="__URL__/traceInfo?id=<{$vo.tracenum}>" target="_blank" class="blue" title="点击查看详情"><{$vo.tracenum}></a></td>
-        <td ><{$vo.username}></td>
-        <td ><{$vo.addtime}></td>
-        <td ><{$vo.lotteryname}></td>
-        <td ><{$vo.methodname}></td>
-        <td ><{$vo.issue}></td>
-         <td ><{$vo.tracecount}></td>
-              <td ><{$vo.traceWanCheng}></td>
-        <td class="codelist" ><{$vo.codes}></td>      
-        <td ><{$vo.mode}></td>
-        <td ><{$vo.traceCountMoney}></td>
-         <td ><{$vo.traceWanChengMoney}></td>
-        <td ><{$vo.status}></td> 
-    </tr>
-  {/volist}
-   
-  <switch name="message">
-		<case value="0">
-			 <tr>
-    	<td height="37" colspan="13" align="center" class=needq><span>请选择查询条件之后进行查询<span></td>
-            </tr>
-		</case>
-		<case value="2">
-			<tr>
-    	<td height="37" colspan="13" align="center" class="no-records"><span>没有找到指定条件的投注记录</span></td>
-             </tr>
-		</case>		
-		<case value="1">
-		 <tr align="right">
-    	<td height="37" colspan="25"><{$page}></td>
-         </tr>
-		</case>		
-  </switch>
-  
- 
-  
-  	
+    <ul>
+    <li ><a href="<{:url('order/index')}>"><img alt="" src="/public/images/icon/icon (3).png">投注记录</a></li>
+    <li class="current"><a href="<{:url('trace/index')}>"><img alt="" src="/public/images/icon/icon (4).png">追号记录</a></li>
+    </ul>
+  </div>
+  <div class="search">
+  	<table class='st' border="0" cellspacing="0" cellpadding="0">
+  	<form action="__URL__/" >
+  	<input type="hidden" name="isgetdata" value="1">
+  		<tr>
+  	    	<td>
+  	        	游戏时间：<input type="text" id="starttime" name="starttime" style="width:150px;" value="<{$starttime}>" /> <img class='icons_mb4' src="/images/comm/t.gif" id="time_min_button" style="cursor:pointer;" /> 至
+  	   					<input type="text" name="endtime" id="endtime" style="width:150px;" value="<{$endtime}>" /> <img class='icons_mb4' src="/images/comm/t.gif" id="time_min_button" style="cursor:pointer;" />&nbsp;&nbsp;
+  						 &nbsp;&nbsp;&nbsp;&nbsp;<button name="submit" type="submit" width='69' height='26' class="btn_search" /></button>
+  			</td>
+  	    </tr>
+  	    <tr>
+  	    	<td>
+  				游戏名称：<select name="my_search[lotteryid]" id="lotteryid" style="width:100px;">
+  	  						<option value="-9">所有游戏</option>
+  	    					{volist name="lotterylist" id="vo"}
+  								<option value="<{$vo.lotteryid}>"><{$vo.lotteryname}></option>
+  							{/volist}						
+  						 </select>
+  				<span id="game_info">
+  	            &nbsp;&nbsp;游戏玩法: <select name='my_search[methodid]' id='methodid'><option value="-10" selected="selected">所有玩法</option></select>
+  				&nbsp;&nbsp;游戏奖期: <select name='my_search[issue]' id='issue'><option value='-10' selected="selected">所有奖期</option></select>
+  	            </span>
+  	            &nbsp;&nbsp;游戏模式: 
+  	              <select name="my_search[mode]" id="modes" style="width:80px;">
+  	                <option value="-10">所有模式</option>
+  	                           <option value="1">元</option>
+  	                        <option value="2">角</option>
+  	                        <option value="3">分</option>
+  	                          </select>
+  	    <tr>
+  	    	<td>
+  	        	追号编号：<input style='width:60px;' type="text" id="projectno" name="my_search[tracenum]" value="" style="width:150px;" />
+  							&nbsp;&nbsp;游戏用户：<input style='width:90px;' type="text" name="username" id="username" value="" />
+  				&nbsp;&nbsp;范围: <select name='range'><OPTION  value="4">全部</OPTION><OPTION selected value="1">自己</OPTION><OPTION  value="2">直接下级</OPTION><OPTION  value="3">所有下级</OPTION></select>						&nbsp;&nbsp;<font color=#009900>温馨提示: 点击注单编号可以查看详细注单信息以及撤单.</font>
+  			</td>
+  	     </tr>
+  	</form>
+  	</table>
+  </div>
+  <div class="display biao-cont"> 
+    <!--下注列表-->
+    
+    <table width="100%" class="table_b">
       
+        <tr class='th'>
+            <td height="43">追号编号</td>
+        		<td><div class='line'></div>用户名</td>
+        		<td><div class='line'></div>追号时间</td>
+        		<td><div class='line'></div>游戏</td>
+        		<td><div class='line'></div>玩法</td>
+        		<td><div class='line'></div>开始期数</td>
+        		<td><div class='line'></div>追号期数</td>
+        		<td><div class='line'></div>完成期数</td>
+        		<td><div class='line'></div>追号内容</td>
+        		<td><div class='line'></div>模式</td>
+        		<td><div class='line'></div>总金额</td>
+        		<td><div class='line'></div>完成金额</td>
+        		<td><div class='line'></div>状态</td>
+          </tr>
+          {volist name="orderList" id="vo"}
+          		<tr align="center" class='needchangebg' >
+                <td height="37" ><a href="__URL__/traceInfo?id=<{$vo.tracenum}>" target="_blank" class="blue" title="点击查看详情"><{$vo.tracenum}></a></td>
+                <td ><{$vo.username}></td>
+                <td ><{$vo.addtime}></td>
+                <td ><{$vo.lotteryname}></td>
+                <td ><{$vo.methodname}></td>
+                <td ><{$vo.issue}></td>
+                 <td ><{$vo.tracecount}></td>
+                      <td ><{$vo.traceWanCheng}></td>
+                <td class="codelist" ><{$vo.codes}></td>      
+                <td ><{$vo.mode}></td>
+                <td ><{$vo.traceCountMoney}></td>
+                 <td ><{$vo.traceWanChengMoney}></td>
+                <td ><{$vo.status}></td> 
+            </tr>
+          {/volist}
+         
+        {switch name="message"}
+      		{case value="0"}
+      			 <tr>
+          	<td height="37" colspan="13" align="center" class=needq><span>请选择查询条件之后进行查询<span></td>
+                  </tr>
+      		{/case}
+      		{case value="2"}
+      			<tr>
+          	<td height="37" colspan="13" align="center" class="no-records"><span>没有找到指定条件的投注记录</span></td>
+                   </tr>
+      		{/case}		
+      		{case value="1"}
+      		 <tr align="right">
+          	<td height="37" colspan="25"><{$page}></td>
+               </tr>
+      		{/case}		
+        {/switch}
     </table>
+    <!--下注列表 end --> 
+  </div>
 </div>
-
-<div id="footer"><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td align="center"><table align="center" width="450">
-<tr><td align="left"><font color='#000000'>浏览器建议：首选IE 8.0浏览器，其次为火狐浏览器。</font></td></tr>
-</table></td></tr><tr><td></td></tr></table></div>
-<br/><br/>
-</div></div>
-</BODY></HTML>
+{include file="Public:foot" /}
