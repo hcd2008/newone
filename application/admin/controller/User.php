@@ -14,12 +14,15 @@ class User extends Common
 	public function index()
 	{
 		$this->search();
+		
 		return $this->fetch();
 	}
 
 	public function search()
 	{
+		isset($this->param['my_search']) or $this->param['my_search']='';
 		$my_search = $this->param['my_search'];
+		isset($this->param['range']) or $this->param['range']='';
 		$range = (int) $this->param['range'];
 
 		if (empty($my_search)) {
@@ -29,6 +32,8 @@ class User extends Common
 		$condition = array_filter($my_search, 'value_filter');
 		$starttime = isset($this->param['starttime'])?$this->param['starttime']:'';
 		$endtime = isset($this->param['endtime'])?$this->param['endtime']:'';
+		$this->assign('starttime',$starttime);
+		$this->assign('endtime',$endtime);
 		if (!empty($starttime) && !empty($endtime)) {
 			// $condition['addtime'] = array(
 			// 	array('gt', $starttime),
@@ -66,8 +71,8 @@ class User extends Common
 			$condition['username'] = array('in', $regname);
 		}
 
-		$bank_min = $this->param['bank_min'];
-		$bank_max = $this->param['bank_max'];
+		$bank_min = isset($this->param['bank_min'])?$this->param['bank_min']:'';
+		$bank_max = isset($this->param['bank_max'])?$this->param['bank_max']:'';
 		if (!empty($bank_min) && !empty($bank_max) && is_numeric($bank_min) && is_numeric($bank_max)) {
 			// $condition['money'] = array(
 			// 	array('gt', $bank_min),
@@ -78,6 +83,7 @@ class User extends Common
 		}
 
 		$sortby = isset($this->param['sortby'])?$this->param['sortby']:'';
+		isset($this->param['sortbymax']) or $this->param['sortbymax']='';
 		$sortbymax = ($this->param['sortbymax'] == '1' ? 'desc' : 'asc');
 		$orderStr = '';
 

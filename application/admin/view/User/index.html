@@ -126,7 +126,7 @@ function isDeltet(){
             	<div class="viewlist">
 						<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
 						  <tr>
-						    <td height="30"><form action="__URL__/">	
+						    <td height="30"><form action="" method="post">	
 						       <table border="0" align="left" cellpadding="0" cellspacing="0">
 						            <tr>             
 						              <td >
@@ -194,7 +194,7 @@ QQ：<input style='width:90px;' type="text" id="projectno" name="my_search[qq]" 
 						  <!--第二行-->
 						   <!--列表开始-->
 						  <tr>
-						    <td>  <form action="__URL__/deleteUser" method="POST" id="formlist"> 
+						    <td>  <form action="<{:url('user/deleteUser')}>" method="POST" id="formlist"> 
 						    <input type="hidden" name="safenum" id="safenum"> 
 						      <table width="100%" border="0" align="left" cellpadding="0" cellspacing="1" bgcolor="" id="viewlist" class="viewlist">
 						          <!--表头-->
@@ -240,18 +240,18 @@ QQ：<input style='width:90px;' type="text" id="projectno" name="my_search[qq]" 
 								       
 								    </tr>
 							  {/volist}
-							       <switch name="message">
-									<case value="0">
+							       {switch name="message"}
+									{case value="0"}
 										 <tr>
 							    	<td height="37" colspan="13" align="center" class=needq><span>请选择查询条件之后进行查询<span></td>
 							            </tr>
-									</case>
-									<case value="2">
+									{/case}
+									{case value="2"}
 										<tr>
 							    	<td height="37" colspan="13" align="center" class="no-records"><span>没有找到指定条件的投注记录</span></td>
 							             </tr>
-									</case>		
-									<case value="1">
+									{/case}		
+									{case value="1"}
 									 <tr align="right">
 							    	<td height="37" colspan="25">
 							    		 <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#E9EBEF" class="pagelist">						          
@@ -265,8 +265,8 @@ QQ：<input style='width:90px;' type="text" id="projectno" name="my_search[qq]" 
 						</table> <!--分页列表结束-->
 							    	</td>
 							         </tr>
-									</case>		
-							  </switch>		  	 
+									{/case}		
+							  {/switch}		  	 
 						    </table></form></td>
 						  </tr>
 						  <!--列表结束-->

@@ -1,6 +1,9 @@
 <?php
-
-class DuoAutoAction extends Action
+namespace app\admin\controller;
+use app\admin\controller\Common;
+use think\Db;
+use think\Config;
+class DuoAuto extends Common
 {
 	private $isAutoDuo = false;
 	private $context;
@@ -12,8 +15,9 @@ class DuoAutoAction extends Action
 
 	public function _initialize()
 	{
-		header('Content-Type:text/html;charset=UTF-8');
-		$isAutoDuo = $_GET['isAutoDuo'];
+		$param=$this->request->param();
+		// $isAutoDuo = isset($this->request->param(['isAutoDuo']))?$this->request->param['isAutoDuo']:false;
+		$isAutoDuo = isset($param['isAutoDuo'])?$param['isAutoDuo']:false;
 
 		if ($isAutoDuo == 1) {
 			$this->isAutoDuo = true;
@@ -22,7 +26,7 @@ class DuoAutoAction extends Action
 
 	public function my18()
 	{
-		$DaoMy18 = d('My18Auto');
+		$DaoMy18 = Db::table('my18_pay_temp');
 		$where['Memo'] = '';
 		$data = $DaoMy18->where($where)->find();
 
@@ -47,8 +51,8 @@ class DuoAutoAction extends Action
 		$data_u18['Memo'] = '1';
 		$where['o_id'] = $o_id;
 		$where['M_name'] = $M_name;
-		$DaoMy18->where($where)->data($data_u18)->save();
-		$DaoAccount = m('Account');
+		$DaoMy18->where($where)->update($data_u18);
+		$DaoAccount = Db::name('Account');
 		$where_a['accountnum'] = $o_id;
 		$where_a['username'] = $username;
 		$count = $DaoAccount->where($where_a)->count();
@@ -57,7 +61,7 @@ class DuoAutoAction extends Action
 			return NULL;
 		}
 
-		$DaoUser = m('user');
+		$DaoUser = Db::name('user');
 		$where_u['id'] = $u_id;
 		$data_u = $DaoUser->where($where_u)->find();
 
@@ -78,22 +82,22 @@ class DuoAutoAction extends Action
 		$data_a['accounttype'] = 6;
 		$data_a['beizhu'] = $beizhu;
 		$data_a['state'] = 0;
-		$DaoAccount->add($data_a);
+		$DaoAccount->insert($data_a);
 		$sql = 'update jiang_user set money=money+' . $addmoney . ' where id=' . $u_id;
-		$DaoUser->execute($sql);
-		$DaoMessage = m('message');
+		Db::query($sql);
+		$DaoMessage = Db::name('message');
 		$ajaxStr['type'] = 2;
 		$ajaxStr['username'] = $username;
 		$ajaxStr['yinkui'] = $addmoney;
 		$ajaxStr['addtime'] = date('Y-m-d H:i:s');
-		$DaoMessage->add($ajaxStr);
+		$DaoMessage->insert($ajaxStr);
 
-		if (c('dlfy') == 1) {
+		if (Config::get('dlfy') == 1) {
 			$this->autoFanXian($username, $shijiChongZhi, $o_time);
 		}
 
-		if (c('dlfh') == 1) {
-			if (c('DB_NAME') != 'jiang_msgj') {
+		if (Config::get('dlfh') == 1) {
+			if (Config::get('database') != 'jiang_msgj') {
 				$this->autoFengHong($username, $shijiChongZhi, $o_time, 0);
 			}
 		}
@@ -109,25 +113,26 @@ class DuoAutoAction extends Action
 			return NULL;
 		}
 
-		$DaoAccount = m('account');
+		$DaoAccount = Db::name('account');
 		$cztime = date('Y-m-d H:i:s', strtotime($addtime) - 600);
 		$where_one['username'] = $username;
-		$where_one['addtime'] = array(
-			array('lt', $cztime)
-			);
+
+		// $where_one['addtime'] = array(
+		// 	array('lt', $cztime)
+		// 	);
 		$where_one['accounttype'] = 6;
-		$dataOne = $DaoAccount->where($where_one)->count();
+		$dataOne = $DaoAccount->where($where_one)->where('addtime','lt',$cztime)->count();
 
 		if (0 < $dataOne) {
 			return NULL;
 		}
 
-		$DaoUser = m('User');
+		$DaoUser = Db::name('User');
 		$where_u['username'] = $username;
 		$data_u = $DaoUser->where($where_u)->find();
 		$regfrom = $data_u['regfrom'];
 		$str = ltrim(rtrim($regfrom, '|'), '|');
-		$regArr = split('\\|\\|', $str);
+		$regArr = explode('||', $str);
 		$countreg = count($regArr);
 
 		if ($countreg < 2) {
@@ -156,19 +161,19 @@ class DuoAutoAction extends Action
 			$da['beizhu'] = '代理佣金:' . $username . '会员充值';
 			$da['addtime'] = date('Y-m-d H:i:s');
 			$da['mode'] = 1;
-			$DaoAccount->add($da);
-			$DaoUser->setInc('money', array('username' => $dainame), $oneSJ);
+			$DaoAccount->insert($da);
+			$DaoUser->where('username',$username)->setInc('money', $oneSJ);
 			return NULL;
 		}
 		else {
 			$dainame1 = $regArr[$countreg - 1];
 			$dainame2 = $regArr[$countreg - 2];
-			$map['username'] = array(
-				array('eq', $dainame1),
-				array('eq', $dainame2),
-				'or'
-				);
-			$data_umap = $DaoUser->where($map)->order('regfrom desc')->select();
+			// $map['username'] = array(
+			// 	array('eq', $dainame1),
+			// 	array('eq', $dainame2),
+			// 	'or'
+			// 	);
+			$data_umap = $DaoUser->where('username',$dainame1)->whereor('username',$dainame2)->order('regfrom desc')->select();
 			$countMap = count($data_umap);
 
 			if ($countMap == 0) {
@@ -196,9 +201,9 @@ class DuoAutoAction extends Action
 				$da[1]['beizhu'] = '代理佣金:' . $username . '会员充值';
 				$da[1]['addtime'] = date('Y-m-d H:i:s');
 				$da[1]['mode'] = 1;
-				$DaoAccount->addAll($da);
-				$DaoUser->setInc('money', array('username' => $data_umap[0]['username']), $oneSJ);
-				$DaoUser->setInc('money', array('username' => $data_umap[1]['username']), $twoSJ);
+				$DaoAccount->insertAll($da);
+				$DaoUser->where('username',$data_umap[0]['username'])->setInc('money', $oneSJ);
+				$DaoUser->where('username',$data_umap[1]['username'])->setInc('money', $twoSJ);
 				return NULL;
 			}
 
@@ -222,8 +227,8 @@ class DuoAutoAction extends Action
 				$da['beizhu'] = '代理佣金:' . $username . '会员充值';
 				$da['addtime'] = date('Y-m-d H:i:s');
 				$da['mode'] = 1;
-				$DaoAccount->add($da);
-				$DaoUser->setInc('money', array('username' => $data_umap[0]['username']), $fymoey);
+				$DaoAccount->insert($da);
+				$DaoUser->where('username',$data_umap[0]['username'])->setInc('money', $fymoey);
 				return NULL;
 			}
 		}
@@ -236,12 +241,12 @@ class DuoAutoAction extends Action
 		$twoSJ = 6;
 		$threeSJ = 3;
 		$beizhuinfo = '代理分红:';
-		$Dao_fenghong = m('fenghong');
+		$Dao_fenghong = Db::name('fenghong');
 		$where_fenghong['username'] = $username;
 		$where_fenghong['type'] = $type;
 		$where_fenghong['addtime'] = date('Y-m-d');
 
-		if (c('DB_NAME') == 'jiang_dfw') {
+		if (Config::get('database') == 'jiang_dfw') {
 			$czmoney = 200;
 			$oneSJ = 12;
 			$twoSJ = 8;
@@ -256,7 +261,7 @@ class DuoAutoAction extends Action
 			return NULL;
 		}
 
-		if ((c('DB_NAME') == 'jiang_dfw') && ($type == 0)) {
+		if ((Config::get('database') == 'jiang_dfw') && ($type == 0)) {
 			if ($addmoney < $czmoney) {
 				return NULL;
 			}
@@ -274,8 +279,8 @@ class DuoAutoAction extends Action
 			}
 		}
 
-		if (($type == 0) && (c('DB_NAME') == 'jiang_dfw')) {
-			$DaoAccount = m('account');
+		if (($type == 0) && (Config::get('database') == 'jiang_dfw')) {
+			$DaoAccount = Db::name('account');
 			$cztime = date('Y-m-d 00:00:01');
 			$where_one['username'] = $username;
 			$where_one['addtime'] = array(
@@ -296,13 +301,13 @@ class DuoAutoAction extends Action
 		$data_fenghong['username'] = $username;
 		$data_fenghong['type'] = $type;
 		$data_fenghong['addtime'] = date('Y-m-d');
-		$Dao_fenghong->add($data_fenghong);
-		$DaoUser = m('User');
+		$Dao_fenghong->insert($data_fenghong);
+		$DaoUser = Db::name('User');
 		$where_u['username'] = $username;
 		$data_u = $DaoUser->where($where_u)->find();
 		$regfrom = $data_u['regfrom'];
 		$str = ltrim(rtrim($regfrom, '|'), '|');
-		$regArr = split('\\|\\|', $str);
+		$regArr = explode('||', $str);
 		$countreg = count($regArr);
 
 		if ($countreg < 2) {
@@ -322,13 +327,13 @@ class DuoAutoAction extends Action
 		$dainame1 = $regArr[$countreg - 1];
 		$dainame2 = $regArr[$countreg - 2];
 		$dainame3 = $regArr[$countreg - 3];
-		$map['username'] = array(
-			array('eq', $dainame1),
-			array('eq', $dainame2),
-			array('eq', $dainame3),
-			'or'
-			);
-		$data_umap = $DaoUser->where($map)->order('regfrom desc')->select();
+		// $map['username'] = array(
+		// 	array('eq', $dainame1),
+		// 	array('eq', $dainame2),
+		// 	array('eq', $dainame3),
+		// 	'or'
+		// 	);
+		$data_umap = $DaoUser->whereOr('username',$dainame1)->whereOr('username',$dainame2)->whereOr('username',$dainame3)->order('regfrom desc')->select();
 		$countMap = count($data_umap);
 
 		if ($countMap == 0) {
@@ -347,8 +352,8 @@ class DuoAutoAction extends Action
 				$daOne['beizhu'] = $beizhuinfo . $username . $info;
 				$daOne['addtime'] = date('Y-m-d H:i:s');
 				$daOne['mode'] = 1;
-				$DaoAccount->add($daOne);
-				$DaoUser->setInc('money', array('username' => $dainame1), $oneSJ);
+				$DaoAccount->insert($daOne);
+				$DaoUser->where('username',$dainame1)->setInc('money',$oneSJ);
 			}
 
 			if ($v['username'] == $dainame2) {
@@ -362,8 +367,8 @@ class DuoAutoAction extends Action
 				$daOne['beizhu'] = $beizhuinfo . $username . $info;
 				$daOne['addtime'] = date('Y-m-d H:i:s');
 				$daOne['mode'] = 1;
-				$DaoAccount->add($daOne);
-				$DaoUser->setInc('money', array('username' => $dainame2), $twoSJ);
+				$DaoAccount->insert($daOne);
+				$DaoUser->where('username',$dainame2)->setInc('money', $twoSJ);
 			}
 
 			if ($v['username'] == $dainame3) {
@@ -377,26 +382,26 @@ class DuoAutoAction extends Action
 				$daOne['beizhu'] = $beizhuinfo . $username . $info;
 				$daOne['addtime'] = date('Y-m-d H:i:s');
 				$daOne['mode'] = 1;
-				$DaoAccount->add($daOne);
-				$DaoUser->setInc('money', array('username' => $dainame3), $threeSJ);
+				$DaoAccount->insert($daOne);
+				$DaoUser->where('username',$dainame3)->setInc('money',$threeSJ);
 			}
 		}
 	}
 
 	public function czyl($username)
 	{
-		$DaoAccount = m('account');
+		$DaoAccount = Db::name('account');
 		$Where['username'] = $username;
 		$Where['accounttype'] = 11;
-		$Where['beizhu'] = array(
-			array('eq', '充值有礼')
-			);
-
+		// $Where['beizhu'] = array(
+		// 	array('eq', '充值有礼')
+		// 	);
+		$Where['accounttype']='充值有礼';
 		if (0 < $DaoAccount->where($Where)->count()) {
 			return NULL;
 		}
 		else {
-			$_obfuscate_6ogI80pkWQ = m('User');
+			$_obfuscate_6ogI80pkWQ = Db::name('User');
 			$where_u['username'] = $username;
 			$data_u = $_obfuscate_6ogI80pkWQ->where($where_u)->find();
 			$usm = $data_u['money'];
@@ -414,8 +419,8 @@ class DuoAutoAction extends Action
 			$da['beizhu'] = '充值有礼';
 			$da['addtime'] = date('Y-m-d H:i:s');
 			$da['mode'] = 1;
-			$_obfuscate_6ogI80pkWQ->setInc('money', array('username' => $username), $songMoney);
-			$DaoAccount->add($da);
+			$_obfuscate_6ogI80pkWQ->where('username',$username)->setInc('money', $songMoney);
+			$DaoAccount->insert($da);
 		}
 	}
 
@@ -431,7 +436,7 @@ class DuoAutoAction extends Action
 			$data['regfrom'] = $data_u['regfrom'];
 			$data['addtime'] = $time;
 			$data['usertype'] = $data_u['usertype'];
-			$this->Dao_Baobiao->data($data)->add();
+			$this->Dao_Baobiao->data($data)->insert();
 			$data_b['xiaofei'] = 0;
 			$data_b['fandian'] = 0;
 			$data_b['zhonjiang'] = 0;
@@ -447,9 +452,9 @@ class DuoAutoAction extends Action
 
 	public function autoBaobiao()
 	{
-		$this->Dao_Baobiao = m('Baobiao');
-		$this->Dao_User = m('User');
-		$DaoAccount = m('Account');
+		$this->Dao_Baobiao = Db::name('Baobiao');
+		$this->Dao_User = Db::name('User');
+		$DaoAccount = Db::name('Account');
 		$Where['isbb'] = 0;
 		$_obfuscate_IeXYIlxKqA = 75;
 		$data_account = $DaoAccount->where($Where)->limit($_obfuscate_IeXYIlxKqA)->select();
@@ -511,10 +516,10 @@ class DuoAutoAction extends Action
 			$data['yingkui'] = ($data['fandian'] + 0 + $data['zhonjiang'] + 0) - ($data['xiaofei'] + 0);
 			$_obfuscate_noJW2HiVs0['username'] = $username;
 			$_obfuscate_noJW2HiVs0['addtime'] = $Time;
-			$this->Dao_Baobiao->where($_obfuscate_noJW2HiVs0)->save($data);
+			$this->Dao_Baobiao->where($_obfuscate_noJW2HiVs0)->update($data);
 			$_obfuscate_XdJfyHUaNUovpk['isbb'] = 1;
 			$_obfuscate_XdJfyHUaNUovpk['id'] = $id;
-			$DaoAccount->save($_obfuscate_XdJfyHUaNUovpk);
+			$DaoAccount->update($_obfuscate_XdJfyHUaNUovpk);
 		}
 	}
 
@@ -525,7 +530,7 @@ class DuoAutoAction extends Action
 
 	public function isopenwinauto()
 	{
-		$_obfuscate_NWXTrwqh5P_IVE_K = m('Webconfig');
+		$_obfuscate_NWXTrwqh5P_IVE_K = Db::name('Webconfig');
 		$data = $_obfuscate_NWXTrwqh5P_IVE_K->find();
 		$isopenwinauto = $data['isopenwinauto'];
 		$this->sscsrc = $data['sscsrc'];
@@ -622,13 +627,13 @@ class DuoAutoAction extends Action
 	{
 		$url = 'http://baidu.lecai.com/lottery/draw/view/200';
 		$content = curl_file_get_contents($url);
-
 		if (empty($content)) {
 			return NULL;
 		}
 
 		$ptn = '/latest_draw_result = (.*?)latest_draw_time/is';
 		preg_match($ptn, $content, $abc);
+		print_r($abc);exit;
 		$matchstr = trim($abc[1]);
 		$issue = substr($matchstr, -19, 9);
 		$code = str_replace('"', '', substr($matchstr, 8, 19));
@@ -706,7 +711,7 @@ class DuoAutoAction extends Action
 
 		$ptn = '/em(.*)<\\/em>/is';
 		preg_match($ptn, $abc[1], $abc_code);
-		$code_arr = split('</em>', $abc_code[1]);
+		$code_arr = explode('</em>', $abc_code[1]);
 		$code = substr($code_arr[0], -1, 1) . ',' . substr($code_arr[1], -1, 1) . ',' . substr($code_arr[2], -1, 1) . ',' . substr($code_arr[3], -1, 1) . ',' . substr($code_arr[4], -1, 1);
 		$ptn = '/^\\d{9}$/';
 
@@ -758,8 +763,8 @@ class DuoAutoAction extends Action
 		$issue = date('Y') . substr($abc_iss[1], 2, 4) . '-' . substr($abc_iss[1], 6, 3);
 		$ptn = '/<div(.*)?<\\/div>/is';
 		preg_match($ptn, $abc[1], $abc_code);
-		$abc_code_split = split('</div>', $abc_code[1]);
-		$code = substr($abc_code_split[0], -1) . ',' . substr($abc_code_split[1], -1) . ',' . substr($abc_code_split[2], -1) . ',' . substr($abc_code_split[3], -1) . ',' . substr($abc_code_split[4], -1);
+		$abc_code_explode = explode('</div>', $abc_code[1]);
+		$code = substr($abc_code_explode[0], -1) . ',' . substr($abc_code_explode[1], -1) . ',' . substr($abc_code_explode[2], -1) . ',' . substr($abc_code_explode[3], -1) . ',' . substr($abc_code_explode[4], -1);
 		$flag = $this->save($issue, $code, 'SscCode', 1);
 
 		if ($flag) {
@@ -955,11 +960,11 @@ class DuoAutoAction extends Action
 		$time_startsale_fixed = date('H:i:s', strtotime($a['time_startsale_fixed']));
 		$time_endsale_fixed = date('H:i:s', strtotime($a['time_endsale_fixed']));
 		$time_draw_fixed = date('H:i:s', strtotime($a['time_draw_fixed']));
-		$DaoXsc = m('XscTime');
+		$DaoXsc = Db::name('XscTime');
 		$currIss = sprintf('%d', substr($issue, -2));
 		$where_c['lottery_num'] = $currIss;
 		$data_c['endtime'] = $time_startsale_fixed;
-		$DaoXsc->where($where_c)->data($data_c)->save();
+		$DaoXsc->where($where_c)->update($data_c);
 		$where_x['lottery_num'] = $issue1;
 		$data_x['begintime'] = $time_startsale_fixed;
 		$data_x['endtime'] = $time_endsale_fixed;
@@ -969,7 +974,7 @@ class DuoAutoAction extends Action
 		$DaoXsc->where($where_xw)->count();
 
 		if ($DaoXsc->where($where_xw)->count() == 0) {
-			$DaoXsc->where($where_x)->data($data_x)->save();
+			$DaoXsc->where($where_x)->update($data_x);
 		}
 	}
 
@@ -1010,11 +1015,11 @@ class DuoAutoAction extends Action
 		$time_startsale_fixed = date('H:i:s', strtotime($cTermDT . ' - 1 minute'));
 		$time_endsale_fixed = date('H:i:s', strtotime($nTermDT . ' - 1 minute'));
 		$time_draw_fixed = date('H:i:s', strtotime($nTermDT));
-		$DaoXsc = m('XscTime');
+		$DaoXsc = Db::name('XscTime');
 		$currIss = sprintf('%d', substr($issue, -2));
 		$where_c['lottery_num'] = $currIss;
 		$data_c['endtime'] = $time_startsale_fixed;
-		$DaoXsc->where($where_c)->data($data_c)->save();
+		$DaoXsc->where($where_c)->update($data_c);
 		$where_x['lottery_num'] = $issue1;
 		$data_x['begintime'] = $time_startsale_fixed;
 		$data_x['endtime'] = $time_endsale_fixed;
@@ -1024,7 +1029,7 @@ class DuoAutoAction extends Action
 		$cdbd = $DaoXsc->where($where_xw)->count();
 
 		if ($cdbd == 0) {
-			$DaoXsc->where($where_x)->data($data_x)->save();
+			$DaoXsc->where($where_x)-udpate($data_x);
 		}
 	}
 
@@ -1274,6 +1279,7 @@ class DuoAutoAction extends Action
 
 		$url = 'http://www.lecai.com/lottery/ajax_latestdrawn.php?lottery_type=4';
 		$CONTENT = curl_file_get_contents($url);
+		print_r($CONTENT); exit;
 		$m = json_decode($CONTENT, true);
 		$issue = $m['data'][0]['phase'];
 		$codeArr = $m['data'][0]['result']['result'][0]['data'];
@@ -1434,35 +1440,35 @@ class DuoAutoAction extends Action
 		$content = ltrim(rtrim($content, '})'), '{(');
 		$ptn = '/id(.*?)分/is';
 		preg_match($ptn, $content, $abc);
-		$lhdata = split(',', str_ireplace('\'', '', $abc[0]));
-		$year_arr = split(':', $lhdata[2]);
+		$lhdata = explode(',', str_ireplace('\'', '', $abc[0]));
+		$year_arr = explode(':', $lhdata[2]);
 		$year = $year_arr[1];
-		$day_arr = split(':', $lhdata[3]);
+		$day_arr = explode(':', $lhdata[3]);
 		$month = substr($day_arr[1], 0, 2);
 		$day = substr($day_arr[1], 5, 2);
-		$time_arr = split(':', $lhdata[4]);
+		$time_arr = explode(':', $lhdata[4]);
 		$hour = substr($time_arr[1], 0, 2);
 		$minute = substr($time_arr[1], 5, 2);
 		$opentime = $year . '-' . $month . '-' . $day . ' ' . $hour . ':' . $minute . ':00';
 		$endtime = $opentime;
-		$num_arr = split(':', $lhdata[1]);
+		$num_arr = explode(':', $lhdata[1]);
 		$lottery_num = $year . $num_arr[1];
-		$issue_arr = split(':', $lhdata[0]);
+		$issue_arr = explode(':', $lhdata[0]);
 		$issue = $year . $issue_arr[1];
 		$data_lhctime['id'] = 1;
 		$data_lhctime['endtime'] = $endtime;
 		$data_lhctime['opentime'] = $opentime;
 		$data_lhctime['lottery_num'] = $lottery_num;
-		$Dao_lhctime = m('lhcTime');
+		$Dao_lhctime = Db::name('lhcTime');
 		$nowtime = date('H:i:s');
 
 		if (strtotime('21:30:00') < strtotime($nowtime)) {
-			$Dao_lhctime->save($data_lhctime);
+			$Dao_lhctime->update($data_lhctime);
 		}
 
 		$ptn = '/\\[(.*?)\\]/is';
 		preg_match($ptn, $content, $ddc);
-		$lhdataCode = split(',', str_ireplace('\'', '', $ddc[1]));
+		$lhdataCode = explode(',', str_ireplace('\'', '', $ddc[1]));
 		$code = $lhdataCode[0] . ',' . $lhdataCode[3] . ',' . $lhdataCode[6] . ',' . $lhdataCode[9] . ',' . $lhdataCode[12] . ',' . $lhdataCode[15] . ',' . $lhdataCode[18];
 		if (empty($lhdataCode[18]) || empty($lhdataCode[19]) || empty($lhdataCode[20])) {
 			return false;
@@ -1504,8 +1510,8 @@ class DuoAutoAction extends Action
 			exit();
 		}
 
-		$DaoCode = m($codeModelName);
-		$DaoLast = m('lastissue');
+		$DaoCode = Db::name($codeModelName);
+		$DaoLast = Db::name('lastissue');
 		$where['issue'] = $issue;
 
 		if (!$DaoCode->where($where)->find()) {
@@ -1518,14 +1524,14 @@ class DuoAutoAction extends Action
 				$data['sb'] = $sb;
 			}
 
-			if ($DaoCode->data($data)->add()) {
+			if ($DaoCode->data($data)->insert()) {
 				unset($data['code']);
-				$DaoLast->where(array('lotteryid' => $lotteryid))->data($data)->save();
+				$DaoLast->where(array('lotteryid' => $lotteryid))->update($data);
 				return true;
 			}
 		}
 		else {
-			$DaoOrder = m('Order');
+			$DaoOrder = Db::name('Order');
 			$where['state'] = 0;
 			$where['lotteryid'] = $lotteryid;
 
