@@ -100,6 +100,14 @@ function checkForm(obj)
 	
 </style>
 <div class="pagemain">
+<div class="geren_menu">
+      <ul>
+          <li class="current"><a href="<{:url('index/Account/index')}>"><img alt="" src="__ASSETS__/images/icon/icon (14).png">帐变列表</a></li>
+          <li><a href="<{:url('index/Report/reportList')}>"><img alt="" src="__ASSETS__/images/icon/icon (3).png">报表查询</a></li>
+          <li><a href="<{:url('index/Report/countFd')}>"><img alt="" src="__ASSETS__/images/icon/icon (18).png">返点查询</a></li>
+          <li><a href="<{:url('index/Report/todayReport')}>"><img alt="" src="__ASSETS__/images/icon/icon (8).png">今日报表</a></li>
+      </ul>
+</div>
 <table class='table_b' border="0" cellspacing="0" cellpadding="0">
 <form action="" method="get" name="search" onsubmit="return checkForm(this)">
 <input type="hidden" name="isrequery" value="1" />
@@ -197,7 +205,7 @@ function checkForm(obj)
 		{/case}		
 		{case value="1"}
 		 <tr align="right">
-    	<td height="37" colspan="25"><{@$page}></td>
+    	<td height="37" colspan="25"><?php echo $page; ?></td>
          </tr>
 		{/case}		
   {/switch}

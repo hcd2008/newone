@@ -29,6 +29,14 @@ function checkform(obj)
     }
 </style>
 <div class="pagemain">
+<div class="geren_menu">
+      <ul>
+          <li class="current"><a href="<{:url('index/user/editPwd')}>"><img alt="" src="__ASSETS__/images/icon/icon (30).png">修改密码</a></li>
+          <li><a href="<{:url('index/user/showChonZhi')}>"><img alt="" src="__ASSETS__/images/icon/icon (31).png">充值申请</a></li>
+          <li><a href="<{:url('index/user/showZhiJinPwd',array('flag'=>'tx'))}>"><img alt="" src="__ASSETS__/images/icon/icon (32).png">提现申请</a></li>
+          <li><a href="<{:url('index/user/showZhiJinPwd',array('flag'=>'yhk'))}>"><img alt="" src="__ASSETS__/images/icon/icon (33).png">我的资料</a></li>
+      </ul>
+</div>
 <form action="<{:url('index/user/updateLogPwd')}>" method="post" name="changepass" onsubmit="return checkform(this)">
 <table class="table_b" border="0" cellspacing="0" cellpadding="0">
 <tr><th colspan="2" align='left'>&nbsp; A. 修改登陆密码</th></tr>

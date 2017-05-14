@@ -9,7 +9,7 @@ form{padding:0px;margin:0px}
 .yh{ font-family:YaHeiConsolas,"Microsoft YaHei","宋体" !important }
 
 .message{background: #F3F8FE;border: 1px solid #8BC0E7;padding: 5px;color: #666;margin: 0 0 10px 0}
-h1{height:32px;width:100%;border-bottom:1px #D6AC83 solid;background:#F4F5F9;font-size:14px;margin: 0 0 6px 0;overflow:hidden;*margin-top:-7px;*padding-bottom:9px;}
+h1{height:32px;width:100%;border-bottom:1px #fefefe solid;font-size:14px;margin: 0 0 6px 0;overflow:hidden;*margin-top:-7px;*padding-bottom:9px;}
 h1 span{zoom:1}h1 .action-span{float:right;margin: 4px 10px 3px 5px;*margin:11px 10px 0px 5px}
 h1 .action-span a{color:#666;font-size:12px;font-weight:400;text-decoration:none;display:block;padding:3px 7px 3px 25px;
 *padding:5px 7px 3px 25px;border:1px solid #999;border-right:2px solid #999;border-bottom:2px solid #999;
@@ -17,7 +17,7 @@ background:#FFF url('/images/v1/icon_add.gif') no-repeat 3px center;*background:
 h1 .action-span a:hover{border:1px solid #CC6600;
 border-right:2px solid #CC6600; border-bottom:2px solid #CC6600;background:#FEF2F1 url('/images/v1/icon_add.gif') no-repeat 3px center;
 *background:#FEF2F1 url('/images/v1/icon_add.gif') no-repeat 3px 3px;color:#8C4600;text-decoration:none}
-.action-span1{color:#666666;display:block;float:left;margin-left:10px!important;margin-left:5px;margin-top:0!important;margin-top:10px;height:32px;line-height:32px;font-weight:normal}
+.action-span1{color:#fff;display:block;float:left;margin-left:10px!important;margin-left:5px;margin-top:0!important;margin-top:10px;height:32px;line-height:32px;font-weight:normal;font-size: 12px;}
 h1 .action-span1 a{color:#333;text-decoration:none}
 h1 .action-span1 a:hover{color:#F30}
 #footer{width:100%;border:1px #CCC solid;background:#F4FAFB;position:relative;font-size: 12px;margin-top: 12px;overflow:hidden;text-align:center;line-height:20px;color:#666}
