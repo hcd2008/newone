@@ -1279,7 +1279,10 @@ class DuoAuto extends Common
 
 		$url = 'http://www.lecai.com/lottery/ajax_latestdrawn.php?lottery_type=4';
 		$CONTENT = curl_file_get_contents($url);
-		print_r($CONTENT); exit;
+		if($CONTENT==''){
+			echo "结果为空";
+			exit;
+		}
 		$m = json_decode($CONTENT, true);
 		$issue = $m['data'][0]['phase'];
 		$codeArr = $m['data'][0]['result']['result'][0]['data'];
@@ -1312,13 +1315,13 @@ class DuoAuto extends Common
 
 		$url = 'http://www.500wan.com/static/info/kaijiang/xml/plw/list10.xml';
 		$CONTENT = curl_file_get_contents($url);
-		$DOC = new DOMDocument();
+		$DOC = new \DOMDocument();
 		$DOC->loadXML($CONTENT);
 		$Row = $DOC->getElementsByTagName('row');
 		$issue = $Row->item(0)->attributes->item(0)->nodeValue;
 		$CODE = $Row->item(0)->attributes->item(1)->nodeValue;
-		$flag = $this->save($issue, $CODE, 'plsCode', 10);
-
+		$flag = $this->save($issue, $CODE, 'plsCode', 10,'');
+		//hcd
 		if ($flag) {
 			$data['flag'] = true;
 			$data['lotteryid'] = 10;
@@ -1331,7 +1334,6 @@ class DuoAuto extends Common
 			$data['issue'] = $issue;
 			$data['str'] = '排列三、五:' . $issue . ':' . $CODE;
 		}
-
 		$_obfuscate_nT44rgz3TQ = json_encode($data);
 		echo $_obfuscate_nT44rgz3TQ;
 	}
@@ -1345,7 +1347,9 @@ class DuoAuto extends Common
 
 		$url = 'http://www.lecai.com/lottery/ajax_latestdrawn.php?lottery_type=52';
 		$CONTENT = curl_file_get_contents($url);
+		echo $CONTENT;exit;
 		$m = json_decode($CONTENT, true);
+		print_r($m);exit;
 		$issue = $m['data'][0]['phase'];
 		$codeArr = $m['data'][0]['result']['result'][0]['data'];
 		$CODE = '*,*,' . implode(',', $codeArr);
@@ -1377,13 +1381,13 @@ class DuoAuto extends Common
 
 		$url = 'http://www.500wan.com/static/info/kaijiang/xml/sd/list10.xml';
 		$CONTENT = curl_file_get_contents($url);
-		$DOC = new DOMDocument();
+		$DOC = new \DOMDocument();
 		$DOC->loadXML($CONTENT);
 		$Row = $DOC->getElementsByTagName('row');
 		$issue = $Row->item(0)->attributes->item(0)->nodeValue;
 		$CODE = $Row->item(0)->attributes->item(1)->nodeValue;
 		$CODE = '*,*,' . $CODE;
-		$flag = $this->save($issue, $CODE, 'fucaiCode', 9);
+		$flag = $this->save($issue, $CODE, 'fucaiCode', 9,'');
 
 		if ($flag) {
 			$data['flag'] = true;
@@ -1503,30 +1507,27 @@ class DuoAuto extends Common
 		echo $ajaxStr;
 	}
 
-	public function save($issue, $code, $codeModelName, $lotteryid, $sx, $sb)
+	public function save($issue, $code, $codeModelName, $lotteryid, $sx, $sb='')
 	{
 		if (empty($issue) || empty($code)) {
 			echo '由于网络原因读取失败,请重新读取!';
 			exit();
 		}
-
 		$DaoCode = Db::name($codeModelName);
 		$DaoLast = Db::name('lastissue');
 		$where['issue'] = $issue;
-
-		if (!$DaoCode->where($where)->find()) {
+		if (!Db::name($codeModelName)->where($where)->count()) {
 			$data['issue'] = $issue;
 			$data['code'] = $code;
 			$data['addtime'] = date('Y-m-d H:i:s');
-
+			//hcd
 			if ($codeModelName == 'lhcCode') {
 				$data['sx'] = $sx;
 				$data['sb'] = $sb;
 			}
-
-			if ($DaoCode->data($data)->insert()) {
+			if (Db::name($codeModelName)->insert($data)) {
 				unset($data['code']);
-				$DaoLast->where(array('lotteryid' => $lotteryid))->update($data);
+				$DaoLast->where('lotteryid',$lotteryid)->update($data);
 				return true;
 			}
 		}
@@ -1534,7 +1535,6 @@ class DuoAuto extends Common
 			$DaoOrder = Db::name('Order');
 			$where['state'] = 0;
 			$where['lotteryid'] = $lotteryid;
-
 			if ($DaoOrder->where($where)->limit(1)->find()) {
 				return true;
 			}

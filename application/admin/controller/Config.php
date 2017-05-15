@@ -116,7 +116,7 @@ class Config extends Common
 	public function gonggao()
 	{
 		$Daogonggao = Db::name('Gonggao');
-		$data = $Daogonggao->order('addtime desc')->findAll();
+		$data = $Daogonggao->order('addtime desc')->select();
 		$this->assign('list', $data);
 		return $this->fetch();
 	}
@@ -354,7 +354,7 @@ class Config extends Common
 	public function admin()
 	{
 		$DaoAdmin = Db::name('Admin');
-		$dataAdmin = $DaoAdmin->findAll();
+		$dataAdmin = $DaoAdmin->select();
 		$this->assign('list', $dataAdmin);
 		return $this->fetch();
 	}

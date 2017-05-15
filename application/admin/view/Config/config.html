@@ -75,7 +75,7 @@ function checkform(obj)
                <tr>
                 <td width="32%"  align="right">53客服帐号：</td>
                 <td width="3%">&nbsp;</td>
-                <td ><input name="53kf" type="text" id="53kf" size="36" value="<{$kf}>" > </td>               
+                <td ><input name="53kf" type="text" id="53kf" size="36" value="<{$53kf}>" > </td>               
               </tr>
 			   <tr>
                 <td width="32%"  align="right">重庆自动采集源： </td>
@@ -83,11 +83,11 @@ function checkform(obj)
                 <td >
                 &nbsp; 
 				<select name='sscsrc'>
-					<option value='1' <eq name="sscsrc" value="1">selected="selected"</eq>>源1</option>
-					<option value='2' <eq name="sscsrc" value="2">selected="selected"</eq>>源2</option>
-					<option value='3' <eq name="sscsrc" value="3">selected="selected"</eq>>源3</option>
-					<option value='4' <eq name="sscsrc" value="4">selected="selected"</eq>>源4</option>
-					<option value='5' <eq name="sscsrc" value="5">selected="selected"</eq>>源5</option>
+					<option value='1' {eq name="sscsrc" value="1"}selected="selected"{/eq}>源1</option>
+					<option value='2' {eq name="sscsrc" value="2"}selected="selected"{/eq}>源2</option>
+					<option value='3' {eq name="sscsrc" value="3"}selected="selected"{/eq}>源3</option>
+					<option value='4' {eq name="sscsrc" value="4"}selected="selected"{/eq}>源4</option>
+					<option value='5' {eq name="sscsrc" value="5"}selected="selected"{/eq}>源5</option>
 				</select>　　
                       </td>               
               </tr>
@@ -97,11 +97,11 @@ function checkform(obj)
                 <td >
                 &nbsp; 
 				<select name='xscsrc'>
-					<option value='1' <eq name="xscsrc" value="1">selected="selected"</eq>>源1</option>
-					<option value='2' <eq name="xscsrc" value="2">selected="selected"</eq>>源2</option>
-					<option value='3' <eq name="xscsrc" value="3">selected="selected"</eq>>源3</option>
-					<option value='4' <eq name="xscsrc" value="4">selected="selected"</eq>>源4</option>
-					<option value='5' <eq name="xscsrc" value="5">selected="selected"</eq>>源5</option>
+					<option value='1' {eq name="xscsrc" value="1"}selected="selected"{/eq}>源1</option>
+					<option value='2' {eq name="xscsrc" value="2"}selected="selected"{/eq}>源2</option>
+					<option value='3' {eq name="xscsrc" value="3"}selected="selected"{/eq}>源3</option>
+					<option value='4' {eq name="xscsrc" value="4"}selected="selected"{/eq}>源4</option>
+					<option value='5' {eq name="xscsrc" value="5"}selected="selected"{/eq}>源5</option>
 				</select>　　
                       </td>               
               </tr>
@@ -111,11 +111,11 @@ function checkform(obj)
                 <td >
                 &nbsp; 
 				<select name='xjcsrc'>
-					<option value='1' <eq name="xjcsrc" value="1">selected="selected"</eq>>源1</option>
-					<option value='2' <eq name="xjcsrc" value="2">selected="selected"</eq>>源2</option>
-					<option value='3' <eq name="xjcsrc" value="3">selected="selected"</eq>>源3</option>
-					<option value='4' <eq name="xjcsrc" value="4">selected="selected"</eq>>源4</option>
-					<option value='5' <eq name="xjcsrc" value="5">selected="selected"</eq>>源5</option>
+					<option value='1' {eq name="xjcsrc" value="1"}selected="selected"{/eq}>源1</option>
+					<option value='2' {eq name="xjcsrc" value="2"}selected="selected"{/eq}>源2</option>
+					<option value='3' {eq name="xjcsrc" value="3"}selected="selected"{/eq}>源3</option>
+					<option value='4' {eq name="xjcsrc" value="4"}selected="selected"{/eq}>源4</option>
+					<option value='5' {eq name="xjcsrc" value="5"}selected="selected"{/eq}>源5</option>
 				</select>　　
                       </td>               
               </tr>
@@ -123,9 +123,9 @@ function checkform(obj)
                 <td width="32%"  align="right">是否开启平台： </td>
                 <td width="3%">&nbsp;</td>
                 <td >
-                &nbsp; <input type="radio" name="isopenweb" value="1" <eq name="isopenweb" value="1">checked</eq> >
+                &nbsp; <input type="radio" name="isopenweb" value="1" {eq name="isopenweb" value="1"}checked{/eq} >
                       开启　　 
-                      <input type="radio" name="isopenweb" value="0" <eq name="isopenweb" value="0">checked</eq> >
+                      <input type="radio" name="isopenweb" value="0" {eq name="isopenweb" value="0"}checked{/eq} >
                       关闭　　
                       </td>               
               </tr>
@@ -133,26 +133,26 @@ function checkform(obj)
                 <td width="32%"  align="right">是否开启自动开奖： </td>
                 <td width="3%">&nbsp;</td>
                 <td >
-                &nbsp; <input type="radio" name="isopenwinauto" value="1" <eq name="isopenwinauto" value="1">checked</eq> >
+                &nbsp; <input type="radio" name="isopenwinauto" value="1" {eq name="isopenwinauto" value="1"}checked{/eq} >
                       开启　　 
-                      <input type="radio" name="isopenwinauto" value="0" <eq name="isopenwinauto" value="0">checked</eq> >
+                      <input type="radio" name="isopenwinauto" value="0" {eq name="isopenwinauto" value="0"}checked{/eq} >
                       关闭　　
                       </td>               
               </tr>
                <tr>
                 <td width="32%"  align="right">是否开启报表查询：</td>
                 <td width="3%">&nbsp;</td>
-                <td >&nbsp; <input type="radio" name="isbaobiao" value="1" <eq name="isbaobiao" value="1">checked</eq>>
+                <td >&nbsp; <input type="radio" name="isbaobiao" value="1" {eq name="isbaobiao" value="1"}checked{/eq}>
                       开启　　 
-                      <input type="radio" name="isbaobiao" value="0" <eq name="isbaobiao" value="0">checked</eq>>
+                      <input type="radio" name="isbaobiao" value="0" {eq name="isbaobiao" value="0"}checked{/eq}>
                       关闭　　</td>               
               </tr>
                <tr>
                 <td width="32%"  align="right">是否开启推荐注册：</td>
                 <td width="3%">&nbsp;</td>
-                <td >&nbsp; <input type="radio" name="isreg" value="1" <eq name="isreg" value="1">checked</eq>>
+                <td >&nbsp; <input type="radio" name="isreg" value="1" {eq name="isreg" value="1"}checked{/eq}>
                       开启　　 
-                      <input type="radio" name="isreg" value="0" <eq name="isreg" value="0">checked</eq>>
+                      <input type="radio" name="isreg" value="0" {eq name="isreg" value="0"}checked{/eq}>
                       关闭　　</td>               
               </tr>
                 <tr>
