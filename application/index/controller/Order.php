@@ -413,6 +413,7 @@ class Order extends Base
 		$_obfuscate_8Iu1['data_method'] = json_encode($lottery->getMethodData());
 		$_obfuscate_8Iu1['data_issue'] = json_encode($lottery->getIssue());
 		$_obfuscate_8Iu1['lotterylist'] = $lottery->getLotteryData();
+		// print_r($this->orderList); exit;
 		$_obfuscate_8Iu1['orderList'] = $this->orderList;
 		$_obfuscate_8Iu1['message'] = $this->message;
 		$this->assign($_obfuscate_8Iu1);
@@ -426,8 +427,7 @@ class Order extends Base
 
 		if (empty($newLmData)) {
 			$newLmData = array();
-			$Dao = m();
-			$lmdata = $Dao->query('SELECT l.lotteryid,l.lotteryname,m.methodid,m.methodname FROM `jiang_lottery` as l,`jiang_method` as m  WHERE l.lotteryid=m.lotteryid ;');
+			$lmdata = Db::query('SELECT l.lotteryid,l.lotteryname,m.methodid,m.methodname FROM `jiang_lottery` as l,`jiang_method` as m  WHERE l.lotteryid=m.lotteryid ;');
 
 			foreach ($lmdata as $v ) {
 				$newLmData[$v['methodid']] = $v;
