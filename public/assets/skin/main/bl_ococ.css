@@ -1,5 +1,5 @@
 @import url("bl_stand.css");
-body{font:12px/150% Arial,"微软雅黑","Microsoft Sans Serif","宋体";text-align:left;}
+body{color:#ffffff;font:12px/150% Arial,"微软雅黑","Microsoft Sans Serif","宋体";text-align:left;}
 
 #mainbody{ margin-top:7px}
 .gamemain{width:912px; padding:0px 0px; margin:0 auto;height:auto;min-height:550px;_height:550px; padding-top:280px}
