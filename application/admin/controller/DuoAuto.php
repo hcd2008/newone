@@ -625,34 +625,71 @@ class DuoAuto extends Common
 
 	public function sscLeHe()
 	{
-		$url = 'http://baidu.lecai.com/lottery/draw/view/200';
-		$content = curl_file_get_contents($url);
-		if (empty($content)) {
-			return NULL;
-		}
+		// $url = 'http://baidu.lecai.com/lottery/draw/view/200';
+		// $content = curl_file_get_contents($url);
+		// if (empty($content)) {
+		// 	return NULL;
+		// }
+		// $ptn='/<span class="sl-draw-sell-red" id="cqssc_latest_draw_phase">(.*?)<\/span>/is';
+		// $ptn='/<span class="text2 red_big">(.*?)<\/span>/is';
+		// // $ptn='/<div class="page3">(.*?)<\/div> <div id="Foot">/is';
+		// // $ptn = '/latest_draw_result = (.*?)latest_draw_time/is';
+		// preg_match($ptn, $content, $abc);
+		// print_r($abc);exit;
+		// $matchstr = trim($abc[1]);
+		// $issue = substr($matchstr, -19, 9);
+		// $code = str_replace('"', '', substr($matchstr, 8, 19));
+		// $iss120 = substr($issue, -3);
 
-		$ptn = '/latest_draw_result = (.*?)latest_draw_time/is';
-		preg_match($ptn, $content, $abc);
-		print_r($abc);exit;
-		$matchstr = trim($abc[1]);
-		$issue = substr($matchstr, -19, 9);
-		$code = str_replace('"', '', substr($matchstr, 8, 19));
-		$iss120 = substr($issue, -3);
+		// if ($iss120 == '120') {
+		// 	$nowtime = date('H:i:s');
 
-		if ($iss120 == '120') {
-			$nowtime = date('H:i:s');
+		// 	if (strtotime($nowtime) < strtotime('00:10:10')) {
+		// 		$issue = date('ymd', strtotime('-1 day')) . '120';
+		// 	}
+ 
+		// 	if (strtotime('23:58:30') < strtotime($nowtime)) {
+		// 		$issue = date('ymd') . '120';
+		// 	}
+		// }
 
-			if (strtotime($nowtime) < strtotime('00:10:10')) {
-				$issue = date('ymd', strtotime('-1 day')) . '120';
-			}
+		// $flag = $this->save($issue, $code, 'SscCode', 1);
 
-			if (strtotime('23:58:30') < strtotime($nowtime)) {
-				$issue = date('ymd') . '120';
-			}
-		}
+		// if ($flag) {
+		// 	$data['flag'] = true;
+		// 	$data['lotteryid'] = 1;
+		// 	$data['issue'] = $issue;
+		// 	$data['str'] = '重庆彩:' . $issue . ':' . $code;
+		// }
+		// else {
+		// 	$data['flag'] = false;
+		// 	$data['lotteryid'] = 1;
+		// 	$data['issue'] = $issue;
+		// 	$data['str'] = '重庆彩:' . $issue . ':' . $code;
+		// }
 
-		$flag = $this->save($issue, $code, 'SscCode', 1);
-
+		// $ajaxStr = json_encode($data);
+		// echo $ajaxStr;
+		$date=date('Y-m-d');
+		$url='http://baidu.lecai.com/lottery/ajax_latestdrawn.php?lottery_type=200';
+		$refrer='http://baidu.lecai.com/lottery/draw/view/200';
+		$agent='Mozilla/5.0 (Windows NT 6.1; WOW64; rv:53.0) Gecko/20100101 Firefox/53.0';
+		// $url='http://www.baidu.com';
+		// $jg=$this->_get($url,"http://baidu.lecai.com/lottery/draw/view/200");
+		// $ch=curl_init();
+		// curl_setopt($ch, CURLOPT_URL, $url);
+		// curl_setopt($ch,CURLOPT_REFERER,'http://baidu.lecai.com/lottery/draw/view/200');
+		// curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
+		// curl_setopt($ch,CURLOPT_USERAGENT,'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:53.0) Gecko/20100101 Firefox/53.0');
+		// curl_setopt($ch,CURLOPT_HEADER,0);
+		// $output=curl_exec($ch);
+		// $info=json_decode($output,true);
+		$info=$this->_get($url,$refrer,$agent);
+		$issue=$info['data'][0]['phase'];
+		$issue=substr($issue,2);
+		$codearr=$info['data'][0]['result']['result'][0]['data'];
+		$code=implode($codearr,',');
+		$flag =$this->save($issue, $code, 'sscCode', 1);
 		if ($flag) {
 			$data['flag'] = true;
 			$data['lotteryid'] = 1;
@@ -669,7 +706,28 @@ class DuoAuto extends Common
 		$ajaxStr = json_encode($data);
 		echo $ajaxStr;
 	}
-
+	/**
+	 * 模拟get请求
+	 * @Author   黄传东
+	 * @DateTime 2017-06-19T15:21:34+0800
+	 * @return   [type]                   [description]
+	 */
+	public function _get($url,$refer='',$agent=''){
+		$ch=curl_init();
+		curl_setopt($ch, CURLOPT_URL, $url);
+		curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
+		curl_setopt($ch,CURLOPT_HEADER,0);
+		if($refer!=''){
+			curl_setopt($ch,CURLOPT_REFERER,$refer);
+		}
+		if($agent!=''){
+			curl_setopt($ch,CURLOPT_USERAGENT,$agent);
+		}
+		$output=curl_exec($ch);
+		curl_close($ch);
+		$info=json_decode($output,true);
+		return $info;
+	}
 	public function _strip_tags($tags_a, $str)
 	{
 		foreach ($tags_a as $tag) {
@@ -1269,7 +1327,7 @@ class DuoAuto extends Common
 		$ajaxStr = json_encode($data);
 		echo $ajaxStr;
 	}
-
+	//hcd pls
 	public function plsLeHe()
 	{
 		if (!$this->isDuo(10)) {
@@ -1277,29 +1335,37 @@ class DuoAuto extends Common
 			return NULL;
 		}
 
-		$url = 'http://www.lecai.com/lottery/ajax_latestdrawn.php?lottery_type=4';
-		$CONTENT = curl_file_get_contents($url);
-		if($CONTENT==''){
-			echo "结果为空";
-			exit;
-		}
-		$m = json_decode($CONTENT, true);
-		$issue = $m['data'][0]['phase'];
-		$codeArr = $m['data'][0]['result']['result'][0]['data'];
-		$CODE = implode(',', $codeArr);
-		$flag = $this->save($issue, $CODE, 'plsCode', 10);
+		$url = 'http://baidu.lecai.com/lottery/ajax_latestdrawn.php?lottery_type=4';
+		$refrer='http://baidu.lecai.com/lottery/draw/view/200';
+		$agent='Mozilla/5.0 (Windows NT 6.1; WOW64; rv:53.0) Gecko/20100101 Firefox/53.0';
+		$res=$this->_get($url,$refrer,$agent);
+		$codeArr=$res['data'][0]['result']['result'][0]['data'];
+		$code=implode(',',$codeArr);
+		$issue=$res['data'][0]['phase'];
+
+		// $CONTENT = curl_file_get_contents($url);
+		// if($CONTENT==''){
+		// 	echo "结果为空";
+		// 	exit;
+		// }
+		// $m = json_decode($CONTENT, true);
+		// $issue = $m['data'][0]['phase'];
+		// $codeArr = $m['data'][0]['result']['result'][0]['data'];
+		// $CODE = implode(',', $codeArr);
+		
+		$flag = $this->save($issue, $code, 'plsCode', 10);
 
 		if ($flag) {
 			$data['flag'] = true;
 			$data['lotteryid'] = 10;
 			$data['issue'] = $issue;
-			$data['str'] = '排列三、五:' . $issue . ':' . $CODE;
+			$data['str'] = '排列三、五:' . $issue . ':' . $code;
 		}
 		else {
 			$data['flag'] = false;
 			$data['lotteryid'] = 10;
 			$data['issue'] = $issue;
-			$data['str'] = '排列三、五:' . $issue . ':' . $CODE;
+			$data['str'] = '排列三、五:' . $issue . ':' . $code;
 		}
 
 		$_obfuscate_nT44rgz3TQ = json_encode($data);
@@ -1345,27 +1411,35 @@ class DuoAuto extends Common
 			return NULL;
 		}
 
-		$url = 'http://www.lecai.com/lottery/ajax_latestdrawn.php?lottery_type=52';
-		$CONTENT = curl_file_get_contents($url);
-		echo $CONTENT;exit;
-		$m = json_decode($CONTENT, true);
-		print_r($m);exit;
-		$issue = $m['data'][0]['phase'];
-		$codeArr = $m['data'][0]['result']['result'][0]['data'];
-		$CODE = '*,*,' . implode(',', $codeArr);
-		$flag = $this->save($issue, $CODE, 'fucaiCode', 9);
+		$url = 'http://baidu.lecai.com/lottery/ajax_latestdrawn.php?lottery_type=52';
+		$refrer='http://baidu.lecai.com/lottery/draw/view/200';
+		$agent='Mozilla/5.0 (Windows NT 6.1; WOW64; rv:53.0) Gecko/20100101 Firefox/53.0';
+		$res=$this->_get($url,$refrer,$agent);
+		$codeArr=$res['data'][0]['result']['result'][0]['data'];
+		$code=implode(',',$codeArr);
+		$code="*,*,".$code;
+		$issue=$res['data'][0]['phase'];
+		// echo $code."<hr>".$issue;exit;
+		// $CONTENT = curl_file_get_contents($url);
+		// echo $CONTENT;exit;
+		// $m = json_decode($CONTENT, true);
+		// print_r($m);exit;
+		// $issue = $m['data'][0]['phase'];
+		// $codeArr = $m['data'][0]['result']['result'][0]['data'];
+		// $CODE = '*,*,' . implode(',', $codeArr);
+		$flag = $this->save($issue, $code, 'fucaiCode', 9);
 
 		if ($flag) {
 			$data['flag'] = true;
 			$data['lotteryid'] = 9;
 			$data['issue'] = $issue;
-			$data['str'] = '福彩3D:' . $issue . ':' . $CODE;
+			$data['str'] = '福彩3D:' . $issue . ':' . $code;
 		}
 		else {
 			$data['flag'] = false;
 			$data['lotteryid'] = 9;
 			$data['issue'] = $issue;
-			$data['str'] = '福彩3D:' . $issue . ':' . $CODE;
+			$data['str'] = '福彩3D:' . $issue . ':' . $code;
 		}
 
 		$_obfuscate_nT44rgz3TQ = json_encode($data);
@@ -1506,8 +1580,19 @@ class DuoAuto extends Common
 		$ajaxStr = json_encode($data);
 		echo $ajaxStr;
 	}
-
-	public function save($issue, $code, $codeModelName, $lotteryid, $sx, $sb='')
+	/**
+	 * 保存开奖信息
+	 * @Author   黄传东
+	 * @DateTime 2017-06-20T14:19:50+0800
+	 * @param    [type]                   $issue         [期数]
+	 * @param    [type]                   $code          [中奖号码]
+	 * @param    [type]                   $codeModelName [表名]
+	 * @param    [type]                   $lotteryid     [彩票ID]
+	 * @param    [type]                   $sx            [description]
+	 * @param    string                   $sb            [description]
+	 * @return   [type]                                  [description]
+	 */
+	public function save($issue, $code, $codeModelName, $lotteryid, $sx='', $sb='')
 	{
 		if (empty($issue) || empty($code)) {
 			echo '由于网络原因读取失败,请重新读取!';
@@ -1527,7 +1612,7 @@ class DuoAuto extends Common
 			}
 			if (Db::name($codeModelName)->insert($data)) {
 				unset($data['code']);
-				$DaoLast->where('lotteryid',$lotteryid)->update($data);
+				Db::name('lastissue')->where('lotteryid',$lotteryid)->update($data);
 				return true;
 			}
 		}
