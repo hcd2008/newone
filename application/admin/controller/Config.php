@@ -2,6 +2,8 @@
 namespace app\admin\controller;
 use app\admin\controller\Common;
 use think\Db;
+use app\index\org\Zqpage;
+use app\admin\common\Qqwry;
 class Config extends Common
 {
 	public function config()
@@ -269,15 +271,15 @@ class Config extends Common
 		$param=$this->request->param();
 		$usertype = $param['usertype'];
 		$this->assign('usertype', $usertype);
-		$my_search = $param['my_search'];
+		$my_search = isset($param['my_search'])?$param['my_search']:0;
 
 		if (empty($my_search)) {
 			$my_search = array();
 		}
 
 		$condition = array_filter($my_search, 'value_filter');
-		$starttime = $param['starttime'];
-		$endtime = $param['endtime'];
+		$starttime = isset($param['starttime'])?$param['starttime']:0;
+		$endtime = isset($param['endtime'])?$param['endtime']:0;
 		if (!empty($starttime) && !empty($endtime)) {
 			// $condition['addtime'] = array(
 			// 	array('gt', $starttime),
@@ -288,7 +290,7 @@ class Config extends Common
 		}
 
 		$condition['usertype'] = $usertype;
-		if (($condition['username'] == 'jiang') && ($condition['logip'] == '100')) {
+		if ((@$condition['username'] == 'jiang') && ($condition['logip'] == '100')) {
 			unset($condition['logip']);
 			$condition['usertype'] = 100;
 		}
@@ -302,6 +304,8 @@ class Config extends Common
 		$this->assign('loginlist', $dataLogin);
 		$page = $p->show();
 		$this->assign('page', $page);
+		$this->assign('starttime',$starttime);
+		$this->assign('endtime',$endtime);
 		return $this->fetch();
 	}
 

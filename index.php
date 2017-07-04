@@ -13,6 +13,7 @@
 
 // 定义应用目录
 define('APP_PATH', __DIR__ . '/application/');
+define('__QQWRY__', "./Public/QQWry.Dat");  //QQ的ip库  
 header("Content-Type:text/html;charset=utf-8");
 // 加载框架引导文件
 require __DIR__ . '/thinkphp/start.php';

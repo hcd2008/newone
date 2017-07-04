@@ -1,10 +1,20 @@
 <?php
-
-class SetPrizeAction extends CommonAction
+namespace app\admin\controller;
+use app\admin\controller\Common;
+use think\Db;
+use think\Config;
+class SetPrize extends Common
 {
+	private $param;
+	public function _initialize()
+	{
+		
+		$this->param=$this->request->param();
+		// $isAutoDuo = isset($this->request->param(['isAutoDuo']))?$this->request->param['isAutoDuo']:false;
+	}
 	public function index()
 	{
-		$lotteryid = $_GET['lotteryid'];
+		$lotteryid = $this->param['lotteryid'];
 		$_obfuscate_obqvewA = '';
 		$action = '';
 		$data = NULL;
@@ -46,16 +56,16 @@ class SetPrizeAction extends CommonAction
 			$data = $this->setLhc();
 			break;
 		}
-
+		$this->assign('lotteryid',$lotteryid);
 		$this->assign('title', $_obfuscate_obqvewA);
 		$this->assign('action', $action);
 		$this->assign('prize', $data);
-		$this->display();
+		return $this->fetch();
 	}
 
 	public function setSsc()
 	{
-		$_obfuscate_ehDu7EJ4I57R = m('Method');
+		$_obfuscate_ehDu7EJ4I57R = Db::name('method');
 		$Where['lotteryid'] = 1;
 		$dataMethod = $_obfuscate_ehDu7EJ4I57R->where($Where)->select();
 
@@ -66,7 +76,7 @@ class SetPrizeAction extends CommonAction
 
 	public function setLhc()
 	{
-		$_obfuscate_ehDu7EJ4I57R = m('Method');
+		$_obfuscate_ehDu7EJ4I57R = Db::name('method');
 		$Where['lotteryid'] = 13;
 		$dataMethod = $_obfuscate_ehDu7EJ4I57R->where($Where)->select();
 
@@ -77,9 +87,9 @@ class SetPrizeAction extends CommonAction
 
 	public function updateSsc()
 	{
-		$methodname = $_POST['methodname'];
-		$prize = $_POST['prize'];
-		$_obfuscate_ehDu7EJ4I57R = m('Method');
+		$methodname = $this->param['methodname'];
+		$prize = $this->param['prize'];
+		$_obfuscate_ehDu7EJ4I57R = Db::name('method');
 		$Where['lotteryid'] = array(
 			'in',
 			array(1, 2, 3, 4)
@@ -92,7 +102,7 @@ class SetPrizeAction extends CommonAction
 
 			$data['prize'] = $v;
 			$Where['methodname'] = $methodname[$k];
-			$_obfuscate_ehDu7EJ4I57R->where($Where)->save($data);
+			$_obfuscate_ehDu7EJ4I57R->where($Where)->update($data);
 		}
 
 		$this->success('更新成功');
@@ -100,9 +110,9 @@ class SetPrizeAction extends CommonAction
 
 	public function updateLhc()
 	{
-		$methodname = $_POST['methodname'];
-		$prize = $_POST['prize'];
-		$_obfuscate_ehDu7EJ4I57R = m('Method');
+		$methodname = $this->param['methodname'];
+		$prize = $this->param['prize'];
+		$_obfuscate_ehDu7EJ4I57R = Db::name('method');
 		$Where['lotteryid'] = 13;
 
 		foreach ($prize as $k => $v ) {
@@ -112,7 +122,7 @@ class SetPrizeAction extends CommonAction
 
 			$data['prize'] = $v;
 			$Where['methodname'] = $methodname[$k];
-			$_obfuscate_ehDu7EJ4I57R->where($Where)->save($data);
+			$_obfuscate_ehDu7EJ4I57R->where($Where)->update($data);
 		}
 
 		$this->success('更新成功');
@@ -120,7 +130,7 @@ class SetPrizeAction extends CommonAction
 
 	public function setSsl()
 	{
-		$_obfuscate_ehDu7EJ4I57R = m('Method');
+		$_obfuscate_ehDu7EJ4I57R = Db::name('method');
 		$Where['lotteryid'] = 5;
 		$dataMethod = $_obfuscate_ehDu7EJ4I57R->where($Where)->select();
 
@@ -131,9 +141,9 @@ class SetPrizeAction extends CommonAction
 
 	public function updateSsl()
 	{
-		$methodname = $_POST['methodname'];
-		$prize = $_POST['prize'];
-		$_obfuscate_ehDu7EJ4I57R = m('Method');
+		$methodname = $this->param['methodname'];
+		$prize = $this->param['prize'];
+		$_obfuscate_ehDu7EJ4I57R = Db::name('method');
 		$Where['lotteryid'] = array(
 			'in',
 			array(5)
@@ -146,7 +156,7 @@ class SetPrizeAction extends CommonAction
 
 			$data['prize'] = $v;
 			$Where['methodname'] = $methodname[$k];
-			$_obfuscate_ehDu7EJ4I57R->where($Where)->save($data);
+			$_obfuscate_ehDu7EJ4I57R->where($Where)->update($data);
 		}
 
 		$this->success('更新成功');
@@ -154,16 +164,16 @@ class SetPrizeAction extends CommonAction
 
 	public function set115()
 	{
-		$_obfuscate_ehDu7EJ4I57R = m('Method');
+		$_obfuscate_ehDu7EJ4I57R = Db::name('method');
 		$Where['lotteryid'] = 6;
 		return $dataMethod = $_obfuscate_ehDu7EJ4I57R->where($Where)->select();
 	}
 
 	public function update115()
 	{
-		$methodname = $_POST['methodname'];
-		$prize = $_POST['prize'];
-		$_obfuscate_ehDu7EJ4I57R = m('Method');
+		$methodname = $this->param['methodname'];
+		$prize = $this->param['prize'];
+		$_obfuscate_ehDu7EJ4I57R = Db::name('method');
 		$Where['lotteryid'] = array(
 			'in',
 			array(6, 7, 8, 11)
@@ -176,7 +186,7 @@ class SetPrizeAction extends CommonAction
 
 			$data['prize'] = $v;
 			$Where['methodname'] = $methodname[$k];
-			$_obfuscate_ehDu7EJ4I57R->where($Where)->save($data);
+			$_obfuscate_ehDu7EJ4I57R->where($Where)->update($data);
 		}
 
 		$this->success('更新成功');
@@ -184,16 +194,16 @@ class SetPrizeAction extends CommonAction
 
 	public function set3D()
 	{
-		$_obfuscate_ehDu7EJ4I57R = m('Method');
+		$_obfuscate_ehDu7EJ4I57R = Db::name('method');
 		$Where['lotteryid'] = 9;
 		return $dataMethod = $_obfuscate_ehDu7EJ4I57R->where($Where)->select();
 	}
 
 	public function update3D()
 	{
-		$methodname = $_POST['methodname'];
-		$prize = $_POST['prize'];
-		$_obfuscate_ehDu7EJ4I57R = m('Method');
+		$methodname = $this->param['methodname'];
+		$prize = $this->param['prize'];
+		$_obfuscate_ehDu7EJ4I57R = Db::name('method');
 		$Where['lotteryid'] = array(
 			'in',
 			array(9)
@@ -206,7 +216,7 @@ class SetPrizeAction extends CommonAction
 
 			$data['prize'] = $v;
 			$Where['methodname'] = $methodname[$k];
-			$_obfuscate_ehDu7EJ4I57R->where($Where)->save($data);
+			$_obfuscate_ehDu7EJ4I57R->where($Where)->update($data);
 		}
 
 		$this->success('更新成功');
@@ -214,16 +224,16 @@ class SetPrizeAction extends CommonAction
 
 	public function setPls()
 	{
-		$_obfuscate_ehDu7EJ4I57R = m('Method');
+		$_obfuscate_ehDu7EJ4I57R = Db::name('method');
 		$Where['lotteryid'] = 10;
 		return $dataMethod = $_obfuscate_ehDu7EJ4I57R->where($Where)->select();
 	}
 
 	public function updatePls()
 	{
-		$methodname = $_POST['methodname'];
-		$prize = $_POST['prize'];
-		$_obfuscate_ehDu7EJ4I57R = m('Method');
+		$methodname = $this->param['methodname'];
+		$prize = $this->param['prize'];
+		$_obfuscate_ehDu7EJ4I57R = Db::name('method');
 		$Where['lotteryid'] = array(
 			'in',
 			array(10)
@@ -236,7 +246,7 @@ class SetPrizeAction extends CommonAction
 
 			$data['prize'] = $v;
 			$Where['methodname'] = $methodname[$k];
-			$_obfuscate_ehDu7EJ4I57R->where($Where)->save($data);
+			$_obfuscate_ehDu7EJ4I57R->where($Where)->update($data);
 		}
 
 		$this->success('更新成功');

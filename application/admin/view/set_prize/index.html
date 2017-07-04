@@ -1,0 +1,92 @@
+{include file="Public:head" /}
+
+<body>
+	<SPAN id=ShowSound></SPAN>
+	<table width="100%" border="0" cellpadding="0" cellspacing="0">
+	<!--标签栏开始-->
+  <tr>
+    <td width="17" valign="top" background="__PUBLIC__/images/mail_leftbg.gif"><img src="__PUBLIC__/images/left-top-right.gif" width="17" height="29" /></td>
+    <td valign="top" background="__PUBLIC__/images/content-bg.gif"><table width="100%" height="31" border="0" cellpadding="0" cellspacing="0" class="left_topbg" id="table2">
+      <tr>
+        <td height="31"><div class="titlebt"><{$title}></div></td>
+      </tr>
+    </table></td>
+    <td width="16" valign="top" background="__PUBLIC__/images/mail_rightbg.gif"><img src="__PUBLIC__/images/nav-right-bg.gif" width="16" height="29" /></td>
+  </tr><!--标签栏结束-->
+  <tr><!--左侧一坚-->
+    <td valign="middle" background="__PUBLIC__/images/mail_leftbg.gif">&nbsp;</td>
+    <td valign="top" bgcolor="#F7F8F9">
+	<!--主体表格-->
+		<table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+		 
+	
+		   <tr>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+						  	<td>
+ 
+						  		
+						  	</td>
+						  </tr>
+		  <!--空行-->
+		    <tr>
+            <td>&nbsp;</td>
+          </tr>
+		  <!--功能列表开始-->
+		  <tr>
+            <td>
+            	<div class="viewlist">
+						<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+						<tr>
+						    <td>
+						    <form action="__URL__/<{$action}>" method="post">
+						    <input type="hidden" name="lotteryid" value="<{$lotteryid}>">
+						   <table width="100%" border="0" cellpadding="0" cellspacing="0" class="edittable">
+						   {volist name="prize" id="vo"}
+						           	 <tr>
+						                <td width="32%"  align="right"><{$vo.methodname}>：</td>
+										<input type="hidden" name="methodname[]" value="<{$vo.methodname}>">
+						                <td width="3%">&nbsp;</td>
+						                <td ><input name="prize[]" type="text" id="issue" size="36" value="<{$vo.prize}>"> </td>               
+						              </tr>
+						    {/volist}          
+						                <tr>
+					                <td width="32%"  align="center" colspan="3">
+					                	  <input type="submit" name="Submit" value="提 交" class="submit">
+					                        &nbsp;&nbsp; 
+					                        <input type="reset" name="Submit2" value="恢 复" class="submit">
+					                </td>
+					                        
+					              </tr>
+						   </table>
+						   </form>
+						    </td>
+						  </tr>
+						   <tr>
+						    <td height="30">
+						      &nbsp;
+						    </td>
+						  </tr>
+						  
+						 
+						  <!--第二行-->
+						   <!--列表开始-->
+						
+						  <!--列表结束-->
+						  
+						  </table>
+						
+						 <!--分页列表结束-->
+						
+                </div>	
+                 
+            </td>
+          </tr>
+          <!--功能列表开始-->
+		</table>
+	<!--主体结束-->
+	
+	{include file="Public:foot" /}
+
+	

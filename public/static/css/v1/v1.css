@@ -103,8 +103,8 @@ h1 .action-span1 a:hover{color:#F30}
 .d450 a:hover{text-decoration:underline}
 
 /* div_s1 */
-.div_s1{border:#505050 solid 4px;width:808px}
-.div_s1 .header{color:#FFF;font-size:14px;border:#353535 solid 1px;height:29px;line-height:29px;background:url("/images/v1/left.png") repeat-x 0px -569px;}
+.div_s1{width:808px}
+.div_s1 .header{color:#FFF;font-size:14px;border:#999 solid 1px;height:29px;line-height:29px;color:#fff;}
 
 #tPages{border:0px;height:30px;color:#21366D}
 #tPages strong{height:30px;padding: 2px;border:#A9BADC solid 1px;text-align:center;color:#21366D;background:#F0F0F0;margin:1px}
@@ -150,7 +150,7 @@ font-size:14px;line-height:36px;color:#4A4A4A}
 .tab-div-s2 .bd{width:99.8%;border-right: 1px solid #1C1C1C;border-left: 1px solid #1C1C1C;margin-top:-2px}
 .tab-div-s2 .bd2{width:100%;border-right: 1px solid #5D5C5C;border-left: 1px solid #5D5C5C;border-bottom: 1px solid #1C1C1C}
 
-#tabbar-div-s2{height:40px;background:url("/images/v1/left.png") repeat-x 0px -673px;padding-left:10px;}
+#tabbar-div-s2{height:40px;padding-left:10px;}
 #tabbar-div-s2 .tab-front{height:34px !important;line-height: 33px;height:33px;float:left;font-weight: bold;cursor: pointer;color:#333;margin:7px 0px 0px 8px}
 #tabbar-div-s2 .tab-front .tabbar-left{background:url('/images/v1/icons.png') -16px -28px no-repeat;height:33px;width:7px;float:left}
 #tabbar-div-s2 .tab-front .tabbar-right{background:url('/images/v1/icons.png') -24px -28px no-repeat;height:33px;width:7px;float:left}

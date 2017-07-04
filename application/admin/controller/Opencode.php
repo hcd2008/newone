@@ -2,6 +2,7 @@
 namespace app\admin\controller;
 use app\admin\controller\Common;
 use think\Db;
+use app\index\org\Zqpage;
 class Opencode extends Common
 {
 	protected $codeModel;
@@ -227,7 +228,7 @@ class Opencode extends Common
 
 	public function getOpenCode()
 	{
-		$_obfuscate_Ul2pBz4CAA = m($this->codeModel);
+		$_obfuscate_Ul2pBz4CAA = Db::name($this->codeModel);
 		// import('@.ORG.ZQPage');
 		$listRows = 30;
 		$count = $_obfuscate_Ul2pBz4CAA->order('id desc')->count();
